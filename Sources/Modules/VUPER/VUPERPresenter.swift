@@ -11,14 +11,6 @@ import Foundation
 // MARK: - VUPER Presenter
 public protocol VUPERPresenter: class {
 
-// MARK: - Types
-    associatedtype View: VUPERView
-    associatedtype Router: VUPERRouter
-
-// MARK: - VUPER
-    var view: View? { get }
-    var router: Router? { get }
-
 // MARK: - Life Cycle
     func viewDidLoad()
     func viewWillAppear()
@@ -27,17 +19,16 @@ public protocol VUPERPresenter: class {
     func viewDidDisappear()
     func viewDidUnload()
     func didReceiveMemoryWarning()
-
-// MARK: - Close
-    func close(animated: Bool)
-    func close(animated: Bool, completion: (() -> Void)?)
-    func pop(animated: Bool)
 }
 
 // MARK: - VUPER Presenter - Default implementation
 public extension VUPERPresenter {
 
 // MARK: - Life Cycle
+    func viewDidLoad() {
+
+    }
+    
     func viewWillAppear() {
 
     }
@@ -60,18 +51,5 @@ public extension VUPERPresenter {
 
     func didReceiveMemoryWarning() {
 
-    }
-
-// MARK: - Close
-    func close(animated: Bool) {
-        self.close(animated: animated, completion: nil)
-    }
-
-    func close(animated: Bool, completion: (() -> Void)?) {
-        self.router?.dismiss(animated: animated, completion: completion)
-    }
-
-    func pop(animated: Bool) {
-        self.router?.pop(animated: animated)
     }
 }

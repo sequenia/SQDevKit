@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Table Cells
 public extension SQDevKit where Base: UITableView {
 
     func register<T: UITableViewCell>(_ cellClass: T.Type,
@@ -24,6 +25,10 @@ public extension SQDevKit where Base: UITableView {
         return self.base.dequeueReusableCell(withIdentifier: identifier != nil ? identifier ?? "" : T.self.sq.identifier,
                                              for: path) as? T
     }
+}
+
+// MARK: - Scroll To Section
+public extension SQDevKit where Base: UITableView {
 
     func scrollToSection(_ section: Int, animated: Bool) {
         self.scrollToSection(section,
@@ -43,5 +48,33 @@ public extension SQDevKit where Base: UITableView {
         if self.base.numberOfRows(inSection: section) > 0 {
             self.base.scrollToRow(at: indexPath, at: position, animated: animated)
         }
+    }
+}
+
+// MARK: - Utils
+public extension SQDevKit where Base: UITableView {
+
+    func adjustFooterToFill() {
+        let tableView = self.base
+
+        guard let tableFooterView = tableView.tableFooterView else { return }
+
+        var topInset: CGFloat = .zero
+        if #available(iOS 11.0, *) {
+            topInset = tableView.adjustedContentInset.top
+        }
+
+        let minHeight = tableFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let currentFooterHeight = tableFooterView.frame.height
+        let fitHeight = tableView.frame.height - topInset - tableView.contentSize.height + currentFooterHeight
+
+        let nextHeight = (fitHeight > minHeight) ? fitHeight : minHeight
+
+        guard round(nextHeight) != round(currentFooterHeight) else { return }
+
+        var frame = tableFooterView.frame
+        frame.size.height = nextHeight
+        tableFooterView.frame = frame
+        tableView.tableFooterView = tableFooterView
     }
 }

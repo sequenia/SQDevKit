@@ -11,14 +11,6 @@ import Foundation
 // MARK: - VUPER Configurator
 public protocol VUPERConfigurator where Self: NSObject {
 
-// MARK: - Types
-    associatedtype View: VUPERView
-    associatedtype Presenter: VUPERPresenter
-
-// MARK: - VUPER
-    var view: View? { get }
-    var presenter: Presenter? { get }
-
 // MARK: - Configuration
     func configure()
 }
