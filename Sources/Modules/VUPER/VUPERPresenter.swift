@@ -1,6 +1,5 @@
 //
-//  BasicPresenter.swift
-//  TwoPoTwo
+//  VUPERPresenter.swift
 //
 //  Created by Semen Kologrivov on 26.02.2021.
 //  Copyright © 2021 Sequenia OOO. All rights reserved.

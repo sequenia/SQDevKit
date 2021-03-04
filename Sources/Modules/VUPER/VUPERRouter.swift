@@ -1,6 +1,5 @@
 //
-//  BasicRouter.swift
-//  TwoPoTwo
+//  VUPERRouter.swift
 //
 //  Created by Semen Kologrivov on 28.02.2021.
 //  Copyright © 2021 Sequenia OOO. All rights reserved.

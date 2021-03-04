@@ -9,8 +9,13 @@ import UIKit
 
 public extension SQDevKit where Base: UIButton {
 
-    func setBacgroundColor(_ color: UIColor?,
-                           forState state: UIControl.State) {
+    ///  Set background color for button with specific state
+    ///
+    /// - Parameters:
+    ///   - color: color for background. `UIColor`
+    ///   - state: state of button. `UIControl.State`
+    func setBackgroundColor(_ color: UIColor?,
+                            forState state: UIControl.State) {
         self.base.setBackgroundImage(UIImage.sq.create(withColor: color),
                                      for: state)
     }
