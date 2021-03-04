@@ -9,6 +9,7 @@ import UIKit
 
 public extension SQDevKit where Base: UITableViewCell {
 
+    /// Force hide cell's separators
     func hideSeparators() {
         self.base.separatorInset = UIEdgeInsets(top: 0,
                                                 left: UIScreen.main.bounds.width,

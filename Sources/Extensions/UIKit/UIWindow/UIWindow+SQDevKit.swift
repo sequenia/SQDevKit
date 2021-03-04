@@ -9,10 +9,12 @@ import UIKit
 
 public extension SQDevKit where Base: UIWindow {
 
+    /// Application's key window
     static var keyWindow: UIWindow? {
         return UIApplication.shared.windows.first(where: { $0.isKeyWindow })
     }
 
+    /// Current top most presented view controller
     static var topMostViewController: UIViewController? {
         guard var topController = self.keyWindow?.rootViewController else { return nil }
 
@@ -24,6 +26,7 @@ public extension SQDevKit where Base: UIWindow {
         return topController
     }
 
+    /// Current top most presented tab bar controller
     static var tabBarController: UITabBarController? {
         guard let topMostController = self.topMostViewController else { return nil }
 
@@ -34,6 +37,7 @@ public extension SQDevKit where Base: UIWindow {
         return tabBarController
     }
 
+    /// Current top most presented navigation controller
     static var currentNavigationController: UINavigationController? {
         guard let topMostController = self.topMostViewController else { return nil }
 
@@ -46,6 +50,9 @@ public extension SQDevKit where Base: UIWindow {
         return curController
     }
 
+    /// Current view controller
+    /// If top most presenter view controller is UINavigationController, value will be equal last view controller in navigation stack
+    /// If top most presenter view controller is UITabController, value will be equal view controller in selected tab
     static var currentViewController: UIViewController? {
         guard let currentViewController = self.topMostViewController else { return nil }
 
@@ -63,8 +70,9 @@ public extension SQDevKit where Base: UIWindow {
         return currentViewController
     }
 
+    /// Top safe area inset of key window
     static var safeAreaTop: CGFloat {
-        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return 0.0 }
+        guard let window = self.keyWindow else { return 0.0 }
 
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.top
@@ -73,8 +81,9 @@ public extension SQDevKit where Base: UIWindow {
         return 0.0
     }
 
+    /// Bottom safe area inset of key window
     static var safeAreaBottom: CGFloat {
-        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return 0.0 }
+        guard let window = self.keyWindow else { return 0.0 }
 
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.bottom

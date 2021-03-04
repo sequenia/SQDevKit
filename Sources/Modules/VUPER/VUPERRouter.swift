@@ -15,7 +15,7 @@ public protocol VUPERRouter: class {
     var topMostViewController: UIViewController? { get }
     var topMostTabViewController: UITabBarController? { get }
     var topMostNavigationController: UINavigationController? { get }
-    var currentViewController: UIViewController? { get }
+    var currentView: UIViewController? { get }
 
 // MARK: - Navigation actions
     func setRootController(_ controller: UIViewController,
@@ -42,7 +42,7 @@ public extension VUPERRouter {
         UIWindow.sq.currentNavigationController
     }
 
-    var currentViewController: UIViewController? {
+    var currentView: UIViewController? {
         UIWindow.sq.currentViewController
     }
 

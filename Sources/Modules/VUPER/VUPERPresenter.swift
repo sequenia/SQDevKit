@@ -20,36 +20,3 @@ public protocol VUPERPresenter: class {
     func viewDidUnload()
     func didReceiveMemoryWarning()
 }
-
-// MARK: - VUPER Presenter - Default implementation
-public extension VUPERPresenter {
-
-// MARK: - Life Cycle
-    func viewDidLoad() {
-
-    }
-    
-    func viewWillAppear() {
-
-    }
-
-    func viewDidAppear() {
-
-    }
-
-    func viewWillDisappear() {
-
-    }
-
-    func viewDidDisappear() {
-
-    }
-
-    func viewDidUnload(){
-
-    }
-
-    func didReceiveMemoryWarning() {
-
-    }
-}
