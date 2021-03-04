@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+// MARK: - Initialization
 public extension SQDevKit where Base: UIViewController {
 
     /// Returns UINavigationController with self as root
@@ -33,10 +35,25 @@ public extension SQDevKit where Base: UIViewController {
     ///
     /// - Precondition: In your project must exist storyboard contained view controller and named as that
     /// - Returns:new navigation view controller
-    static func createWithNavigationController<T: UIViewController>(_ type: T.Type) -> UINavigationController? {
-        guard let viewController = T.self.sq.create() else { return nil }
+    static func createWithNavigationController() -> UINavigationController? {
+        guard let viewController = Base.self.sq.create() else { return nil }
 
         return viewController.sq.wrappedIntoNavigationController
+    }
+}
+
+// MARK: - Push
+public extension SQDevKit where Base: UIViewController {
+
+    /// Push into view controller's navigation controller new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of pushed view controller
+    ///   - configureBlock: closure for configure pushed view controller
+    /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
+    func push<T: UIViewController>(_ type: T.Type,
+                                   configureBlock: ((_ result: T) -> Void)? = nil) {
+        self.push(type, animated: true, configureBlock: configureBlock)
     }
 
     /// Push into view controller's navigation controller new view controller
@@ -47,12 +64,28 @@ public extension SQDevKit where Base: UIViewController {
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
     func push<T: UIViewController>(_ type: T.Type,
-                                   animated: Bool = true,
+                                   animated: Bool,
                                    configureBlock: ((_ result: T) -> Void)? = nil) {
         guard let viewController = T.sq.create() else { return }
 
         configureBlock?(viewController)
         self.base.navigationController?.pushViewController(viewController, animated: animated)
+    }
+
+}
+
+// MARK: - Set root
+public extension SQDevKit where Base: UIViewController {
+
+    /// Remove all view controllers from stack of view controller's navigation controller and push new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of pushed view controller
+    ///   - configureBlock: closure for configure pushed view controller
+    /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
+    func setNavigationRoot<T: UIViewController>(_ type: T.Type,
+                                                configureBlock: ((_ result: T) -> Void)? = nil) {
+        self.push(type, animated: true, configureBlock: configureBlock)
     }
 
     /// Remove all view controllers from stack of view controller's navigation controller and push new view controller
@@ -63,12 +96,111 @@ public extension SQDevKit where Base: UIViewController {
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
     func setNavigationRoot<T: UIViewController>(_ type: T.Type,
-                                                animated: Bool = true,
+                                                animated: Bool,
                                                 configureBlock: ((_ result: T) -> Void)? = nil) {
         guard let viewController = T.sq.create() else { return }
 
         configureBlock?(viewController)
         self.base.navigationController?.setViewControllers([viewController], animated: animated)
+    }
+}
+
+// MARK: - Present
+public extension SQDevKit where Base: UIViewController {
+
+    /// Present new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of presented view controller
+    ///   - configureBlock: closure for configure pushed view controller
+    ///   - presentationCompletion: closure when presentation is completed
+    /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    func present<T: UIViewController>(_ type: T.Type,
+                                      configureBlock: ((_ result: T) -> Void)? = nil) {
+        self.present(type,
+                     withNavigationController: true,
+                     modalPresentationStyle: .pageSheet,
+                     animated: true,
+                     configureBlock: configureBlock,
+                     presentationCompletion: nil)
+    }
+
+    /// Present new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of presented view controller
+    ///   - configureBlock: closure for configure pushed view controller
+    ///   - presentationCompletion: closure when presentation is completed
+    /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    func present<T: UIViewController>(_ type: T.Type,
+                                      configureBlock: ((_ result: T) -> Void)? = nil,
+                                      presentationCompletion: ((_ presentedController: UIViewController) -> Void)? = nil) {
+        self.present(type,
+                     withNavigationController: true,
+                     modalPresentationStyle: .pageSheet,
+                     animated: true,
+                     configureBlock: configureBlock,
+                     presentationCompletion: presentationCompletion)
+    }
+
+    /// Present new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of presented view controller
+    ///   - modalPresentationStyle: style of presentation. `UIModalPresentationStyle`
+    ///   - configureBlock: closure for configure pushed view controller
+    ///   - presentationCompletion: closure when presentation is completed
+    /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    func present<T: UIViewController>(_ type: T.Type,
+                                      modalPresentationStyle: UIModalPresentationStyle,
+                                      configureBlock: ((_ result: T) -> Void)? = nil,
+                                      presentationCompletion: ((_ presentedController: UIViewController) -> Void)? = nil) {
+        self.present(type,
+                     withNavigationController: true,
+                     modalPresentationStyle: modalPresentationStyle,
+                     animated: true,
+                     configureBlock: configureBlock,
+                     presentationCompletion: presentationCompletion)
+    }
+
+    /// Present new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of presented view controller
+    ///   - withNavigationController: will be presented view controller wrapped into navigation controller. `Bool` (`true` by default)
+    ///   - configureBlock: closure for configure pushed view controller
+    ///   - presentationCompletion: closure when presentation is completed
+    /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    func present<T: UIViewController>(_ type: T.Type,
+                                      withNavigationController: Bool,
+                                      configureBlock: ((_ result: T) -> Void)? = nil,
+                                      presentationCompletion: ((_ presentedController: UIViewController) -> Void)? = nil) {
+        self.present(type,
+                     withNavigationController: withNavigationController,
+                     modalPresentationStyle: .pageSheet,
+                     animated: true,
+                     configureBlock: configureBlock,
+                     presentationCompletion: presentationCompletion)
+    }
+
+    /// Present new view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of presented view controller
+    ///   - animated: animation of present. `Bool`
+    ///   - configureBlock: closure for configure pushed view controller
+    ///   - presentationCompletion: closure when presentation is completed
+    /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    func present<T: UIViewController>(_ type: T.Type,
+                                      animated: Bool,
+                                      configureBlock: ((_ result: T) -> Void)? = nil,
+                                      presentationCompletion: ((_ presentedController: UIViewController) -> Void)? = nil) {
+        self.present(type,
+                     withNavigationController: true,
+                     modalPresentationStyle: .pageSheet,
+                     animated: animated,
+                     configureBlock: configureBlock,
+                     presentationCompletion: presentationCompletion)
     }
 
     /// Present new view controller
@@ -77,17 +209,18 @@ public extension SQDevKit where Base: UIViewController {
     ///   - type: type of presented view controller
     ///   - withNavigationController: will be presented view controller wrapped into navigation controller. `Bool` (`true` by default)
     ///   - modalPresentationStyle: style of presentation. `UIModalPresentationStyle`
-    ///   - animated: animation of push. `Bool`
+    ///   - animated: animation of present]. `Bool`
     ///   - configureBlock: closure for configure pushed view controller
     ///   - presentationCompletion: closure when presentation is completed
     /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
-    func present<T: UIViewController>(_type: T,
-                                      withNavigationController: Bool = true,
-                                      modalPresentationStyle: UIModalPresentationStyle = .pageSheet,
-                                      animated: Bool = true,
+    func present<T: UIViewController>(_ type: T.Type,
+                                      withNavigationController: Bool,
+                                      modalPresentationStyle: UIModalPresentationStyle,
+                                      animated: Bool,
                                       configureBlock: ((_ result: T) -> Void)? = nil,
                                       presentationCompletion: ((_ presentedController: UIViewController) -> Void)? = nil) {
         guard let viewController = T.sq.create() else { return }
+        
         configureBlock?(viewController)
 
         let viewControllerToPresent = withNavigationController ? viewController.sq.wrappedIntoNavigationController : viewController
