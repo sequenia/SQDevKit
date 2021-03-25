@@ -44,7 +44,7 @@ public extension SQDevKit where Base: UIImage {
     func resize(toTargetSize targetSize: CGSize) -> UIImage {
         let image = self.base
 
-        let newSize = image.size.scaleProportional(toSize: targetSize)
+        let newSize = image.size.sq.scaleProportional(toSize: targetSize)
 
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
 
