@@ -9,22 +9,8 @@ import UIKit
 
 public extension SQDevKit where Base == String {
     
-    /// Converts string to date
-    ///
-    /// - Parameters:
-    ///   - format: format for DateFormatter.`String`.
-    /// - Returns: date created from formatted string. `Date`
-    func toDate(format: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-
-        return dateFormatter.date(from: self.base)
-    }
-    
-    /// Converts string with ISO format to date
-    /// 
-    /// - Returns: date created from formatted string with ISO format. `Date`
-    func toDateFromISOString() -> Date? {
+    /// Converts string with ISO format to date (example "2005-08-09T18:31:42")
+    var toDate: Date? {
         let formatter = ISO8601DateFormatter()
         
         var options: ISO8601DateFormatter.Options = [
@@ -42,13 +28,25 @@ public extension SQDevKit where Base == String {
         return formatter.date(from: self.base)
     }
     
+    /// Converts string to date with selected format
+    ///
+    /// - Parameters:
+    ///   - format: format for DateFormatter.`String`.
+    /// - Returns: date created from formatted string. `Date`
+    func toDate(format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+
+        return dateFormatter.date(from: self.base)
+    }
+    
     /// Generating a NSAttributedString from a raw string with html markup
     ///
     /// - Parameters:
-    ///   - using: base font class. `UIFont`.
+    ///   - with: base font class. `UIFont`.
     ///   - color: base font color. `UIColor`.
     /// - Returns: NSAttributedString with the passed attributes
-    func htmlAttributed(using font: UIFont, color: UIColor) -> NSAttributedString? {
+    func htmlAttributed(with font: UIFont, color: UIColor) -> NSAttributedString? {
         do {
             let htmlCSSString = "<style>" +
                 "html *" +

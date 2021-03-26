@@ -13,20 +13,29 @@ public extension SQDevKit where Base: NSMutableAttributedString {
     /// Set text color for substring
     ///
     /// - Parameters:
-    ///   - textForAttribute: substring for setting color.`String`.
+    ///   - forText: substring for setting color.`String`.
     ///   - color: setted color.`UIColor`.
-    func setColorForText(textForAttribute: String, withColor color: UIColor) {
+    func setColor(forText textForAttribute: String, withColor color: UIColor) {
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+        self.base.addAttribute(.foregroundColor, value: color, range: range)
     }
     
     /// Set font color for substring
     ///
     /// - Parameters:
-    ///   - textForAttribute: substring for setting color.`String`.
+    ///   - forText: substring for setting color.`String`.
     ///   - font: setted font.`UIFont`.
-    func setFontForText(textForAttribute: String, withFont font: UIFont) {
+    func setFont(forText textForAttribute: String, withFont font: UIFont) {
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(NSAttributedString.Key.font, value: font, range: range)
+        self.base.addAttribute(.font, value: font, range: range)
+    }
+    
+    /// Set underscore for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting color.`String`.
+    func setUnderscore(forText textForAttribute: String) {
+        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+        self.base.addAttribute(.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: range)
     }
 }

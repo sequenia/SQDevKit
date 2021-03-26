@@ -9,6 +9,11 @@ import Foundation
 
 public extension SQDevKit where Base == Date {
     
+    /// Returns the day of the week for a date
+    var dayNumberOfWeek: Int? {
+        return Calendar.current.dateComponents([.weekday], from: self.base).weekday
+    }
+    
     /// Converts date to string
     ///
     /// - Parameters:
@@ -38,14 +43,14 @@ public extension SQDevKit where Base == Date {
     ///   - hour: hour value.`Int`.
     ///   - minute: minute value.`Int`.
     /// - Returns: date with setted time `Date`
-    func setTime(hour: Int?, minute: Int?) -> Date? {
+    func setTime(hour: Int = .zero, minute: Int = .zero) -> Date? {
         let dateComponents: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
         let calendar = Calendar.current
         var components = calendar.dateComponents(dateComponents, from: self.base)
 
         components.timeZone = .autoupdatingCurrent
-        components.hour = hour ?? .zero
-        components.minute = minute ?? .zero
+        components.hour = hour
+        components.minute = minute
 
         return calendar.date(from: components)
     }
@@ -58,13 +63,6 @@ public extension SQDevKit where Base == Date {
     func isSameDay(date: Date?) -> Bool {
         guard let date = date else { return false }
         return Calendar.current.compare(self.base, to: date, toGranularity: .day) == .orderedSame
-    }
-    
-    /// Returns the day of the week for a date
-    ///
-    /// - Returns: week for a date number `Int`
-    func dayNumberOfWeek() -> Int? {
-        return Calendar.current.dateComponents([.weekday], from: self.base).weekday
     }
       
     /// Returns an array with the names of the months between two dates
