@@ -20,10 +20,23 @@ public extension SQDevKit where Base == Date {
     ///   - format: format for DateFormatter.`String`.
     ///   - locale: locale for format.`String`.
     /// - Returns: formatted date string `String`
-    func toString(format: String, locale: String = "ru_RU") -> String {
+    func toString(format: String, langCode: String = "ru_RU") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        dateFormatter.locale = Locale(identifier: locale)
+        dateFormatter.locale = Locale(identifier: langCode)
+        return dateFormatter.string(from: self.base)
+    }
+    
+    /// Converts date to string
+    ///
+    /// - Parameters:
+    ///   - format: format for DateFormatter.`String`.
+    ///   - locale: locale for format.`String`.
+    /// - Returns: formatted date string `String`
+    func toString(format: String, locale: Locale) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = locale
         return dateFormatter.string(from: self.base)
     }
     
