@@ -9,13 +9,14 @@ import UIKit
 
 public extension SQDevKit where Base: UIScreen {
 
+    /// Screen width
     static var width: CGFloat {
         return UIScreen.main.bounds.width
     }
 
+    /// Screen height
     static var height: CGFloat {
         return UIScreen.main.bounds.height
     }
-
 
 }

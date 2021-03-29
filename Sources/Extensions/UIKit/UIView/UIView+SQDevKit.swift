@@ -43,7 +43,6 @@ public extension SQDevKit where Base: UIView {
         return UIView()
     }
 
-
     /// Blink view with alpla
     ///
     /// - Parameters:
@@ -56,5 +55,41 @@ public extension SQDevKit where Base: UIView {
             self.base.alpha = 1.0
         }
     }
+    
+    /// Get array with all visible subview from view
+    ///
+    /// - Returns: array visible subviews `[UIView]`
+    func getAllVisibleSubviews() -> [UIView] {
+        var allSubviews = [UIView]()
+        for subview in self.base.subviews {
+            if !subview.isHidden {
+                allSubviews.append(contentsOf: subview.sq.getAllVisibleSubviews())
+            }
+        }
+        return allSubviews
+    }
+    
+    /// Add blure effect for view with selected color
+    ///
+    /// - Parameters:
+    ///   - style: blure effect style. `UIBlurEffect.Style`
+    ///   - color: color for blure. `UIColor`
+    func addBlure(style: UIBlurEffect.Style, color: UIColor) {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.backgroundColor = color
+        blurEffectView.layer.masksToBounds = true
+        blurEffectView.layer.cornerRadius = self.base.layer.cornerRadius
+        blurEffectView.frame = self.base.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.base.insertSubview(blurEffectView, at: .zero)
+    }
+    
+    /// Remove blure effect from view
+    func removeBlure() {
+        if let effectView = self.base.subviews.first(where: { $0 is UIVisualEffectView }) as? UIVisualEffectView,
+           effectView.effect is UIBlurEffect {
+            effectView.removeFromSuperview()
+        }
+    }
 }
-

@@ -12,7 +12,7 @@ import SQDifferenceKit
 open class SQCollectionFabric: NSObject {
 
 // MARK: - Properties
-    weak var collectionView: UICollectionView?
+    open weak var collectionView: UICollectionView?
 
 // MARK: - Inits
     public init(collectionView: UICollectionView) {
