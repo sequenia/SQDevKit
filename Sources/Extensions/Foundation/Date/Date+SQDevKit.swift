@@ -18,7 +18,7 @@ public extension SQDevKit where Base == Date {
     ///
     /// - Parameters:
     ///   - format: format for DateFormatter.`String`.
-    ///   - locale: locale for format.`String`.
+    ///   - langCode: langCode (identifier) for initialize Locale object.`String`. Default `"ru_RU"`.
     /// - Returns: formatted date string `String`
     func toString(format: String, langCode: String = "ru_RU") -> String {
         let dateFormatter = DateFormatter()
