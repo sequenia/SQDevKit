@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SQExtensions
 import SQDifferenceKit
 
 // MARK: - CollectionFabric
@@ -29,17 +30,17 @@ open class SQCollectionFabric: NSObject {
 
 // MARK: - Methods
     open func cell(forModelRow modelRow: ModelRow,
-                     atIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+                   atIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
     open func header(forModelSection modelSection: ModelView?,
-                       atIndexPath indexPath: IndexPath) -> UICollectionReusableView {
+                     atIndexPath indexPath: IndexPath) -> UICollectionReusableView {
         return UICollectionReusableView()
     }
 
     open func footer(forModelSection modelSection: ModelView?,
-                       atIndexPath indexPath: IndexPath) -> UICollectionReusableView {
+                     atIndexPath indexPath: IndexPath) -> UICollectionReusableView {
         return UICollectionReusableView()
     }
 }

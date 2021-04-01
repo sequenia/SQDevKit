@@ -9,6 +9,15 @@
           "revision": "14c66681e12a38b81045f44c6c29724a0d4b0e72",
           "version": "1.1.5"
         }
+      },
+      {
+        "package": "SQDifferenceKit",
+        "repositoryURL": "https://github.com/sequenia/SQDifferenceKit.git",
+        "state": {
+          "branch": null,
+          "revision": "a7ca51f5e5913fe7ddef3edeb5c79b9851024f7a",
+          "version": "0.2.2"
+        }
       }
     ]
   },

@@ -8,34 +8,30 @@ let package = Package(
     platforms: [.iOS(.v10)],
     products: [
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
-        .library(name: "SQDifferenceKit", targets: ["SQDifferenceKit"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
         .library(name: "SQLists", targets: ["SQLists"]),
-        .library(name: "VUPER", targets: ["VUPER"]),
-        .library(name: "SQDevKit",
-                 targets: [
-                    "SQExtensions",
-                    "SQDifferenceKit",
-                    "SQKeyboard",
-                    "SQLists",
-                    "VUPER"
-                 ]
-        ),
+        .library(name: "VUPER", targets: ["VUPER"])
     ],
     dependencies: [
-        .package(url: "https://github.com/ra1028/DifferenceKit.git", from: "1.1.5")
+        .package(
+            url: "https://github.com/sequenia/SQDifferenceKit.git",
+            .upToNextMajor(from: "0.2.2")
+        )
     ],
     targets: [
         .target(name: "SQExtensions", path: "./Sources/Extensions"),
-        .target(
-            name: "SQDifferenceKit",
-            dependencies: [
-                .product(name: "DifferenceKit", package: "DifferenceKit")
-            ],
-            path: "./Sources/DifferenceKit"
-        ),
         .target(name: "SQKeyboard", path: "./Sources/Keyboard"),
-        .target(name: "SQLists", dependencies: ["SQDifferenceKit"], path: "./Sources/Lists"),
-        .target(name: "VUPER", path: "./Sources/VUPER")
+        .target(
+            name: "SQLists",
+            dependencies: [
+                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
+            ],
+            path: "./Sources/Lists"
+        ),
+        .target(
+            name: "VUPER",
+            dependencies: ["SQExtensions"],
+            path: "./Sources/VUPER"
+        )
     ]
 )

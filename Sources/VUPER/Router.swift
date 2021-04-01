@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SQExtensions
 
 // MARK: - VUPER Router
 public protocol Router: class {
@@ -26,7 +27,7 @@ public protocol Router: class {
 }
 
 // MARK: - VUPER Router - Default implementation
-public extension VUPERRouter {
+public extension Router {
 
 // MARK: - Variables
     var topMostViewController: UIViewController? {
