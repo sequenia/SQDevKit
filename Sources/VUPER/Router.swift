@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - VUPER Router
-public protocol VUPERRouter: class {
+public protocol Router: class {
 
 // MARK: - Variables
     var topMostViewController: UIViewController? { get }

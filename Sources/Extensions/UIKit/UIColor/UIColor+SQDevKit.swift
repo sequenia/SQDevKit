@@ -84,7 +84,7 @@ public extension UIColor {
     
 }
 
-public extension SQDevKit where Base: UIColor {
+public extension SQExtensions where Base: UIColor {
 
     var hexString: String {
         var red: CGFloat = 0

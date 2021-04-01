@@ -20,7 +20,7 @@ public extension UICollectionView {
 }
 
 // MARK: - Work with cells
-public extension SQDevKit where Base: UICollectionView {
+public extension SQExtensions where Base: UICollectionView {
 
     /// Register cell with class in the collection view
     ///
@@ -62,7 +62,7 @@ public extension SQDevKit where Base: UICollectionView {
 }
 
 // MARK: - Work with supplementary views
-public extension SQDevKit where Base: UICollectionView {
+public extension SQExtensions where Base: UICollectionView {
 
     /// Register suplementary view in collection
     ///

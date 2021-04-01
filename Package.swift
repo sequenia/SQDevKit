@@ -7,28 +7,35 @@ let package = Package(
     name: "SQDevKit",
     platforms: [.iOS(.v10)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "SQDevKit",
-            targets: ["SQDevKit"]),
+        .library(name: "SQExtensions", targets: ["SQExtensions"]),
+        .library(name: "SQDifferenceKit", targets: ["SQDifferenceKit"]),
+        .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
+        .library(name: "SQLists", targets: ["SQLists"]),
+        .library(name: "VUPER", targets: ["VUPER"]),
+        .library(name: "SQDevKit",
+                 targets: [
+                    "SQExtensions",
+                    "SQDifferenceKit",
+                    "SQKeyboard",
+                    "SQLists",
+                    "VUPER"
+                 ]
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/sequenia/SQDifferenceKit.git",
-                 .upToNextMajor(from: "0.2.2"))
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/ra1028/DifferenceKit.git", from: "1.1.5")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(name: "SQExtensions", path: "./Sources/Extensions"),
         .target(
-            name: "SQDevKit",
+            name: "SQDifferenceKit",
             dependencies: [
-                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
+                .product(name: "DifferenceKit", package: "DifferenceKit")
             ],
-            path: "./Sources/"),
-        .testTarget(
-            name: "SQDevKitTests",
-            dependencies: ["SQDevKit"]),
+            path: "./Sources/DifferenceKit"
+        ),
+        .target(name: "SQKeyboard", path: "./Sources/Keyboard"),
+        .target(name: "SQLists", dependencies: ["SQDifferenceKit"], path: "./Sources/Lists"),
+        .target(name: "VUPER", path: "./Sources/VUPER")
     ]
 )

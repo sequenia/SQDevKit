@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension SQDevKit where Base: NSObject {
+public extension SQExtensions where Base: NSObject {
 
     /// String identifier of object
     static var identifier: String {

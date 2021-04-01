@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIScreen {
+public extension SQExtensions where Base: UIScreen {
 
     /// Screen width
     static var width: CGFloat {

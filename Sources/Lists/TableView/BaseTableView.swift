@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SQDifferenceKit
 
 // MARK: - Base Table View
 public protocol BaseTableView: class {

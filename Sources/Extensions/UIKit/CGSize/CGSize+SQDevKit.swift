@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base == CGSize {
+public extension SQExtensions where Base == CGSize {
 
     /// Scales size by the next algorithm:
     /// - original size width replaces with `width` from parameter
@@ -45,4 +45,4 @@ public extension SQDevKit where Base == CGSize {
     }
 }
 
-extension CGSize: SQDevKitCompatible {}
+extension CGSize: SQExtensionsCompatible {}

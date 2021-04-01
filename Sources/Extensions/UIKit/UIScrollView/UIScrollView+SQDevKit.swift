@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIScrollView {
+public extension SQExtensions where Base: UIScrollView {
 
     /// Minimum available content offset
     var minContentOffset: CGPoint {

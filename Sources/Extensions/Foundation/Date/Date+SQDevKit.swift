@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension SQDevKit where Base == Date {
+public extension SQExtensions where Base == Date {
     
     /// Returns the day of the week for a date
     var dayNumberOfWeek: Int? {
@@ -106,4 +106,4 @@ public extension SQDevKit where Base == Date {
     
 }
 
-extension Date: SQDevKitCompatible {}
+extension Date: SQExtensionsCompatible {}

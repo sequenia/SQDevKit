@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - VUPER View
-public protocol VUPERView where Self: UIViewController {
+public protocol View where Self: UIViewController {
     
 // MARK: - Loading indicator
     func setLoadingVisible(_ visible: Bool)

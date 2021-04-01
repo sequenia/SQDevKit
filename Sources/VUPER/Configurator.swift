@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - VUPER Configurator
-public protocol VUPERConfigurator where Self: NSObject {
+public protocol Configurator where Self: NSObject {
 
 // MARK: - Configuration
     func configure()

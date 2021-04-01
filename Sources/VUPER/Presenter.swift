@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - VUPER Presenter
-public protocol VUPERPresenter: class {
+public protocol Presenter: class {
 
 // MARK: - Life Cycle
     func viewDidLoad()

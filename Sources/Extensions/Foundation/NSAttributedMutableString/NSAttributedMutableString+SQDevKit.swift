@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-public extension SQDevKit where Base: NSMutableAttributedString {
+public extension SQExtensions where Base: NSMutableAttributedString {
     
     /// Set text color for substring
     ///

@@ -9,7 +9,7 @@ import UIKit
 
 
 // MARK: - Initialization
-public extension SQDevKit where Base: UIViewController {
+public extension SQExtensions where Base: UIViewController {
 
     /// Returns UINavigationController with self as root
     var wrappedIntoNavigationController: UINavigationController {
@@ -43,7 +43,7 @@ public extension SQDevKit where Base: UIViewController {
 }
 
 // MARK: - Push
-public extension SQDevKit where Base: UIViewController {
+public extension SQExtensions where Base: UIViewController {
 
     /// Push into view controller's navigation controller new view controller
     ///
@@ -75,7 +75,7 @@ public extension SQDevKit where Base: UIViewController {
 }
 
 // MARK: - Set root
-public extension SQDevKit where Base: UIViewController {
+public extension SQExtensions where Base: UIViewController {
 
     /// Remove all view controllers from stack of view controller's navigation controller and push new view controller
     ///
@@ -106,7 +106,7 @@ public extension SQDevKit where Base: UIViewController {
 }
 
 // MARK: - Present
-public extension SQDevKit where Base: UIViewController {
+public extension SQExtensions where Base: UIViewController {
 
     /// Present new view controller
     ///

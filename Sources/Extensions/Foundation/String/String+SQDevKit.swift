@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base == String {
+public extension SQExtensions where Base == String {
     
     /// Converts string with ISO format to date (example "2005-08-09T18:31:42")
     var toDate: Date? {
@@ -115,4 +115,4 @@ public extension SQDevKit where Base == String {
 
 }
 
-extension String: SQDevKitCompatible {}
+extension String: SQExtensionsCompatible {}

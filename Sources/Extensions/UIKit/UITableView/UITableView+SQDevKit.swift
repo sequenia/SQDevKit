@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - Table Cells
-public extension SQDevKit where Base: UITableView {
+public extension SQExtensions where Base: UITableView {
 
     /// Register cell with class in the table view
     ///
@@ -53,7 +53,7 @@ public extension SQDevKit where Base: UITableView {
 }
 
 // MARK: - Scrolling utils
-public extension SQDevKit where Base: UITableView {
+public extension SQExtensions where Base: UITableView {
 
     /// Scroll table to section
     ///
@@ -77,7 +77,7 @@ public extension SQDevKit where Base: UITableView {
 }
 
 // MARK: - Utils
-public extension SQDevKit where Base: UITableView {
+public extension SQExtensions where Base: UITableView {
 
     /// Fill table's footer to table fill all screen content
     func adjustFooterToFill() {

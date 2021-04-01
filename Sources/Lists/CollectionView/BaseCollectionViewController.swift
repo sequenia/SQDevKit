@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SQDifferenceKit
 
 // MARK: - Base Collection View
 public protocol BaseCollectionView: class {
