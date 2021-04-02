@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
         .library(name: "SQLists", targets: ["SQLists"]),
-        .library(name: "VUPER", targets: ["VUPER"])
+        .library(name: "SQVUPER", targets: ["SQVUPER"]),
     ],
     dependencies: [
         .package(
@@ -29,7 +29,7 @@ let package = Package(
             path: "./Sources/Lists"
         ),
         .target(
-            name: "VUPER",
+            name: "SQVUPER",
             dependencies: ["SQExtensions"],
             path: "./Sources/VUPER"
         )
