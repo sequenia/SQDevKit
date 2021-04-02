@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIView {
+public extension SQExtensions where Base: UIView {
 
     /// String identifier of view (class name)
     static var identifier: String {

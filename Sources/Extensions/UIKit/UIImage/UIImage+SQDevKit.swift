@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIImage {
+public extension SQExtensions where Base: UIImage {
 
     /// Image's width
     var width: CGFloat {

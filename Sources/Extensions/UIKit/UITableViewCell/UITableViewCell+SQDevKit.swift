@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UITableViewCell {
+public extension SQExtensions where Base: UITableViewCell {
 
     /// Force hide cell's separators
     func hideSeparators() {

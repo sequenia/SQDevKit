@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIWindow {
+public extension UIWindow {
 
     /// Transition Options
     struct TransitionOptions {
@@ -82,22 +82,22 @@ extension UIWindow {
         ///
         /// - solidColor: solid color
         /// - customView: custom view
-        public enum Background {
+        enum Background {
             case solidColor(_: UIColor)
             case customView(_: UIView)
         }
 
         /// Duration of the animation (default is 0.20s)
-        public var duration: TimeInterval = 0.3
+        var duration: TimeInterval = 0.3
 
         /// Direction of the transition (default is `toRight`)
-        public var direction: TransitionOptions.Direction = .toRight
+        var direction: TransitionOptions.Direction = .toRight
 
         /// Style of the transition (default is `linear`)
-        public var style: TransitionOptions.Curve = .linear
+        var style: TransitionOptions.Curve = .linear
 
         /// Background of the transition (default is `nil`)
-        public var background: TransitionOptions.Background?
+        var background: TransitionOptions.Background?
 
         /// Initialize a new options object with given direction and curve
         ///

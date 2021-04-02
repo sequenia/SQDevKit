@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIWindow {
+public extension SQExtensions where Base: UIWindow {
 
     /// Application's key window
     static var keyWindow: UIWindow? {

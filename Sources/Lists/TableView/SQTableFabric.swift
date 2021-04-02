@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SQExtensions
 import SQDifferenceKit
 
 // MARK: - Table fabric
@@ -29,19 +30,19 @@ open class SQTableFabric: NSObject {
 
 // MARK: - Methods
     open func cell(forModelRow modelRow: ModelRow,
-                     atIndexPath indexPath: IndexPath) -> UITableViewCell {
+                   atIndexPath indexPath: IndexPath) -> UITableViewCell {
        return UITableViewCell()
     }
 
     open func header(forModelSection modelSection: ModelView?,
-                       atSection section: Int) -> UIView? {
+                     atSection section: Int) -> UIView? {
        guard modelSection != nil else { return nil }
 
        return UIView()
     }
 
     open func footer(forModelSection modelSection: ModelView?,
-                       atSection section: Int) -> UIView? {
+                     atSection section: Int) -> UIView? {
        guard modelSection != nil else { return nil }
 
        return UIView()

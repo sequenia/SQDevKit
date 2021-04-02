@@ -6,13 +6,13 @@
 //
 
 /**
- Use `SQDevKit` proxy as customization point for constrained protocol extensions.
+ Use `SQExtensions` proxy as customization point for constrained protocol extensions.
 
  General pattern would be:
 
- // 1. Extend SQDevKit protocol with constrain on Base
- // Read as: SQDevKit Extension where Base is a SomeType
- extension SQDevKit where Base: SomeType {
+ // 1. Extend SQExtensions protocol with constrain on Base
+ // Read as: SQExtensions Extension where Base is a SomeType
+ extension SQExtensions where Base: SomeType {
  // 2. Put any specific reactive extension for SomeType here
  }
 
@@ -21,7 +21,7 @@
 
  */
 
-public struct SQDevKit<Base> {
+public struct SQExtensions<Base> {
     /// Base object to extend.
     public let base: Base
 
@@ -34,22 +34,22 @@ public struct SQDevKit<Base> {
 }
 
 /// A type that has sq extensions.
-public protocol SQDevKitCompatible {
+public protocol SQExtensionsCompatible {
     /// Extended type
-    associatedtype SQDevKitBase
+    associatedtype SQExtensionsBase
     
     /// Sq extensions.
-    static var sq: SQDevKit<SQDevKitBase>.Type { get set }
+    static var sq: SQExtensions<SQExtensionsBase>.Type { get set }
 
     /// Sq extensions.
-    var sq: SQDevKit<SQDevKitBase> { get set }
+    var sq: SQExtensions<SQExtensionsBase> { get set }
 }
 
-extension SQDevKitCompatible {
+extension SQExtensionsCompatible {
     /// Sq extensions.
-    public static var sq: SQDevKit<Self>.Type {
+    public static var sq: SQExtensions<Self>.Type {
         get {
-            return SQDevKit<Self>.self
+            return SQExtensions<Self>.self
         }
         // swiftlint:disable:next unused_setter_value
         set {
@@ -58,9 +58,9 @@ extension SQDevKitCompatible {
     }
 
     /// Sq extensions.
-    public var sq: SQDevKit<Self> {
+    public var sq: SQExtensions<Self> {
         get {
-            return SQDevKit(self)
+            return SQExtensions(self)
         }
         // swiftlint:disable:next unused_setter_value
         set {
@@ -72,4 +72,4 @@ extension SQDevKitCompatible {
 import class Foundation.NSObject
 
 /// Extend NSObject with `sq` proxy.
-extension NSObject: SQDevKitCompatible { }
+extension NSObject: SQExtensionsCompatible { }

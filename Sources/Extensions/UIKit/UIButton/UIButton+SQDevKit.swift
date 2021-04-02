@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIButton {
+public extension SQExtensions where Base: UIButton {
 
     ///  Set background color for button with specific state
     ///

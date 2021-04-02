@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension SQDevKit where Base: UIStackView {
+public extension SQExtensions where Base: UIStackView {
     
     /// True cleaning arranged subviews for UIStackView
     func removeAllArrangedSubviews() {
