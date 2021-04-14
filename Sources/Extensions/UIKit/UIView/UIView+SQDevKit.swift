@@ -23,10 +23,10 @@ public extension SQExtensions where Base: UIView {
     ///
     /// - Precondition: View must have .xib-file and that name must be equal to view's class
     /// - Returns: example of view
-    static func instance() -> Self? {
+    static func instance() -> Base? {
         return UINib(nibName: self.identifier,
                      bundle: nil)
-            .instantiate(withOwner: self, options: nil).first as? Self
+            .instantiate(withOwner: self, options: nil).first as? Base
     }
 
     /// Load view from that's nib
