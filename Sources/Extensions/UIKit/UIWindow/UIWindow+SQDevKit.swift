@@ -46,13 +46,13 @@ public extension SQExtensions where Base: UIWindow {
         guard let tabBarController = topMostController as? UITabBarController else { return nil }
 
         guard let curController = tabBarController.selectedViewController as? UINavigationController else { return nil }
-
+        
         return curController
     }
 
     /// Current view controller
-    /// If top most presenter view controller is UINavigationController, value will be equal last view controller in navigation stack
-    /// If top most presenter view controller is UITabController, value will be equal view controller in selected tab
+    /// If top most presented view controller is UINavigationController, value will be equal to last view controller in navigation stack
+    /// If top most presented view controller is UITabBarController, value will be equal to view controller in selected tab
     static var currentViewController: UIViewController? {
         guard let currentViewController = self.topMostViewController else { return nil }
 
@@ -72,24 +72,42 @@ public extension SQExtensions where Base: UIWindow {
 
     /// Top safe area inset of key window
     static var safeAreaTop: CGFloat {
-        guard let window = self.keyWindow else { return 0.0 }
+        guard let window = self.keyWindow else { return .zero }
 
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.top
         }
 
-        return 0.0
+        return .zero
     }
 
     /// Bottom safe area inset of key window
     static var safeAreaBottom: CGFloat {
-        guard let window = self.keyWindow else { return 0.0 }
+        guard let window = self.keyWindow else { return .zero }
 
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.bottom
         }
 
-        return 0.0
+        return .zero
+    }
+    
+    /// Left safe area inset of key window
+    static var safeAreaLeft: CGFloat {
+        guard let window = self.keyWindow else { return .zero }
+        if #available(iOS 11.0, *) {
+            return window.safeAreaInsets.left
+        }
+        return .zero
+    }
+    
+    /// Right safe area inset of key window
+    static var safeAreaRight: CGFloat {
+        guard let window = self.keyWindow else { return .zero }
+        if #available(iOS 11.0, *) {
+            return window.safeAreaInsets.right
+        }
+        return .zero
     }
 
 }

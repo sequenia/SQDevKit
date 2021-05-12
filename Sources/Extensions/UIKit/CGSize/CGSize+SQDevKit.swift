@@ -11,7 +11,7 @@ public extension SQExtensions where Base == CGSize {
 
     /// Scales size by the next algorithm:
     /// - original size width replaces with `width` from parameter
-    /// - original size height changes proportionaly
+    /// - original size height changes proportionally
     ///
     /// - Parameters:
     ///   - width: target width for scale.`CGFloat`.

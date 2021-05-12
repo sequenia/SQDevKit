@@ -32,12 +32,22 @@ public extension SQExtensions where Base: UICollectionView {
     func register<T: UICollectionViewCell>(_ cellClass: T.Type,
                                            identifier: String? = nil) {
         var cellIdentifier = T.self.sq.identifier
-        if let specificIndentifer = identifier {
-            cellIdentifier = specificIndentifer
+        if let specificIdentifier = identifier {
+            cellIdentifier = specificIdentifier
         }
 
         self.base.register(T.self.sq.nib,
                            forCellWithReuseIdentifier: cellIdentifier)
+    }
+    
+    /// Register cell with unique nib name
+    ///
+    /// - Parameters:
+    ///   - nibName: nib name
+    ///   - cellClass: class of cell
+    func registerCellWithNibName(_ nibName: String) {
+        let nib = UINib(nibName: nibName, bundle: Bundle(identifier: nibName))
+        self.base.register(nib, forCellWithReuseIdentifier: nibName)
     }
 
     /// Dequeue cell at index path
@@ -51,12 +61,26 @@ public extension SQExtensions where Base: UICollectionView {
                                                       indexPath: IndexPath,
                                                       identifier: String? = nil) -> T? {
         var cellIdentifier = T.self.sq.identifier
-        if let specificIndentifer = identifier {
-            cellIdentifier = specificIndentifer
+        if let specificIdentifier = identifier {
+            cellIdentifier = specificIdentifier
         }
 
         return self.base.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
                                              for: indexPath) as? T
+    }
+    
+    /// Dequeue cell at index path with unique nib name
+    ///
+    /// - Parameters:
+    ///   - nibName: nib name
+    ///   - cellClass: class of cell
+    ///   - indexPath: index path of cell. `IndexPath`
+    func dequeueReusableCellWithNibName<T: UICollectionViewCell>(_ nibName: String,
+                                                                 _ cellClass: T.Type,
+                                                                 indexPath: IndexPath? = nil) -> T? {
+        guard let path = indexPath else { return nil }
+        return self.base.dequeueReusableCell(withReuseIdentifier: nibName,
+                                             for: path) as? T
     }
 
 }
