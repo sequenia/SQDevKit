@@ -9,7 +9,7 @@ import UIKit
 import SQExtensions
 
 // MARK: - VUPER Router
-public protocol Router: class {
+public protocol Router: AnyObject {
 
 // MARK: - Variables
     var topMostViewController: UIViewController? { get }

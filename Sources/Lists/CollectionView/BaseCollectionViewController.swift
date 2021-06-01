@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - Base Collection View
-public protocol BaseCollectionView: class {
+public protocol BaseCollectionView: AnyObject {
 
 // MARK: - Variables
     var collectionView: UICollectionView! { get }

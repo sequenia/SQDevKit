@@ -16,14 +16,28 @@ let package = Package(
         .package(
             url: "https://github.com/sequenia/SQDifferenceKit.git",
             .upToNextMajor(from: "0.2.2")
+        ),
+        .package(
+            url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            .upToNextMajor(from: "5.0.1")
         )
     ],
     targets: [
-        .target(name: "SQExtensions", path: "./Sources/Extensions"),
-        .target(name: "SQKeyboard", path: "./Sources/Keyboard"),
+        .target(
+            name: "SQExtensions",
+            dependencies: [
+                .product(name: "SwiftyJSON", package: "SwiftyJSON")
+            ],
+            path: "./Sources/Extensions"
+        ),
+        .target(
+            name: "SQKeyboard",
+            path: "./Sources/Keyboard"
+        ),
         .target(
             name: "SQLists",
             dependencies: [
+                "SQExtensions",
                 .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
             ],
             path: "./Sources/Lists"
