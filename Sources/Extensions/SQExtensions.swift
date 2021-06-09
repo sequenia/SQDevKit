@@ -73,3 +73,7 @@ import class Foundation.NSObject
 
 /// Extend NSObject with `sq` proxy.
 extension NSObject: SQExtensionsCompatible { }
+
+import SwiftyJSON
+/// Extend JSON with `sq` proxy.
+extension JSON: SQExtensionsCompatible { }
