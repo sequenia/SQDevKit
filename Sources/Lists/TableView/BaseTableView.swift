@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - Base Table View
-public protocol BaseTableView: class {
+public protocol BaseTableView: AnyObject {
 
 // MARK: - Variables
     var fabric: SQTableFabric! { get }

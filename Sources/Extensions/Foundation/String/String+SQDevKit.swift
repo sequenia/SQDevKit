@@ -9,23 +9,9 @@ import UIKit
 
 public extension SQExtensions where Base == String {
     
-    /// Converts string with ISO format to date (example "2005-08-09T18:31:42")
+    /// Converts string with ISO 8601 format to date (example "2005-08-09T18:31:42")
     var toDate: Date? {
-        let formatter = ISO8601DateFormatter()
-        
-        var options: ISO8601DateFormatter.Options = [
-            .withInternetDateTime
-        ]
-        
-        if #available(iOS 11.0, *) {
-            options = [
-                .withInternetDateTime,
-                .withFractionalSeconds
-            ]
-        }
-        
-        formatter.formatOptions = options
-        return formatter.date(from: self.base)
+        ISO8601DateFormatter.sq.formatter.date(from: self.base)
     }
     
     /// Converts string to date with selected format

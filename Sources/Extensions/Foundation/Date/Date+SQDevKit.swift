@@ -13,6 +13,11 @@ public extension SQExtensions where Base == Date {
     var dayNumberOfWeek: Int? {
         return Calendar.current.dateComponents([.weekday], from: self.base).weekday
     }
+
+    /// Returns ISO 8601 String from date (example "2005-08-09T18:31:42")
+    var ISOString: String {
+        ISO8601DateFormatter.sq.formatter.string(from: self.base)
+    }
     
     /// Converts date to string
     ///
@@ -76,6 +81,17 @@ public extension SQExtensions where Base == Date {
     func isSameDay(date: Date?) -> Bool {
         guard let date = date else { return false }
         return Calendar.current.compare(self.base, to: date, toGranularity: .day) == .orderedSame
+    }
+
+    /// Check date for coincidence with yesterday (by day)
+    ///
+    /// - Parameters:
+    ///   - date: date for comparison `Date`.
+    /// - Returns: comparison result `Bool`
+    func isYesterday(date: Date?) -> Bool {
+        guard let date = date else { return false }
+
+        return Calendar.current.compare(self.base, to: date.addingTimeInterval(-86400), toGranularity: .day) == .orderedSame
     }
       
     /// Returns an array with the names of the months between two dates

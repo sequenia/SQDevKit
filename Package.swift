@@ -11,6 +11,7 @@ let package = Package(
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
         .library(name: "SQLists", targets: ["SQLists"]),
         .library(name: "SQVUPER", targets: ["SQVUPER"]),
+        .library(name: "SQOperations", targets: ["SQOperations"]),
     ],
     dependencies: [
         .package(
@@ -46,6 +47,11 @@ let package = Package(
             name: "SQVUPER",
             dependencies: ["SQExtensions"],
             path: "./Sources/VUPER"
+        ),
+        .target(
+            name: "SQOperations",
+            dependencies: ["SQExtensions"],
+            path: "./Sources/Operations"
         )
     ]
 )
