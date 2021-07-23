@@ -8,6 +8,12 @@
 import UIKit
 
 public extension SQExtensions where Base == String {
+
+
+    /// Converts string to attributed string
+    var attributedString: NSAttributedString {
+        NSAttributedString(string: self.base)
+    }
     
     /// Converts string with ISO 8601 format to date (example "2005-08-09T18:31:42")
     var toDate: Date? {
