@@ -15,7 +15,7 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     /// - Parameters:
     ///   - color: setted color.`UIColor`.
     @discardableResult
-    func setColor(_ color: UIColor) -> NSMutableAttributedString {
+    func setColor(_ color: UIColor?) -> NSMutableAttributedString {
         return self.base.sq.setColor(forText: self.base.string, withColor: color)
     }
     
@@ -25,7 +25,9 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - color: setted color.`UIColor`.
     @discardableResult
-    func setColor(forText textForAttribute: String, withColor color: UIColor) -> NSMutableAttributedString {
+    func setColor(forText textForAttribute: String, withColor color: UIColor?) -> NSMutableAttributedString {
+        guard let color = color else { return self.base }
+
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
         self.base.addAttribute(.foregroundColor, value: color, range: range)
         return self.base
@@ -36,7 +38,7 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     /// - Parameters:
     ///   - font: setted font.`UIFont`.
     @discardableResult
-    func setFont(_ font: UIFont) -> NSMutableAttributedString {
+    func setFont(_ font: UIFont?) -> NSMutableAttributedString {
         return self.base.sq.setFont(forText: self.base.string, withFont: font)
     }
     
@@ -46,7 +48,9 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - font: setted font.`UIFont`.
     @discardableResult
-    func setFont(forText textForAttribute: String, withFont font: UIFont) -> NSMutableAttributedString{
+    func setFont(forText textForAttribute: String, withFont font: UIFont?) -> NSMutableAttributedString{
+        guard let font = font else { return self.base }
+        
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
         self.base.addAttribute(.font, value: font, range: range)
         return self.base
@@ -88,7 +92,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     func setLineHeight(forText textForAttribute: String, withLineHeight lineHeight: CGFloat) -> NSMutableAttributedString {
         var range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
 
-        let font = (self.base.attributes(at: 0, effectiveRange: &range)[.font] as? UIFont) ?? .systemFont(ofSize: 15)
+        guard let font = self.base.attributes(at: 0, effectiveRange: &range)[.font] as? UIFont else { return self.base }
+
         let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
         let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
 
@@ -126,6 +131,18 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         return self.base
     }
 
+    /// Return width of string
+    /// - Parameters:
+    ///   - height: height of string.`CGFloat`.
+    func desiredWidth(withHeight height: CGFloat) -> CGFloat {
+        var range: NSRange = self.base.mutableString.range(of: self.base.string, options: .caseInsensitive)
+
+        return (self.base.string as NSString).size(
+            withAttributes: self.base.attributes(at: 0, effectiveRange: &range)
+        )
+            .width.rounded(.up)
+    }
+
     /// Return height of string
     /// - Parameters:
     ///   - width: width of string.`CGFloat`.
@@ -134,4 +151,5 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         let rect = self.base.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
         return rect.height
     }
+
 }

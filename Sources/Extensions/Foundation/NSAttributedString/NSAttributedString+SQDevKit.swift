@@ -15,7 +15,7 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - color: setted color.`UIColor`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setColor(_ color: UIColor) -> NSAttributedString {
+    func setColor(_ color: UIColor?) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setColor(color)
     }
@@ -26,7 +26,7 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - color: setted color.`UIColor`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setColor(forText textForAttribute: String, withColor color: UIColor) -> NSAttributedString {
+    func setColor(forText textForAttribute: String, withColor color: UIColor?) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setColor(forText: textForAttribute, withColor: color)
     }
@@ -36,7 +36,7 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - font: setted font.`UIFont`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setFont(_ font: UIFont) -> NSAttributedString {
+    func setFont(_ font: UIFont?) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setFont(font)
 
@@ -48,7 +48,7 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - font: setted font.`UIFont`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setFont(forText textForAttribute: String, withFont font: UIFont) -> NSAttributedString {
+    func setFont(forText textForAttribute: String, withFont font: UIFont?) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setFont(forText: textForAttribute, withFont: font)
 
@@ -112,6 +112,14 @@ public extension SQExtensions where Base: NSAttributedString {
     func setAlignment(forText textForAttribute: String, withAlignment alignment: NSTextAlignment) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
+    }
+
+    /// Return width of string
+    /// - Parameters:
+    ///   - height: height of string.`CGFloat`.
+    func desiredWidth(withHeight height: CGFloat) -> CGFloat {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.desiredWidth(withHeight: height)
     }
 
     /// Return height of string
