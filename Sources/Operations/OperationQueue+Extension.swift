@@ -13,7 +13,6 @@ public extension SQExtensions where Base: OperationQueue {
     /// Execute block after all operations from the array.
     func onFinish(_ block: @escaping () -> Void) {
         let doneOperation = BlockOperation(block: block)
-        print(doneOperation)
         self.base.operations.forEach { [unowned doneOperation] in doneOperation.addDependency($0) }
         self.base.addOperation(doneOperation)
     }

@@ -19,6 +19,12 @@ public extension SQExtensions where Base == String {
     var toDate: Date? {
         ISO8601DateFormatter.sq.formatter.date(from: self.base)
     }
+
+    /// Converts string into phone-call URL (example "tel://+79111111111")
+    var toPhoneCallURL: URL? {
+        let clearedString = self.base.components(separatedBy: .whitespacesAndNewlines).joined()
+        return URL(string: "tel://\(clearedString)")
+    }
     
     /// Converts string to date with selected format
     ///
@@ -103,6 +109,16 @@ public extension SQExtensions where Base == String {
             print("htmlAttributed error: ", error)
             return nil
         }
+    }
+    /// Returns substring in NSRange
+    ///
+    /// - Parameters:
+    ///   - range: range.`NSRaing`.
+    /// - Returns: string from passed range. `String`
+    func substring(with range: NSRange) -> String? {
+        guard let range = Range(range, in: self.base) else { return nil }
+
+        return String(self.base[range])
     }
 
 }
