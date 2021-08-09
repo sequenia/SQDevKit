@@ -13,7 +13,7 @@ import SQDifferenceKit
 open class SQTableFabric: NSObject {
 
 // MARK: - Properties
-    open weak var tableView: UITableView?
+    open weak var tableView: UITableView!
 
 // MARK: - Inits
     public init(tableView: UITableView) {
@@ -25,7 +25,7 @@ open class SQTableFabric: NSObject {
 
 // MARK: - Register cells
     open func registerCells() {
-        self.tableView?.sq.register(UITableViewCell.self)
+        self.tableView.sq.register(UITableViewCell.self)
     }
 
 // MARK: - Methods

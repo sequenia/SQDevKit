@@ -11,6 +11,11 @@ import SwiftyJSON
 public extension SQExtensions where Base == JSON {
     
 // MARK: - Identifier
+    /// Returns string identifier in JSON of passed field
+    ///
+    /// - Parameters:
+    ///   - field: field for getting identifier.`String`. Default value == `id`
+    /// - Returns: string identifier. `String`
     func identifier(fromField field: String = "id") -> String? {
         if let stringValue = self.base[field].string { return stringValue }
         

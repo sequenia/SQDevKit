@@ -13,7 +13,7 @@ import SQDifferenceKit
 open class SQCollectionFabric: NSObject {
 
 // MARK: - Properties
-    open weak var collectionView: UICollectionView?
+    open weak var collectionView: UICollectionView!
 
 // MARK: - Inits
     public init(collectionView: UICollectionView) {
@@ -25,7 +25,7 @@ open class SQCollectionFabric: NSObject {
 
 // MARK: - Register Cells
     open func registerCells() {
-        self.collectionView?.sq.register(UICollectionViewCell.self)
+        self.collectionView.sq.register(UICollectionViewCell.self)
     }
 
 // MARK: - Methods

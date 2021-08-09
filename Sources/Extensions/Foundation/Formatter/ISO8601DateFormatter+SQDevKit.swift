@@ -9,6 +9,7 @@ import Foundation
 
 public extension SQExtensions where Base == ISO8601DateFormatter {
 
+    /// Formatter for ISO8601
     static var formatter: ISO8601DateFormatter {
         let formatter = ISO8601DateFormatter()
 

@@ -80,6 +80,7 @@ public extension SQExtensions where Base == Date {
     /// - Returns: comparison result `Bool`
     func isSameDay(date: Date?) -> Bool {
         guard let date = date else { return false }
+
         return Calendar.current.compare(self.base, to: date, toGranularity: .day) == .orderedSame
     }
 

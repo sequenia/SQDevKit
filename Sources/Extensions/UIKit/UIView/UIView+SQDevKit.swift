@@ -29,6 +29,33 @@ public extension SQExtensions where Base: UIView {
             .instantiate(withOwner: self, options: nil).first as? Base
     }
 
+    /// Corner radius of view
+    var cornerRadius: CGFloat {
+        get { self.base.layer.cornerRadius }
+        set {
+            self.base.layer.cornerRadius = newValue
+            self.base.clipsToBounds = true
+        }
+    }
+
+    /// Border width of view
+    var borderWidth: CGFloat {
+        get { self.base.layer.borderWidth }
+        set { self.base.layer.borderWidth = newValue }
+    }
+
+    /// Border color of view
+    var borderColor: UIColor? {
+        get {
+            guard let cgColor = self.base.layer.borderColor else { return nil }
+
+            return UIColor(cgColor: cgColor)
+        }
+        set {
+            self.base.layer.borderColor = newValue?.cgColor
+        }
+    }
+
     /// Load view from that's nib
     ///
     /// - Returns: `UIView`
@@ -69,14 +96,14 @@ public extension SQExtensions where Base: UIView {
         return allSubviews
     }
     
-    /// Add blure effect for view with selected color
+    /// Add blur effect for view with selected color
     ///
     /// - Parameters:
-    ///   - style: blure effect style. `UIBlurEffect.Style`
+    ///   - effect: blur effect. `UIBlurEffect`
     ///   - color: color for blure. `UIColor`
-    func addBlure(style: UIBlurEffect.Style, color: UIColor) {
-        let blurEffect = UIBlurEffect(style: style)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+    func addBlur(_ effect: UIBlurEffect, color: UIColor) {
+        let blurEffectView = UIVisualEffectView(effect: effect)
+        
         blurEffectView.backgroundColor = color
         blurEffectView.layer.masksToBounds = true
         blurEffectView.layer.cornerRadius = self.base.layer.cornerRadius
@@ -85,11 +112,12 @@ public extension SQExtensions where Base: UIView {
         self.base.insertSubview(blurEffectView, at: .zero)
     }
     
-    /// Remove blure effect from view
-    func removeBlure() {
+    /// Remove blur effect from view
+    func removeBlur() {
         if let effectView = self.base.subviews.first(where: { $0 is UIVisualEffectView }) as? UIVisualEffectView,
            effectView.effect is UIBlurEffect {
             effectView.removeFromSuperview()
         }
     }
+
 }
