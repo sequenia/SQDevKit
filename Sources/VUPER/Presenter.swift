@@ -16,6 +16,4 @@ public protocol Presenter: AnyObject {
     func viewDidAppear()
     func viewWillDisappear()
     func viewDidDisappear()
-    func viewDidUnload()
-    func didReceiveMemoryWarning()
 }
