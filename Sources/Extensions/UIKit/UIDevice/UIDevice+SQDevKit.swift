@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 
 public extension SQExtensions where Base: UIDevice {
+
+    /// Check if device has narrow screen (like iPhone 5/5c/5s/SE)
+    static var isNarrowScreen: Bool {
+        return UIScreen.sq.width == 568.0 || UIScreen.sq.width == 320.0
+    }
     
     /// Current screen orientation
     static var isLandscape: Bool {
