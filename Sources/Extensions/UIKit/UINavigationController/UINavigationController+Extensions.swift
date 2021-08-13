@@ -44,7 +44,7 @@ public extension NavigationBarStyle {
     var titleAttributes: [NSAttributedString.Key: Any] { [ : ] }
     var blurEffect: UIBlurEffect? { nil }
 
-    var shadowImage: UIImage? { .sq.create(withColor: self.shadowColor) }
+    var shadowImage: UIImage? { UIImage.sq.create(withColor: self.shadowColor) }
 }
 
 public extension SQExtensions where Base: UINavigationController {
