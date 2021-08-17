@@ -48,9 +48,12 @@ public extension UIColor {
     ///   - #000000
     ///   - 00000000
     ///   - #00000000
-    convenience init(withRGBA rgba: String) {
-        var cleanString = rgba.replacingOccurrences(of: "#", with: "")
-        assert(cleanString.count == 3 || cleanString.count == 6 || cleanString.count == 8, "Invalid color string format. Must be in formats: #000, #000000, #00000000")
+    convenience init?(withRGBA rgba: String) {
+        var cleanString = self.base.replacingOccurrences(of: "#", with: "")
+        guard cleanString.count == 3 ||
+                cleanString.count == 6 ||
+                cleanString.count == 8 else { return nil }
+        
         if cleanString.count == 3 {
             cleanString = String(format: "%@%@%@%@%@%@",
                                  cleanString[0..<1],
@@ -64,6 +67,7 @@ public extension UIColor {
         if cleanString.count == 6 {
             cleanString += "ff"
         }
+        
         cleanString = cleanString.lowercased()
 
         var red: CUnsignedLongLong   = 0
