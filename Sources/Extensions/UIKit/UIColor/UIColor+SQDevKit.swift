@@ -49,7 +49,8 @@ public extension UIColor {
     ///   - 00000000
     ///   - #00000000
     convenience init?(withRGBA rgba: String) {
-        var cleanString = self.base.replacingOccurrences(of: "#", with: "")
+        var cleanString = rgba.replacingOccurrences(of: "#", with: "")
+        
         guard cleanString.count == 3 ||
                 cleanString.count == 6 ||
                 cleanString.count == 8 else { return nil }
