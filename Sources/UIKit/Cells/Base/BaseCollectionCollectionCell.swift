@@ -26,6 +26,15 @@ open class BaseCollectionCollectionCell: UICollectionViewCell,
     public var collectionDelegate: CollectionCellDelegate?
     open var fabric: SQCollectionFabric!
 
+    open var scrollPosition: CGPoint {
+        get {
+            self.collectionView.contentOffset
+        }
+        set {
+            self.collectionView.setContentOffset(newValue, animated: false)
+        }
+    }
+
 // MARK: - Outlet
     @IBOutlet public weak var collectionView: UICollectionView!
     @IBOutlet public weak var heightCollectionConstraint: NSLayoutConstraint!
@@ -38,14 +47,17 @@ open class BaseCollectionCollectionCell: UICollectionViewCell,
     }
 
 // MARK: - Bind model
+    @discardableResult
     open func bind(
         model: CollectionModelRow,
         delegate: CollectionCellDelegate?
-    ) {
+    ) -> Self {
         self.model = model
         self.collectionDelegate = delegate
 
         self.reloadAnimated(false)
+
+        return self
     }
 
 // MARK: - Configures

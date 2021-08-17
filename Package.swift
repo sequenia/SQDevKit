@@ -15,6 +15,10 @@ let package = Package(
         .library(name: "SQUIKit", targets: ["SQUIKit"])
     ],
     dependencies: [
+//        .package(
+//            url: "https://github.com/sequenia/SQDifferenceKit.git",
+//            .upToNextMajor(from: "0.3.0-beta")
+//        ),
         .package(path: "/Users/semenkologrivov/Documents/Workspace/iOS/SQDifferenceKit"),
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
