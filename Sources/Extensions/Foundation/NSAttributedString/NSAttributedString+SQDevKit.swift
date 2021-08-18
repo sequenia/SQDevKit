@@ -74,6 +74,24 @@ public extension SQExtensions where Base: NSAttributedString {
             .sq.setUnderscore(forText: textForAttribute)
     }
 
+    /// Set strikethrough for all string
+    ///
+    @discardableResult
+    func setStrikethrough() -> NSMutableAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setStrikethrough()
+    }
+
+    /// Set strikethrough for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting strikethrough.`String`.
+    @discardableResult
+    func setStrikethrough(forText textForAttribute: String) -> NSMutableAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setStrikethrough(forText: textForAttribute)
+    }
+
     /// Set line height for all string and return NSAttributedString
     ///
     /// - Parameters:
@@ -112,6 +130,16 @@ public extension SQExtensions where Base: NSAttributedString {
     func setAlignment(forText textForAttribute: String, withAlignment alignment: NSTextAlignment) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
+    }
+
+    /// Set line spacing
+    ///
+    /// - Parameters:
+    ///   - spacing: setted line spacint.`NSTextAlignment`.
+    @discardableResult
+    func setLineSpacing(_ spacing: CGFloat) -> NSAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setLineSpacing(spacing)
     }
 
     /// Return width of string

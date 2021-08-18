@@ -74,6 +74,24 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         return self.base
     }
 
+    /// Set strikethrough for all string
+    ///
+    @discardableResult
+    func setStrikethrough() -> NSMutableAttributedString {
+        return self.base.sq.setStrikethrough(forText: self.base.string)
+    }
+
+    /// Set strikethrough for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting strikethrough.`String`.
+    @discardableResult
+    func setStrikethrough(forText textForAttribute: String) -> NSMutableAttributedString {
+        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+        self.base.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+        return self.base
+    }
+
     /// Set line height for all string
     ///
     /// - Parameters:
@@ -130,6 +148,24 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
         return self.base
     }
+
+    /// Set line spacing
+    ///
+    /// - Parameters:
+    ///   - spacing: setted line spacint.`NSTextAlignment`.
+    @discardableResult
+    func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        var range: NSRange = self.base.mutableString.range(of: self.base.string, options: .caseInsensitive)
+
+        let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+        let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+
+        paragraph.lineSpacing = spacing
+
+        self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        return self.base
+    }
+
 
     /// Return width of string
     /// - Parameters:

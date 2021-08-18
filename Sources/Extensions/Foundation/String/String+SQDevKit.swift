@@ -9,6 +9,16 @@ import UIKit
 
 public extension SQExtensions where Base == String {
 
+    /// Returns string ready for use as URL (with percent encoding)
+    var encodedUrl: String? {
+        return self.base.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+    }
+
+    /// Returns string with removed percent encoding
+    var decodedUrl: String? {
+        return self.base.removingPercentEncoding
+    }
+
 
     /// Converts string to attributed string
     var attributedString: NSAttributedString {
@@ -45,33 +55,18 @@ public extension SQExtensions where Base == String {
     ///   - color: base font color. `UIColor`.
     /// - Returns: NSAttributedString with the passed attributes
     func htmlAttributed(with font: UIFont, color: UIColor) -> NSAttributedString? {
-        do {
-            let htmlCSSString = "<style>" +
-                "html *" +
-                "{" +
-                "font-size: \(font.pointSize)px !important;" +
-                "color: #\(color.sq.hexString) !important;" +
-                "font-family: \(font.familyName), Helvetica !important;" +
-                "text-overflow: ellipsis;" +
-                "}</style> \(self)"
-            
-            guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
-                return nil
-            }
-            
-            var dict: NSDictionary?
-            dict = NSMutableDictionary()
-            
-            return try NSAttributedString(data: data,
-                                          options: [
-                                            .documentType: NSAttributedString.DocumentType.html,
-                                            .characterEncoding: String.Encoding.utf8.rawValue
-                                          ],
-                                          documentAttributes: &dict)
-        } catch {
-            print("htmlAttributed error: ", error)
-            return nil
-        }
+        let htmlCSSString = "<style>" +
+            "html *" +
+            "{" +
+            "font-size: \(font.pointSize)px !important;" +
+            "color: #\(color.sq.hexString) !important;" +
+            "font-family: \(font.familyName), Helvetica !important;" +
+            "text-overflow: ellipsis;" +
+            "}</style> \(self)"
+        
+        guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }
+
+        return data.sq.html2AttributedString
     }
     
     /// Generating a NSAttributedString from a raw string with html markup
