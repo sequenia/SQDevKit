@@ -149,6 +149,24 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         return self.base
     }
 
+    /// Set line spacing
+    ///
+    /// - Parameters:
+    ///   - spacing: setted line spacint.`NSTextAlignment`.
+    @discardableResult
+    func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        var range: NSRange = self.base.mutableString.range(of: self.base.string, options: .caseInsensitive)
+
+        let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+        let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+
+        paragraph.lineSpacing = spacing
+
+        self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        return self.base
+    }
+
+
     /// Return width of string
     /// - Parameters:
     ///   - height: height of string.`CGFloat`.

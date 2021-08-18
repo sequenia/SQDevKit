@@ -132,6 +132,16 @@ public extension SQExtensions where Base: NSAttributedString {
             .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
     }
 
+    /// Set line spacing
+    ///
+    /// - Parameters:
+    ///   - spacing: setted line spacint.`NSTextAlignment`.
+    @discardableResult
+    func setLineSpacing(_ spacing: CGFloat) -> NSAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setLineSpacing(spacing)
+    }
+
     /// Return width of string
     /// - Parameters:
     ///   - height: height of string.`CGFloat`.
