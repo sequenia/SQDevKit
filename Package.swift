@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/sequenia/SQDifferenceKit.git",
-            .upToNextMajor(from: "1.0.0")
+            .upToNextMajor(from: "1.0.1")
         ),
 //        .package(path: "/Users/semenkologrivov/Documents/Workspace/iOS/SQDifferenceKit"),
         .package(
