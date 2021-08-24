@@ -26,7 +26,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - color: setted color.`UIColor`.
     @discardableResult
     func setColor(forText textForAttribute: String, withColor color: UIColor?) -> NSMutableAttributedString {
-        guard let color = color else { return self.base }
+        guard let color = color,
+              !textForAttribute.isEmpty else { return self.base }
 
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
         self.base.addAttribute(.foregroundColor, value: color, range: range)
@@ -49,7 +50,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - font: setted font.`UIFont`.
     @discardableResult
     func setFont(forText textForAttribute: String, withFont font: UIFont?) -> NSMutableAttributedString{
-        guard let font = font else { return self.base }
+        guard let font = font,
+              !textForAttribute.isEmpty else { return self.base }
         
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
         self.base.addAttribute(.font, value: font, range: range)
@@ -69,8 +71,30 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     @discardableResult
     func setUnderscore(forText textForAttribute: String) -> NSMutableAttributedString {
+        if textForAttribute.isEmpty { return self.base }
+
         let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
         self.base.addAttribute(.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: range)
+        return self.base
+    }
+
+    /// Set strikethrough for all string
+    ///
+    @discardableResult
+    func setStrikethrough() -> NSMutableAttributedString {
+        return self.base.sq.setStrikethrough(forText: self.base.string)
+    }
+
+    /// Set strikethrough for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting strikethrough.`String`.
+    @discardableResult
+    func setStrikethrough(forText textForAttribute: String) -> NSMutableAttributedString {
+        if textForAttribute.isEmpty { return self.base }
+
+        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+        self.base.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: range)
         return self.base
     }
 
@@ -90,6 +114,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - lineHeight: setted line height.`CGFloat`.
     @discardableResult
     func setLineHeight(forText textForAttribute: String, withLineHeight lineHeight: CGFloat) -> NSMutableAttributedString {
+        if textForAttribute.isEmpty { return self.base }
+
         var range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
 
         guard let font = self.base.attributes(at: 0, effectiveRange: &range)[.font] as? UIFont else { return self.base }
@@ -120,6 +146,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - alignment: setted alignment.`NSTextAlignment`.
     @discardableResult
     func setAlignment(forText textForAttribute: String, withAlignment alignment: NSTextAlignment) -> NSMutableAttributedString {
+        if textForAttribute.isEmpty { return self.base }
+
         var range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
 
         let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
@@ -130,6 +158,26 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
         return self.base
     }
+
+    /// Set line spacing
+    ///
+    /// - Parameters:
+    ///   - spacing: setted line spacint.`NSTextAlignment`.
+    @discardableResult
+    func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        if self.base.string.isEmpty { return self.base }
+        
+        var range: NSRange = self.base.mutableString.range(of: self.base.string, options: .caseInsensitive)
+
+        let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+        let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+
+        paragraph.lineSpacing = spacing
+
+        self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        return self.base
+    }
+
 
     /// Return width of string
     /// - Parameters:
