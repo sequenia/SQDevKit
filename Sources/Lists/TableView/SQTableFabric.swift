@@ -6,8 +6,11 @@
 //
 
 import UIKit
-import SQExtensions
 import SQDifferenceKit
+
+#if canImport(SQExtensions)
+import SQExtensions
+#endif
 
 // MARK: - Table fabric
 open class SQTableFabric: NSObject {

@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
+#if canImport(SQExtensions)
 import SQExtensions
+#endif
 
 public extension SQExtensions where Base: OperationQueue {
 
