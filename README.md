@@ -1,3 +1,12 @@
 # SQDevKit
 
-A description of this package.
+При установке через CocoaPods необходимо добавить в начале podfile строки
+```
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/sequenia/cocoapods-specs'
+```
+
+Затем для установки пода
+```
+pod 'SQDevKit', :path => 'https://github.com/sequenia/SQDevKit.git'
+```
