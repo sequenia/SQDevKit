@@ -6,8 +6,11 @@
 //
 
 import UIKit
-import SQExtensions
 import SQDifferenceKit
+
+#if canImport(SQExtensions)
+import SQExtensions
+#endif
 
 // MARK: - CollectionFabric
 open class SQCollectionFabric: NSObject {

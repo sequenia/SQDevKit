@@ -6,10 +6,12 @@
 //
 
 import UIKit
-
 import SQDifferenceKit
 import DifferenceKit
+
+#if canImport(SQLists)
 import SQLists
+#endif
 
 open class BaseTableCollectionCell: UITableViewCell,
                                     CollectionCell,

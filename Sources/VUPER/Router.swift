@@ -6,7 +6,10 @@
 //
 
 import UIKit
+
+#if canImport(SQExtensions)
 import SQExtensions
+#endif
 
 // MARK: - VUPER Router
 public protocol Router: AnyObject {

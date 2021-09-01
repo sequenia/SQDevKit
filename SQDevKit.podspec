@@ -17,14 +17,45 @@ Pod::Spec.new do |s|
     s.version = "1.0.3"
     s.license  = { :type => "MIT", :file => "LICENSE" }
     s.author   = { 'lab-devoloper' => 'vitaly.banik@sequenia.com' }
-    s.homepage         = "https://github.com/sequenia/SQDevKit"
-    s.source           = { :git => 'https://github.com/sequenia/SQDevKit', 
-                           :tag => "#{s.version}" }
+    s.homepage = "https://github.com/sequenia/SQDevKit"
+    s.source = { :git => 'https://github.com/sequenia/SQDevKit', 
+                 :tag => "#{s.version}" }
+
+    s.swift_version = "5.0"
 
     s.dependency 'SQDifferenceKit', '~> 1.0.1'
     s.dependency 'SwiftyJSON', '~> 5.0.1'
-    s.swift_version = "5.0"
 
-    s.source_files = "Sources/**/*.{swift}"
+    s.subspec 'SQExtensions' do |extensions|
+        extensions.source_files = 'Sources/Extensions/**/*.swift'
+        extensions.ios.deployment_target = '10.0'
+        extensions.dependency 'SwiftyJSON', '~> 5.0.1'
+    end
+
+    s.subspec 'SQKeyboard' do |keyboard|
+        keyboard.source_files = 'Sources/Keyboard/**/*.swift'
+    end
+
+    s.subspec 'SQLists' do |lists|
+        lists.source_files = 'Sources/Lists/**/*.swift'
+        lists.dependency 'SQDifferenceKit', '~> 1.0.1'
+    end
+
+    s.subspec 'SQVUPER' do |vuper|
+        vuper.source_files = 'Sources/VUPER/**/*.swift'
+        vuper.dependency 'SQDevKit/SQExtensions'
+    end
+
+    s.subspec 'SQOperations' do |operations|
+        operations.source_files = 'Sources/Operations/**/*.swift'
+        operations.dependency 'SQDevKit/SQExtensions'
+    end
+
+    s.subspec 'SQUIKit' do |uikit|
+        uikit.source_files = 'Sources/UIKit/**/*.swift'
+        uikit.dependency 'SQDevKit/SQExtensions'
+        uikit.dependency 'SQDevKit/SQLists'
+        uikit.dependency 'SQDifferenceKit', '~> 1.0.1'
+    end
 
 end
