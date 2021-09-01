@@ -8,5 +8,5 @@ source 'https://github.com/sequenia/cocoapods-specs'
 
 Затем для установки пода
 ```
-pod 'SQDevKit', :path => 'https://github.com/sequenia/SQDevKit.git'
+pod 'SQDevKit', :git => 'https://github.com/sequenia/SQDevKit.git'
 ```
