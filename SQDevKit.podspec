@@ -28,7 +28,6 @@ Pod::Spec.new do |s|
 
     s.subspec 'SQExtensions' do |extensions|
         extensions.source_files = 'Sources/Extensions/**/*.swift'
-        extensions.ios.deployment_target = '10.0'
         extensions.dependency 'SwiftyJSON', '~> 5.0.1'
     end
 
