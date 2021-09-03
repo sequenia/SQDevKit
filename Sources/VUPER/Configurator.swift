@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - VUPER Configurator
+@objc
 public protocol Configurator where Self: NSObject {
 
 // MARK: - Configuration
