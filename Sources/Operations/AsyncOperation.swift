@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Semen Kologrivov on 08.07.2021.
 //
@@ -30,7 +30,10 @@ public class AsyncOperation: Operation {
             didChangeValue(forKey: state.keyPath)
         }
     }
-
+    
+    public var attemptCount = 0
+    public private(set) var weight = 0
+    
     private var actions: ((AsyncOperation) -> Void)?
 
     override public var isReady: Bool {
@@ -53,9 +56,11 @@ public class AsyncOperation: Operation {
     ///
     /// - Parameters:
     ///   - name: name of operation (nil by default)
+    ///   - weight: call first operation where weight maximum
     ///   - actions: actions for execution in the operation
     public init(
         name: String? = nil,
+        weight: Int = 0,
         actions: @escaping ((AsyncOperation) -> Void)
     ) {
         self.actions = actions
@@ -63,6 +68,7 @@ public class AsyncOperation: Operation {
         super.init()
 
         self.name = name
+        self.weight = weight
     }
 
     override public func start() {
