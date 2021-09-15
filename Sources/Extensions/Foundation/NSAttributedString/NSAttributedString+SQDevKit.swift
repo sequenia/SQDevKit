@@ -157,4 +157,12 @@ public extension SQExtensions where Base: NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.desiredHeight(withWidth: width)
     }
+
+    /// Return size to fit attributedString
+    /// - Parameters:
+    ///   - size: max size for string.`CGSize`.
+    func desiredSize(forMaxSize size: CGSize) -> CGSize {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.desiredSize(forMaxSize: size)
+    }
 }

@@ -125,4 +125,34 @@ public extension SQExtensions where Base: UIView {
         }
     }
 
+    /// Added difference corner radius to view's corners
+    /// - Parameters:
+    ///   - topLeft: radius of top left corner. `CGFloat`
+    ///   - topRight: radius of top right corner. `CGFloat`
+    ///   - bottomLeft: radius of bottom left corner. `CGFloat`
+    ///   - bottomRight: radius of bottom right corner. `CGFloat`
+    func roundCorners(
+        topLeft: CGFloat = .zero,
+        topRight: CGFloat = .zero,
+        bottomLeft: CGFloat = .zero,
+        bottomRight: CGFloat = .zero
+    ) {
+        let topLeftRadius = CGSize(width: topLeft, height: topLeft)
+        let topRightRadius = CGSize(width: topRight, height: topRight)
+        let bottomLeftRadius = CGSize(width: bottomLeft, height: bottomLeft)
+        let bottomRightRadius = CGSize(width: bottomRight, height: bottomRight)
+
+        let maskPath = UIBezierPath(
+            shouldRoundRect: self.base.bounds,
+            topLeftRadius: topLeftRadius,
+            topRightRadius: topRightRadius,
+            bottomLeftRadius: bottomLeftRadius,
+            bottomRightRadius: bottomRightRadius
+        )
+
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        self.base.layer.mask = shape
+    }
+
 }

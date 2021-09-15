@@ -183,21 +183,50 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     /// - Parameters:
     ///   - height: height of string.`CGFloat`.
     func desiredWidth(withHeight height: CGFloat) -> CGFloat {
-        var range: NSRange = self.base.mutableString.range(of: self.base.string, options: .caseInsensitive)
-
-        return (self.base.string as NSString).size(
-            withAttributes: self.base.attributes(at: 0, effectiveRange: &range)
-        )
-            .width.rounded(.up)
+        self.desiredSize(
+            forMaxSize: CGSize(
+                width: .greatestFiniteMagnitude,
+                height: height
+            )
+        ).width
     }
 
     /// Return height of string
     /// - Parameters:
     ///   - width: width of string.`CGFloat`.
     func desiredHeight(withWidth width: CGFloat) -> CGFloat {
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let rect = self.base.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
-        return rect.height
+        self.desiredSize(
+            forMaxSize: CGSize(
+                width: width,
+                height: .greatestFiniteMagnitude
+            )
+        ).height
+    }
+
+    /// Return size to fit attributedString
+    /// - Parameters:
+    ///   - size: max size for string.`CGSize`.
+    func desiredSize(forMaxSize size: CGSize) -> CGSize {
+        let textStorage = NSTextStorage(attributedString: self.base)
+
+        let boundingRect = CGRect(origin: .zero, size: size)
+
+        let textContainer = NSTextContainer(size: size)
+        textContainer.lineFragmentPadding = 0
+
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+
+        textStorage.addLayoutManager(layoutManager)
+
+        layoutManager.glyphRange(
+            forBoundingRect: boundingRect,
+            in: textContainer
+        )
+
+        let rect = layoutManager.usedRect(for: textContainer)
+
+        return rect.integral.size
     }
 
 }

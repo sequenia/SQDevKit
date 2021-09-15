@@ -39,7 +39,7 @@ public extension UIColor {
     /// Create color from RGBA string
     ///
     /// - Parameters:
-    ///   - rgba: hex-code of color
+    ///   - rgba: hex-code of color. `String`
     ///
     /// - Precondition:rgba string must be matched one of the next patterns:
     ///   - 000
@@ -86,6 +86,16 @@ public extension UIColor {
                   blue: Int(blue),
                   alpha: CGFloat(alpha) / 255.0)
     }
+
+    /// Create color from integer
+    ///
+    /// - Parameters:
+    ///   - rgb: digit for representation as hex string. `Int`
+    ///
+    convenience init?(withInt int: Int) {
+        self.init(withRGBA: String(format:"%02x", int))
+    }
+
     
 }
 
