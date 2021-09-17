@@ -62,7 +62,7 @@ public extension SQExtensions where Base == String {
             "color: #\(color.sq.hexString) !important;" +
             "font-family: \(font.familyName), Helvetica !important;" +
             "text-overflow: ellipsis;" +
-            "}</style> \(self)"
+        "}</style> \(self.base)"
         
         guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }
 
@@ -85,7 +85,7 @@ public extension SQExtensions where Base == String {
                 "color: #\(color.sq.hexString) !important;" +
                 "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
                 "text-overflow: ellipsis;" +
-                "}</style> \(self)"
+                "}</style> \(self.base)"
             
             guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
                 return nil
