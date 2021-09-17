@@ -115,6 +115,25 @@ public extension SQExtensions where Base == String {
 
         return String(self.base[range])
     }
+    
+    /// Returns ranges of substring
+    ///
+    /// - Parameters:
+    ///   - substring: substring for find.`String`.
+    /// - Returns: Array of ranges for the found string. `[Range]`
+    func ranges(of substring: String,
+                caseSensitive: Bool = true) -> [Range<Base.Index>] {
+        
+        var ranges: [Range<Base.Index>] = []
+        while ranges.last.map({ $0.upperBound < self.base.endIndex }) ?? true,
+              let range = self.base.range(of: substring,
+                                          options: caseSensitive ? [] : [.caseInsensitive],
+                                          range: (ranges.last?.upperBound ?? self.base.startIndex) ..< self.base.endIndex) {
+            ranges.append(range)
+        }
+        
+        return ranges
+    }
 
 }
 

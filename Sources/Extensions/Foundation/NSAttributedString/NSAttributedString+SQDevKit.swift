@@ -26,9 +26,14 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - color: setted color.`UIColor`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setColor(forText textForAttribute: String, withColor color: UIColor?) -> NSAttributedString {
+    func setColor(forText textForAttribute: String,
+                  withColor color: UIColor?,
+                  caseSensitive: Bool = true) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setColor(forText: textForAttribute, withColor: color)
+            .sq.setColor(forText: textForAttribute,
+                         withColor: color,
+                         caseSensitive: caseSensitive)
     }
 
     /// Set font color for all string and return NSAttributedString
@@ -48,10 +53,14 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - font: setted font.`UIFont`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setFont(forText textForAttribute: String, withFont font: UIFont?) -> NSAttributedString {
+    func setFont(forText textForAttribute: String,
+                 withFont font: UIFont?,
+                 caseSensitive: Bool = true) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setFont(forText: textForAttribute, withFont: font)
-
+            .sq.setFont(forText: textForAttribute,
+                        withFont: font,
+                        caseSensitive: caseSensitive)
     }
 
     /// Set underscore for all string and return NSAttributedString
@@ -69,9 +78,12 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting color.`String`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setUnderscore(forText textForAttribute: String) -> NSAttributedString {
+    func setUnderscore(forText textForAttribute: String,
+                       caseSensitive: Bool = true) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setUnderscore(forText: textForAttribute)
+            .sq.setUnderscore(forText: textForAttribute,
+                              caseSensitive: caseSensitive)
     }
 
     /// Set strikethrough for all string
@@ -87,9 +99,12 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting strikethrough.`String`.
     @discardableResult
-    func setStrikethrough(forText textForAttribute: String) -> NSMutableAttributedString {
+    func setStrikethrough(forText textForAttribute: String,
+                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setStrikethrough(forText: textForAttribute)
+            .sq.setStrikethrough(forText: textForAttribute,
+                                 caseSensitive: caseSensitive)
     }
 
     /// Set line height for all string and return NSAttributedString
@@ -108,9 +123,14 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - lineHeight: setted line height.`CGFloat`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
-    func setLineHeight(forText textForAttribute: String, withLineHeight lineHeight: CGFloat) -> NSAttributedString {
+    func setLineHeight(forText textForAttribute: String,
+                       withLineHeight lineHeight: CGFloat,
+                       caseSensitive: Bool = true) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setLineHeight(forText: textForAttribute, withLineHeight: lineHeight)
+            .sq.setLineHeight(forText: textForAttribute,
+                              withLineHeight: lineHeight,
+                              caseSensitive: caseSensitive)
     }
 
     /// Set text alignment
@@ -127,7 +147,10 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting color.`String`.
     ///   - alignment: setted alignment.`NSTextAlignment`.
-    func setAlignment(forText textForAttribute: String, withAlignment alignment: NSTextAlignment) -> NSAttributedString {
+    func setAlignment(forText textForAttribute: String,
+                      withAlignment alignment: NSTextAlignment,
+                      caseSensitive: Bool = true) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
     }
@@ -164,5 +187,28 @@ public extension SQExtensions where Base: NSAttributedString {
     func desiredSize(forMaxSize size: CGSize) -> CGSize {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.desiredSize(forMaxSize: size)
+    }
+    
+    /// Returns ranges of substring
+    ///
+    /// - Parameters:
+    ///   - substring: substring for find.`String`.
+    /// - Returns: Array of ranges for the found string. `[NSRange]`
+    func ranges(of substring: String,
+                caseSensitive: Bool = true) -> [NSRange] {
+        
+        return NSMutableAttributedString(attributedString: self.base).sq.ranges(of: substring,
+                                                                                caseSensitive: caseSensitive)
+    }
+    
+    /// Replace substring at image with NSTextAttachment
+    ///
+    /// - Parameters:
+    ///   - textForReplace: substring for replace.`String`.
+    ///   - image: image for replace.`UIImage?`.
+    /// - Returns: String for image. `NSAttributedString`
+    func replaceTextToImage(_ textForReplace: String, image: UIImage?) -> NSAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.replaceTextToImage(textForReplace, image: image)
     }
 }
