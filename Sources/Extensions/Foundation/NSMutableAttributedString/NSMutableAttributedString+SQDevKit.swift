@@ -25,12 +25,21 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - color: setted color.`UIColor`.
     @discardableResult
-    func setColor(forText textForAttribute: String, withColor color: UIColor?) -> NSMutableAttributedString {
+    func setColor(forText textForAttribute: String,
+                  withColor color: UIColor?,
+                  caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         guard let color = color,
               !textForAttribute.isEmpty else { return self.base }
-
-        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(.foregroundColor, value: color, range: range)
+        
+        for range in self.ranges(of: textForAttribute,
+                                 caseSensitive: caseSensitive) {
+            
+            self.base.addAttribute(.foregroundColor,
+                                   value: color,
+                                   range: range)
+        }
+        
         return self.base
     }
 
@@ -49,12 +58,21 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - font: setted font.`UIFont`.
     @discardableResult
-    func setFont(forText textForAttribute: String, withFont font: UIFont?) -> NSMutableAttributedString{
+    func setFont(forText textForAttribute: String,
+                 withFont font: UIFont?,
+                 caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         guard let font = font,
               !textForAttribute.isEmpty else { return self.base }
         
-        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(.font, value: font, range: range)
+        for range in self.ranges(of: textForAttribute,
+                                 caseSensitive: caseSensitive) {
+            
+            self.base.addAttribute(.font,
+                                   value: font,
+                                   range: range)
+        }
+        
         return self.base
     }
 
@@ -70,11 +88,19 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting color.`String`.
     @discardableResult
-    func setUnderscore(forText textForAttribute: String) -> NSMutableAttributedString {
+    func setUnderscore(forText textForAttribute: String,
+                       caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         if textForAttribute.isEmpty { return self.base }
 
-        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: range)
+        for range in self.ranges(of: textForAttribute,
+                                 caseSensitive: caseSensitive) {
+            
+            self.base.addAttribute(.underlineStyle,
+                                   value: NSUnderlineStyle.thick.rawValue,
+                                   range: range)
+        }
+        
         return self.base
     }
 
@@ -90,11 +116,19 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting strikethrough.`String`.
     @discardableResult
-    func setStrikethrough(forText textForAttribute: String) -> NSMutableAttributedString {
+    func setStrikethrough(forText textForAttribute: String,
+                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         if textForAttribute.isEmpty { return self.base }
 
-        let range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-        self.base.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+        for range in self.ranges(of: textForAttribute,
+                                 caseSensitive: caseSensitive) {
+            
+            self.base.addAttribute(.strikethroughStyle,
+                                   value: NSUnderlineStyle.single.rawValue,
+                                   range: range)
+        }
+        
         return self.base
     }
 
@@ -113,20 +147,26 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - lineHeight: setted line height.`CGFloat`.
     @discardableResult
-    func setLineHeight(forText textForAttribute: String, withLineHeight lineHeight: CGFloat) -> NSMutableAttributedString {
+    func setLineHeight(forText textForAttribute: String,
+                       withLineHeight lineHeight: CGFloat,
+                       caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         if textForAttribute.isEmpty { return self.base }
 
-        var range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+        for var range in self.ranges(of: textForAttribute,
+                                     caseSensitive: caseSensitive) {
+            
+            guard let font = self.base.attributes(at: 0, effectiveRange: &range)[.font] as? UIFont else { return self.base }
 
-        guard let font = self.base.attributes(at: 0, effectiveRange: &range)[.font] as? UIFont else { return self.base }
+            let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+            let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
 
-        let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
-        let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+            let lineHeight: CGFloat = ((100.0 * lineHeight) / font.lineHeight) / 100.0
+            paragraph.lineHeightMultiple = lineHeight
 
-        let lineHeight: CGFloat = ((100.0 * lineHeight) / font.lineHeight) / 100.0
-        paragraph.lineHeightMultiple = lineHeight
+            self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        }
 
-        self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
         return self.base
     }
 
@@ -145,17 +185,23 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     ///   - alignment: setted alignment.`NSTextAlignment`.
     @discardableResult
-    func setAlignment(forText textForAttribute: String, withAlignment alignment: NSTextAlignment) -> NSMutableAttributedString {
+    func setAlignment(forText textForAttribute: String,
+                      withAlignment alignment: NSTextAlignment,
+                      caseSensitive: Bool = true) -> NSMutableAttributedString {
+        
         if textForAttribute.isEmpty { return self.base }
+        
+        for var range in self.ranges(of: textForAttribute,
+                                     caseSensitive: caseSensitive) {
+            
+            let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+            let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
 
-        var range: NSRange = self.base.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+            paragraph.alignment = alignment
 
-        let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
-        let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
-
-        paragraph.alignment = alignment
-
-        self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+            self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        }
+        
         return self.base
     }
 
@@ -227,6 +273,38 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         let rect = layoutManager.usedRect(for: textContainer)
 
         return rect.integral.size
+    }
+    
+    /// Returns ranges of substring
+    ///
+    /// - Parameters:
+    ///   - substring: substring for find.`String`.
+    /// - Returns: Array of ranges for the found string. `[NSRange]`
+    func ranges(of substring: String,
+                caseSensitive: Bool = true) -> [NSRange] {
+        
+        let stringRanges = self.base.string.sq.ranges(of: substring,
+                                                      caseSensitive: caseSensitive)
+        
+        return stringRanges.map { NSRange($0, in: self.base.string) }
+    }
+    
+    /// Replace substring at image with NSTextAttachment
+    ///
+    /// - Parameters:
+    ///   - textForReplace: substring for replace.`String`.
+    ///   - image: image for replace.`UIImage?`.
+    /// - Returns: String for image. `NSAttributedString`
+    @discardableResult
+    func replaceTextToImage(_ textForReplace: String, image: UIImage?) -> NSMutableAttributedString {
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = image
+                             
+        let imageString = NSAttributedString(attachment: imageAttachment)
+        let range = self.base.mutableString.range(of: textForReplace)
+        self.base.replaceCharacters(in: range, with: imageString)
+        
+        return self.base
     }
 
 }
