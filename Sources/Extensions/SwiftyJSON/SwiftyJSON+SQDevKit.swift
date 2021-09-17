@@ -10,7 +10,6 @@ import SwiftyJSON
 
 public extension SQExtensions where Base == JSON {
     
-// MARK: - Identifier
     /// Returns string identifier in JSON of passed field
     ///
     /// - Parameters:
@@ -22,6 +21,31 @@ public extension SQExtensions where Base == JSON {
         if let intValue = self.base[field].int { return "\(intValue)" }
         
         return nil
+    }
+
+    /// Returns bool value in JSON of passed field. Also processing alternatives like `0`,` 1`, `"0"`, `"1"`, `"true"`, `"false"`
+    ///
+    /// - Parameters:
+    ///   - field: field for getting identifier.`String`
+    /// - Returns: bool value. `Bool`
+    func bool(fromField field: String) -> Bool {
+        if let value = self.base[field].bool { return value }
+
+        if let intValue = self.base[field].int,
+           intValue != 0 {
+            return true
+        }
+
+        if let stringValue = self.base[field].string {
+            if let intValue = Int(stringValue),
+               intValue != 0 {
+                return true
+            }
+
+            return stringValue == "true"
+        }
+
+        return false
     }
     
 // MARK: - String
