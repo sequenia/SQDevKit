@@ -65,8 +65,6 @@ public extension SQExtensions where Base: NSAttributedString {
 
     /// Set underscore for all string and return NSAttributedString
     ///
-    /// - Parameters:
-    ///   - forText: substring for setting color.`String`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setUnderscore() -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
@@ -76,7 +74,7 @@ public extension SQExtensions where Base: NSAttributedString {
     /// Set underscore for substring and return NSAttributedString
     ///
     /// - Parameters:
-    ///   - forText: substring for setting color.`String`.
+    ///   - forText: substring for setting underscoring.`String`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setUnderscore(forText textForAttribute: String,
                        caseSensitive: Bool = true) -> NSAttributedString {
@@ -88,6 +86,7 @@ public extension SQExtensions where Base: NSAttributedString {
 
     /// Set strikethrough for all string
     ///
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     @discardableResult
     func setStrikethrough() -> NSMutableAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
@@ -98,6 +97,7 @@ public extension SQExtensions where Base: NSAttributedString {
     ///
     /// - Parameters:
     ///   - forText: substring for setting strikethrough.`String`.
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     @discardableResult
     func setStrikethrough(forText textForAttribute: String,
                           caseSensitive: Bool = true) -> NSMutableAttributedString {
@@ -126,7 +126,6 @@ public extension SQExtensions where Base: NSAttributedString {
     func setLineHeight(forText textForAttribute: String,
                        withLineHeight lineHeight: CGFloat,
                        caseSensitive: Bool = true) -> NSAttributedString {
-        
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setLineHeight(forText: textForAttribute,
                               withLineHeight: lineHeight,
@@ -137,6 +136,7 @@ public extension SQExtensions where Base: NSAttributedString {
     ///
     /// - Parameters:
     ///   - alignment: setted alignment.`NSTextAlignment`.
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setAlignment(_ alignment: NSTextAlignment) -> NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setAlignment(alignment)
@@ -147,6 +147,7 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Parameters:
     ///   - forText: substring for setting color.`String`.
     ///   - alignment: setted alignment.`NSTextAlignment`.
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setAlignment(forText textForAttribute: String,
                       withAlignment alignment: NSTextAlignment,
                       caseSensitive: Bool = true) -> NSAttributedString {
@@ -154,6 +155,33 @@ public extension SQExtensions where Base: NSAttributedString {
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
     }
+
+    /// Set line breaking mode for text
+    ///
+    /// - Parameters:
+    ///   - lineBreakMode: setted line breaking mode.`NSLineBreakMode`.
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
+    @discardableResult
+    func setLineBreakMode(_ lineBreakMode: NSLineBreakMode) -> NSAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setLineBreakMode(lineBreakMode)
+    }
+
+    /// Set line breaking mode for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting line breaking.`String`.
+    ///   - lineBreakMode: setted line breaking mode.`NSLineBreakMode`.
+    /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
+    @discardableResult
+    func setLineBreakMode(forText textForAttribute: String,
+                          withLineBreakMode lineBreakMode: NSLineBreakMode,
+                          caseSensitive: Bool = true) -> NSAttributedString {
+        return NSMutableAttributedString(attributedString: self.base)
+            .sq.setLineBreakMode(forText: textForAttribute,
+                                 withLineBreakMode: lineBreakMode, caseSensitive: caseSensitive)
+    }
+
 
     /// Set line spacing
     ///

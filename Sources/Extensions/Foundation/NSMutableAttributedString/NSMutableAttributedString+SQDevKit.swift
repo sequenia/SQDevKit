@@ -205,6 +205,41 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         return self.base
     }
 
+    /// Set line breaking mode for text
+    ///
+    /// - Parameters:
+    ///   - lineBreakMode: setted line breaking mode.`NSLineBreakMode`.
+    @discardableResult
+    func setLineBreakMode(_ lineBreakMode: NSLineBreakMode) -> NSMutableAttributedString {
+        return self.base.sq.setLineBreakMode(forText: self.base.string, withLineBreakMode: lineBreakMode)
+    }
+
+    /// Set line breaking mode for substring
+    ///
+    /// - Parameters:
+    ///   - forText: substring for setting line breaking.`String`.
+    ///   - lineBreakMode: setted line breaking mode.`NSLineBreakMode`.
+    @discardableResult
+    func setLineBreakMode(forText textForAttribute: String,
+                          withLineBreakMode lineBreakMode: NSLineBreakMode,
+                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+
+        if textForAttribute.isEmpty { return self.base }
+
+        for var range in self.ranges(of: textForAttribute,
+                                     caseSensitive: caseSensitive) {
+
+            let paragraphAttributes = self.base.attributes(at: 0, effectiveRange: &range)[.paragraphStyle] as? NSParagraphStyle
+            let paragraph = (paragraphAttributes?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+
+            paragraph.lineBreakMode = lineBreakMode
+
+            self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+        }
+
+        return self.base
+    }
+
     /// Set line spacing
     ///
     /// - Parameters:
