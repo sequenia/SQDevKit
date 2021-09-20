@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     s.summary = "Toolkit for iOS developers by Sequenia"
     s.requires_arc = true
 
-    s.version = "1.0.10"
+    s.version = "1.0.12"
     s.license  = { :type => "MIT", :file => "LICENSE" }
     s.author   = { 'lab-devoloper' => 'vitaly.banik@sequenia.com' }
     s.homepage = "https://github.com/sequenia/SQDevKit"
