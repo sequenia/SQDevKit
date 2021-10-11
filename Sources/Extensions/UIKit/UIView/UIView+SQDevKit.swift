@@ -38,15 +38,31 @@ public extension SQExtensions where Base: UIView {
     var cornerRadius: CGFloat {
         get { self.base.layer.cornerRadius }
         set {
-            self.base.layer.cornerRadius = newValue
-            self.base.clipsToBounds = true
+            self.setCornerRadius(newValue)
         }
+    }
+
+    /// Set corner radius for view
+    ///
+    /// - Parameters:
+    ///   - cornerRadius: corner radius for view. `CGFloat`
+    func setCornerRadius(_ cornerRadius: CGFloat) {
+        self.base.layer.cornerRadius = cornerRadius
+        self.base.clipsToBounds = true
     }
 
     /// Border width of view
     var borderWidth: CGFloat {
         get { self.base.layer.borderWidth }
-        set { self.base.layer.borderWidth = newValue }
+        set { self.setBorderWidth(newValue) }
+    }
+
+    /// Set border's width for view
+    ///
+    /// - Parameters:
+    ///   - borderWidth: border width for view. `CGFloat`
+    func setBorderWidth(_ borderWidth: CGFloat) {
+        self.base.layer.borderWidth = borderWidth
     }
 
     /// Border color of view
@@ -57,8 +73,16 @@ public extension SQExtensions where Base: UIView {
             return UIColor(cgColor: cgColor)
         }
         set {
-            self.base.layer.borderColor = newValue?.cgColor
+            self.setBorderColor(newValue)
         }
+    }
+
+    /// Set border's color for view
+    ///
+    /// - Parameters:
+    ///   - borderColor: border color for view. `CGFloat`
+    func setBorderColor(_ borderColor: UIColor?) {
+        self.base.layer.borderColor = borderColor?.cgColor
     }
 
     /// Load view from that's nib
