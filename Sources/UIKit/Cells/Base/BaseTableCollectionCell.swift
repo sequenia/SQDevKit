@@ -25,7 +25,7 @@ open class BaseTableCollectionCell: UITableViewCell,
         }
     }
 
-    public var collectionDelegate: CollectionCellDelegate?
+    public weak var collectionDelegate: CollectionCellDelegate?
     open var fabric: SQCollectionFabric!
 
     open var scrollPosition: CGPoint {
