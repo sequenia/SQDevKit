@@ -83,8 +83,4 @@ public class AsyncOperation: Operation {
     override public func main() {
         self.actions?(self)
     }
-
-    override public func cancel() {
-        state = .finished
-    }
 }

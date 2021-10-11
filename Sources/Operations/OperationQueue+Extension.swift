@@ -22,6 +22,5 @@ public extension SQExtensions where Base: OperationQueue {
     
     func addOperation(_ operation: AsyncOperation) {
         self.base.addOperation(operation)
-        self.base.operations.sorted(by: {($0 as? AsyncOperation)?.weight ?? 0 > ($1 as? AsyncOperation)?.weight ?? 0 })
     }
 }
