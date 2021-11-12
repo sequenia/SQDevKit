@@ -51,14 +51,21 @@ public extension SQExtensions where Base: UIDevice {
     private static func mapToDevice(identifier: String) -> String {
         #if os(iOS)
         switch identifier {
+// MARK: - iPods
         case "iPod5,1":                                  return "iPod touch (5th generation)"
         case "iPod7,1":                                  return "iPod touch (6th generation)"
         case "iPod9,1":                                  return "iPod touch (7th generation)"
-        case "iPhone3,1", "iPhone3,2", "iPhone3,3":      return "iPhone 4"
-        case "iPhone4,1":                                return "iPhone 4s"
-        case "iPhone5,1", "iPhone5,2":                   return "iPhone 5"
-        case "iPhone5,3", "iPhone5,4":                   return "iPhone 5c"
-        case "iPhone6,1", "iPhone6,2":                   return "iPhone 5s"
+// MARK: - iPhones
+        case "iPhone3,1":                                return "iPhone 4"
+        case "iPhone3,2":                                return "iPhone 4 GSM Rev A"
+        case "iPhone3,3":                                return "iPhone 4 CDMA"
+        case "iPhone4,1":                                return "iPhone 4S"
+        case "iPhone5,1":                                return "iPhone 5 (GSM)"
+        case "iPhone5,2":                                return "iPhone 5 (GSM+CDMA)"
+        case "iPhone5,3":                                return "iPhone 5C (GSM)"
+        case "iPhone5,4":                                return "iPhone 5C (Global)"
+        case "iPhone6,1":                                return "iPhone 5S (GSM)"
+        case "iPhone6,2":                                return "iPhone 5S (Global)"
         case "iPhone7,2":                                return "iPhone 6"
         case "iPhone7,1":                                return "iPhone 6 Plus"
         case "iPhone8,1":                                return "iPhone 6s"
@@ -68,9 +75,11 @@ public extension SQExtensions where Base: UIDevice {
         case "iPhone8,4":                                return "iPhone SE"
         case "iPhone10,1", "iPhone10,4":                 return "iPhone 8"
         case "iPhone10,2", "iPhone10,5":                 return "iPhone 8 Plus"
-        case "iPhone10,3", "iPhone10,6":                 return "iPhone X"
+        case "iPhone10,3":                               return "iPhone X Global"
+        case "iPhone10,6":                               return "iPhone X GSM"
         case "iPhone11,2":                               return "iPhone XS"
-        case "iPhone11,4", "iPhone11,6":                 return "iPhone XS Max"
+        case "iPhone11,4":                               return "iPhone XS Max"
+        case "iPhone11,6":                               return "iPhone XS Max Global"
         case "iPhone11,8":                               return "iPhone XR"
         case "iPhone12,1":                               return "iPhone 11"
         case "iPhone12,3":                               return "iPhone 11 Pro"
@@ -80,6 +89,11 @@ public extension SQExtensions where Base: UIDevice {
         case "iPhone13,2":                               return "iPhone 12"
         case "iPhone13,3":                               return "iPhone 12 Pro"
         case "iPhone13,4":                               return "iPhone 12 Pro Max"
+        case "iPhone14,2":                               return "iPhone 13 Pro"
+        case "iPhone14,3":                               return "iPhone 13 Pro Max"
+        case "iPhone14,4":                               return "iPhone 13 Mini"
+        case "iPhone14,5":                               return "iPhone 13"
+// MARK: - iPads
         case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4": return "iPad 2"
         case "iPad3,1", "iPad3,2", "iPad3,3":            return "iPad (3rd generation)"
         case "iPad3,4", "iPad3,5", "iPad3,6":            return "iPad (4th generation)"
@@ -105,14 +119,14 @@ public extension SQExtensions where Base: UIDevice {
         case "AppleTV5,3":                               return "Apple TV"
         case "AppleTV6,2":                               return "Apple TV 4K"
         case "AudioAccessory1,1":                        return "HomePod"
-        case "i386", "x86_64":                           return "Simulator \(self.mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
+        case "i386", "x86_64", "arm64":                  return "Simulator \(self.mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
         default:                                         return identifier
         }
         #elseif os(tvOS)
         switch identifier {
-        case "AppleTV5,3":     return "Apple TV 4"
-        case "AppleTV6,2":     return "Apple TV 4K"
-        case "i386", "x86_64": return "Simulator \(self.mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
+        case "AppleTV5,3":              return "Apple TV 4"
+        case "AppleTV6,2":              return "Apple TV 4K"
+        case "i386", "x86_64", "arm64": return "Simulator \(self.mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
         default:               return identifier
         }
         #endif

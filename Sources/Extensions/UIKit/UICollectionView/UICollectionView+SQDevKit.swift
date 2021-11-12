@@ -39,6 +39,21 @@ public extension SQExtensions where Base: UICollectionView {
         self.base.register(T.self.sq.nib,
                            forCellWithReuseIdentifier: cellIdentifier)
     }
+
+    /// Register cell with class in the collection view
+    ///
+    /// - Parameters:
+    ///   - cellClass: class of cell
+    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///
+    func registerClass<T: UICollectionViewCell>(_ cellClass: T.Type,
+                                                identifier: String? = nil) {
+        var cellIdentifier = T.self.sq.identifier
+        if let specificIdentifier = identifier {
+            cellIdentifier = specificIdentifier
+        }
+        self.base.register(T.self, forCellWithReuseIdentifier: cellIdentifier)
+    }
     
     /// Register cell with unique nib name
     ///
