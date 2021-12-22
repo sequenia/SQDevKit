@@ -130,8 +130,8 @@ public extension SQExtensions where Base: UIView {
     /// - Parameters:
     ///   - effect: blur effect. `UIBlurEffect`
     ///   - color: color for blure. `UIColor`
-    func addBlur(_ effect: UIBlurEffect, color: UIColor) {
-        let blurEffectView = UIVisualEffectView(effect: effect)
+    func addBlur(_ style: UIBlurEffect.Style = .light, color: UIColor = .clear) {
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style))
         
         blurEffectView.backgroundColor = color
         blurEffectView.layer.masksToBounds = true

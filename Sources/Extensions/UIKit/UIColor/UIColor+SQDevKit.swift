@@ -101,6 +101,34 @@ public extension UIColor {
 
 public extension SQExtensions where Base: UIColor {
 
+    /// Check color is light
+    var isLight: Bool {
+        var white: CGFloat = .zero
+        self.base.getWhite(&white, alpha: nil)
+        return white > 0.5
+    }
+
+    static func interpolate(from: UIColor, to: UIColor, with fraction: CGFloat) -> UIColor {
+        let frac = min(1, max(0, fraction))
+        let color1 = from.sq.components()
+        let color2 = to.sq.components()
+        let red = color1.0 + (color2.0 - color1.0) * frac
+        let green = color1.1 + (color2.1 - color1.1) * frac
+        let blue = color1.2 + (color2.2 - color1.2) * frac
+        let alpha = color1.3 + (color2.3 - color1.3) * frac
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+
+    func components() -> (CGFloat, CGFloat, CGFloat, CGFloat) {
+        guard let color = self.base.cgColor.components else { return (0, 0, 0, 1) }
+
+        if self.base.cgColor.numberOfComponents == 2 {
+            return (color[0], color[0], color[0], color[1])
+        } else {
+            return (color[0], color[1], color[2], color[3])
+        }
+    }
+
     var hexString: String {
         var red: CGFloat = 0
         var green: CGFloat = 0

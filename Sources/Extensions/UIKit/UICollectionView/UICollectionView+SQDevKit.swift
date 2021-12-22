@@ -146,3 +146,37 @@ public extension SQExtensions where Base: UICollectionView {
     }
     
 }
+
+// MARK: - Utils
+public extension SQExtensions where Base: UICollectionView {
+
+    func currentPage(maxPageNumber: Int) -> Int {
+        let contentOffset = Int(self.base.contentOffset.x)
+
+        if contentOffset <= .zero { return .zero }
+
+        if contentOffset >= Int(self.base.sq.maxContentOffset.x) { return maxPageNumber }
+
+        let center = CGPoint(
+            x: self.base.frame.width / 2.0,
+            y: self.base.frame.minY + self.base.frame.height / 2.0
+        )
+
+        var minDistance: CGFloat = .greatestFiniteMagnitude
+        var centerIndex: Int = .zero
+
+        self.base.visibleCells.forEach { cell in
+            guard let indexPath = self.base.indexPath(for: cell) else { return }
+
+            let convertedCenter = self.base.convert(cell.center, to: self.base.superview)
+
+            let distance = convertedCenter.sq.distance(to: center)
+            if distance < minDistance {
+                minDistance = distance
+                centerIndex = indexPath.item
+            }
+        }
+
+        return centerIndex
+    }
+}

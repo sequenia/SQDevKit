@@ -135,6 +135,10 @@ public extension SQExtensions where Base == String {
         return ranges
     }
 
+    /// Returns string with capitalized first letter
+    func capitalisingFirstLetter() -> String {
+        return self.base.prefix(1).capitalized + self.base.dropFirst()
+    }
 }
 
 extension String: SQExtensionsCompatible {}

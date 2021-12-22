@@ -12,6 +12,29 @@ public extension UIBezierPath {
     /// Creates UIBezier path for rect with different corner radius
     /// - Parameters:
     ///   - shouldRoundRect: rectangle. `CGRect`
+    ///   - topLeft: radius of top left corner. `CGFloat`
+    ///   - topRight: radius of top right corner. `CGFloat`
+    ///   - bottomLeft: radius of bottom left corner. `CGFloat`
+    ///   - bottomRight: radius of bottom right corner. `CGFloat`
+    convenience init(
+        shouldRoundRect rect: CGRect,
+        topLeftRadius: CGFloat = .zero,
+        topRightRadius: CGFloat = .zero,
+        bottomLeftRadius: CGFloat = .zero,
+        bottomRightRadius: CGFloat = .zero
+    ) {
+        self.init(
+            shouldRoundRect: rect,
+            topLeftRadius: .init(width: topLeftRadius, height: topLeftRadius),
+            topRightRadius: .init(width: topRightRadius, height: topRightRadius),
+            bottomLeftRadius: .init(width: bottomLeftRadius, height: bottomLeftRadius),
+            bottomRightRadius: .init(width: bottomRightRadius, height: bottomRightRadius)
+        )
+    }
+
+    /// Creates UIBezier path for rect with different corner radius
+    /// - Parameters:
+    ///   - shouldRoundRect: rectangle. `CGRect`
     ///   - topLeft: radius of top left corner. `CGSize`
     ///   - topRight: radius of top right corner. `CGSize`
     ///   - bottomLeft: radius of bottom left corner. `CGSize`

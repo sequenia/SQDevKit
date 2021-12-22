@@ -30,8 +30,8 @@ public protocol NavigationBarStyle {
     /// Navigation's bar title attributes (font, color, etc.) . Not required, will be used system style without implementation
     var titleAttributes: [NSAttributedString.Key: Any] { get }
 
-    /// Navigation's bar blur effect. Not required, will be equal nil without implementation
-    var blurEffect: UIBlurEffect? { get }
+    /// Navigation's bar blur effect. style Not required, will be equal nil without implementation
+    var blurStyle: UIBlurEffect.Style?  { get }
 }
 
 public extension NavigationBarStyle {
@@ -42,7 +42,7 @@ public extension NavigationBarStyle {
     var shadowColor: UIColor? { .clear }
     var isTranslucent: Bool { false }
     var titleAttributes: [NSAttributedString.Key: Any] { [ : ] }
-    var blurEffect: UIBlurEffect? { nil }
+    var blurStyle: UIBlurEffect.Style? { nil }
 
     var shadowImage: UIImage? { UIImage.sq.create(withColor: self.shadowColor) }
 }
@@ -88,14 +88,14 @@ public extension SQExtensions where Base: UINavigationController {
     private func setupBlur(forStyle style: NavigationBarStyle) {
         self.base.navigationBar.sq.removeBlur()
 
-        guard let blurEffect = style.blurEffect else { return }
+        guard let blurStyle = style.blurStyle else { return }
 
         let statusBarHeight = UIDevice.sq.statusBarHeight
         var blurFrame = self.base.navigationBar.bounds
         blurFrame.size.height += statusBarHeight
         blurFrame.origin.y -= statusBarHeight
 
-        self.base.navigationBar.sq.addBlur(blurEffect, color: .clear)
+        self.base.navigationBar.sq.addBlur(blurStyle, color: .clear)
     }
 
 }
