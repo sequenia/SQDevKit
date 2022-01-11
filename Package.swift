@@ -12,14 +12,14 @@ let package = Package(
         .library(name: "SQLists", targets: ["SQLists"]),
         .library(name: "SQVUPER", targets: ["SQVUPER"]),
         .library(name: "SQOperations", targets: ["SQOperations"]),
-        .library(name: "SQUIKit", targets: ["SQUIKit"])
+        .library(name: "SQUIKit", targets: ["SQUIKit"]),
+        .library(name: "SQDefaults", targets: ["SQDefaults"]),
     ],
     dependencies: [
         .package(
             url: "https://github.com/sequenia/SQDifferenceKit.git",
             .upToNextMajor(from: "1.0.1")
         ),
-//        .package(path: "/Users/semenkologrivov/Documents/Workspace/iOS/SQDifferenceKit"),
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.1")
@@ -63,6 +63,11 @@ let package = Package(
                 .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
             ],
             path: "./Sources/UIKit"
-        )
+        ),
+        .target(
+            name: "SQDefaults",
+            dependencies: ["SQExtensions"],
+            path: "./Sources/Defaults"
+        ),
     ]
 )
