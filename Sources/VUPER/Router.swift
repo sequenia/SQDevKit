@@ -21,10 +21,15 @@ public protocol Router: AnyObject {
     var currentView: UIViewController? { get }
 
 // MARK: - Navigation actions
-    func setRootController(_ controller: UIViewController,
-                           animated: Bool)
+    @available(*, deprecated, message: "Use options: instead animated:")
+    func setRootController(_ controller: UIViewController, animated: Bool)
+
+    func setRootController(_ controller: UIViewController)
+    func setRootController(_ controller: UIViewController, options: UIWindow.TransitionOptions?)
+
     func pop(animated: Bool)
     func popToRoot(animated: Bool)
+
     func dismiss(animated: Bool)
     func dismiss(animated: Bool, completion: (() -> Void)?)
 }
@@ -50,12 +55,32 @@ public extension Router {
     }
 
 // MARK: - Navigation actions
+    @available(*, deprecated, message: "Use options: instead animated:")
     func setRootController(_ controller: UIViewController, animated: Bool) {
         guard let window = UIWindow.sq.keyWindow else { return }
 
         if animated {
-            window.setRootViewController(controller,
-                                         options: UIWindow.TransitionOptions(direction: .fade))
+            window.setRootViewController(
+                controller,
+                options: UIWindow.TransitionOptions(direction: .fade)
+            )
+        } else {
+            window.rootViewController = controller
+        }
+    }
+
+    func setRootController(_ controller: UIViewController) {
+        self.setRootController(controller, options: nil)
+    }
+
+    func setRootController(_ controller: UIViewController, options: UIWindow.TransitionOptions?) {
+        guard let window = UIWindow.sq.keyWindow else { return }
+
+        if let opts = options {
+            window.setRootViewController(
+                controller,
+                options: opts
+            )
         } else {
             window.rootViewController = controller
         }

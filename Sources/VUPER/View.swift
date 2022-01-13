@@ -15,6 +15,5 @@ public protocol View where Self: UIViewController {
 
 // MARK: - Error message
     func showErrorMessage(_ message: String?)
-    func showErrorMessage(_ message: String?,
-                          retryBlock: @escaping () -> Void)
+    func showErrorMessage(_ message: String?, retryBlock: @escaping () -> Void)
 }

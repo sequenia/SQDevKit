@@ -57,4 +57,8 @@ Pod::Spec.new do |s|
         uikit.dependency 'SQDifferenceKit', '~> 1.0.1'
     end
 
+    s.subspec 'SQUIKit' do |uikit|
+        uikit.source_files = 'Sources/Defaults/**/*.swift'
+        uikit.dependency 'SQDevKit/SQExtensions'
+    end
 end

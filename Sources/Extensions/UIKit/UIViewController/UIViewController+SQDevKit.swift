@@ -7,11 +7,11 @@
 
 import UIKit
 
-
 // MARK: - Initialization
 public extension SQExtensions where Base: UIViewController {
 
     /// Returns UINavigationController with self as root
+    @available(*, deprecated, message: "Use withNavigationController from SQUIKit")
     var wrappedIntoNavigationController: UINavigationController {
         UINavigationController.init(rootViewController: self.base)
     }
@@ -22,6 +22,7 @@ public extension SQExtensions where Base: UIViewController {
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained view controller and named as that
     /// - Returns:new view controller
+    @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     static func create(configureBlock: ((_ result: Base) -> Void)? = nil) -> Base? {
         let storyboard = UIStoryboard(name: Base.sq.identifier,
                                       bundle: Bundle.init(for: Base.self))
@@ -45,6 +46,7 @@ public extension SQExtensions where Base: UIViewController {
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained view controller and named as that
     /// - Returns:new navigation view controller
+    @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     static func createWithNavigationController(configureBlock: ((_ result: Base) -> Void)? = nil) -> UINavigationController? {
         guard let viewController = Base.self.sq.create(configureBlock: configureBlock) else { return nil }
 
@@ -62,6 +64,7 @@ public extension SQExtensions where Base: UIViewController {
     ///   - animated: animation of push. `Bool` (true by default)
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
+    @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     func push<T: UIViewController>(_ type: T.Type,
                                    animated: Bool = true,
                                    configureBlock: ((_ result: T) -> Void)? = nil) {
@@ -83,6 +86,7 @@ public extension SQExtensions where Base: UIViewController {
     ///   - animated: animation of push. `Bool`(true by default)
     ///   - configureBlock: closure for configure pushed view controller
     /// - Precondition: In your project must exist storyboard contained pushed view controller and named as that
+    @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     func setNavigationRoot<T: UIViewController>(_ type: T.Type,
                                                 animated: Bool = true,
                                                 configureBlock: ((_ result: T) -> Void)? = nil) {
@@ -106,6 +110,7 @@ public extension SQExtensions where Base: UIViewController {
     ///   - configureBlock: closure for configure pushed view controller
     ///   - presentationCompletion: closure when presentation is completed
     /// - Precondition: In your project must exist storyboard contained presented view controller and named as that
+    @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     func present<T: UIViewController>(_ type: T.Type,
                                       withNavigationController: Bool = true,
                                       modalPresentationStyle: UIModalPresentationStyle = .pageSheet,

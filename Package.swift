@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
         .library(name: "SQLists", targets: ["SQLists"]),
+        .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
         .library(name: "SQVUPER", targets: ["SQVUPER"]),
         .library(name: "SQOperations", targets: ["SQOperations"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
@@ -44,6 +45,13 @@ let package = Package(
                 .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
             ],
             path: "./Sources/Lists"
+        ),
+        .target(
+            name: "SQCompositionLists",
+            dependencies: [
+                "SQExtensions"
+            ],
+            path: "./Sources/CompositionLists"
         ),
         .target(
             name: "SQVUPER",
