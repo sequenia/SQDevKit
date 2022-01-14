@@ -14,8 +14,8 @@ public extension UIEdgeInsets {
     /// - Parameters:
     ///   - horizontal: horizontal edge insets. `CGFloat`
     ///   - vertical: vertical edge insets. `CGFloat`
-    convenience init(horizontal: CGFloat = .zero, vertical: CGFloat = .zero) {
-        self.init(
+    init(horizontal: CGFloat = .zero, vertical: CGFloat = .zero) {
+        super.init(
             top: vertical,
             left: horizontal,
             bottom: vertical,
