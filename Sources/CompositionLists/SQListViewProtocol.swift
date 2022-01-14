@@ -125,7 +125,7 @@ public extension SQListViewProtocol {
         self.sections = content.map { SQSection($0) }
         self.sections.forEach { section in
             snapshot.appendSections([section])
-            snapshot.appendItems(section.content.items, toSection: section)
+            snapshot.appendItems(section.content.items)
         }
         self.dataSource.apply(
             snapshot,
