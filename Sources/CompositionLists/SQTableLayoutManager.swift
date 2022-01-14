@@ -8,14 +8,14 @@
 import UIKit
 
 @available(iOS 14.0, *)
-public protocol SQTableLayoutDelegate: AnyObject {
+public protocol SQTableLayoutManagerDelegate: AnyObject {
 
     func configureLayout(into config: inout UICollectionLayoutListConfiguration)
     func content(forSection section: Int) -> SQSectionContent?
 }
 
 @available(iOS 14.0, *)
-public extension SQTableLayoutDelegate {
+public extension SQTableLayoutManagerDelegate {
 
     func configureLayout(into config: inout UICollectionLayoutListConfiguration) {
         config.backgroundColor = .clear
@@ -26,14 +26,14 @@ public extension SQTableLayoutDelegate {
 }
 
 @available(iOS 14.0, *)
-open class SQTableLayout {
+open class SQTableLayoutManager {
 
     private let appearance: UICollectionLayoutListConfiguration.Appearance
-    public weak var delegate: SQTableLayoutDelegate!
+    public weak var delegate: SQTableLayoutManagerDelegate!
 
     public init(
-        appearance: UICollectionLayoutListConfiguration.Appearance = .plain,
-        delegate: SQTableLayoutDelegate? = nil
+        appearance: UICollectionLayoutListConfiguration.Appearance = .grouped,
+        delegate: SQTableLayoutManagerDelegate
     ) {
         self.appearance = appearance
         self.delegate = delegate
