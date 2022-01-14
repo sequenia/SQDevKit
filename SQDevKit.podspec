@@ -40,6 +40,11 @@ Pod::Spec.new do |s|
         lists.dependency 'SQDifferenceKit', '~> 1.0.1'
     end
 
+    s.subspec 'SQCompositionLists' do |composition_lists|
+        composition_lists.source_files = 'Sources/CompositionLists/**/*.swift'
+        composition_lists.dependency 'SQDevKit/SQExtensions'
+    end
+
     s.subspec 'SQVUPER' do |vuper|
         vuper.source_files = 'Sources/VUPER/**/*.swift'
         vuper.dependency 'SQDevKit/SQExtensions'
@@ -57,8 +62,8 @@ Pod::Spec.new do |s|
         uikit.dependency 'SQDifferenceKit', '~> 1.0.1'
     end
 
-    s.subspec 'SQUIKit' do |uikit|
-        uikit.source_files = 'Sources/Defaults/**/*.swift'
-        uikit.dependency 'SQDevKit/SQExtensions'
+    s.subspec 'SQDefaults' do |defaults|
+        defaults.source_files = 'Sources/Defaults/**/*.swift'
+        defaults.dependency 'SQDevKit/SQExtensions'
     end
 end
