@@ -11,13 +11,13 @@ import Foundation
 public protocol SQSectionContent: Any {
 
     /// Section identifier
-    var id: String { get set }
+    var id: String { get }
 
     /// Section header
     var header: AnyHashable? { get }
 
     /// Items in section
-    var items: [AnyHashable] { get set }
+    var items: [AnyHashable] { get }
 
     /// Section footer
     var footer: AnyHashable? { get }

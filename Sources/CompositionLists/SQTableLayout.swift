@@ -29,7 +29,7 @@ public extension SQTableLayoutDelegate {
 open class SQTableLayout {
 
     private let appearance: UICollectionLayoutListConfiguration.Appearance
-    public weak var delegate: SQTableLayoutDelegate?
+    public weak var delegate: SQTableLayoutDelegate!
 
     public init(
         appearance: UICollectionLayoutListConfiguration.Appearance = .plain,
@@ -43,9 +43,9 @@ open class SQTableLayout {
         return UICollectionViewCompositionalLayout(
             sectionProvider: { index, environment in
                 var config = UICollectionLayoutListConfiguration(appearance: self.appearance)
-                self.delegate?.configureLayout(into: &config)
+                self.delegate.configureLayout(into: &config)
 
-                let content = self.delegate?.content(forSection: index)
+                let content = self.delegate.content(forSection: index)
                 config.headerMode = content?.header == nil ? .none : .supplementary
                 config.footerMode = content?.footer == nil ? .none : .supplementary
 

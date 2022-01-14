@@ -82,14 +82,14 @@ public extension SQListViewProtocol {
         let dataSource = SQDataSource(
             collectionView: self.collectionView,
             cellProvider: { [weak self] _, indexPath, item in
-                self?.factory.cell(forModelRow: item, atIndexPath: indexPath)
+                self?.factory.cell(forItemModel: item, atIndexPath: indexPath)
             }
         )
         dataSource.supplementaryViewProvider = { [weak self] _, kind, indexPath in
             guard let sectionContent = self?.sections[safe: indexPath.section]?.content else { return nil }
 
             return self?.factory.view(
-                forModelSection: sectionContent,
+                forSectionContent: sectionContent,
                 kind: kind,
                 atIndexPath: indexPath
             )

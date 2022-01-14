@@ -29,23 +29,23 @@ public protocol SQListFactory: AnyObject {
     /// Returns cell for model and index path
     ///
     /// - Parameters:
-    ///   - modelRow: model with data for cell.`AnyHashable`.
+    ///   - itemModel: model with data for cell.`AnyHashable`.
     ///   - indexPath: Index path of cell.`IndexPath`.
     /// - Returns: Dequeued collection cell. `UICollectionViewCell`, nullable
     func cell(
-        forModelRow modelRow: AnyHashable,
+        forItemModel itemModel: AnyHashable,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionViewCell?
 
     /// Returns view section, kind of view and index path
     ///
     /// - Parameters:
-    ///   - modelSection: model section content.`SQSectionContent`.
+    ///   - sectionContent: model section content.`SQSectionContent`.
     ///   - kind: kind of section view. `String`
     ///   - indexPath: Index path of cell.`IndexPath`.
     /// - Returns: Dequeued collection view. `UICollectionReusableView`, nullable
     func view(
-        forModelSection modelSection: SQSectionContent,
+        forSectionContent sectionContent: SQSectionContent,
         kind: String,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionReusableView?
@@ -53,22 +53,8 @@ public protocol SQListFactory: AnyObject {
 
 public extension SQListFactory {
 
-    func registerElements() {
-        self.collectionView?.sq.registerClass(UICollectionViewCell.self)
-    }
-
-    func cell(
-        forModelRow modelRow: AnyHashable,
-        atIndexPath indexPath: IndexPath
-    ) -> UICollectionViewCell? {
-        self.collectionView?.sq.dequeueReusableCell(
-            UICollectionViewCell.self,
-            indexPath: indexPath
-        )
-    }
-
     func view(
-        forModelSection modelSection: SQSectionContent,
+        forSectionContent sectionContent: SQSectionContent,
         kind: String,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionReusableView? {
