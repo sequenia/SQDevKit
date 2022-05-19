@@ -11,9 +11,12 @@ import UIKit
 public protocol View where Self: UIViewController {
     
 // MARK: - Loading indicator
+    @MainActor
     func setLoadingVisible(_ visible: Bool)
 
 // MARK: - Error message
+    @MainActor
     func showErrorMessage(_ message: String?)
+    @MainActor
     func showErrorMessage(_ message: String?, retryBlock: @escaping () -> Void)
 }
