@@ -50,6 +50,43 @@ public extension SQExtensions where Base: UIView {
         self.base.layer.cornerRadius = cornerRadius
         self.base.clipsToBounds = true
     }
+    
+    /// Radius for shadow of view
+    var shadowRadius: CGFloat {
+        get { self.layer.shadowRadius }
+        set {
+            self.layer.shadowRadius = newValue
+            self.layer.masksToBounds = false
+        }
+    }
+    
+    /// Offset for shadow of view
+    var shadowOffset: CGSize {
+        get { self.layer.shadowOffset }
+        set {
+            self.layer.shadowOffset = newValue
+            self.layer.masksToBounds = false
+        }
+    }
+    
+    /// Color for shadow of view
+    var shadowColor: UIColor? {
+        get {
+            guard let cgColor = self.layer.shadowColor else { return nil }
+            
+            return UIColor(cgColor: cgColor)
+        }
+        set {
+            self.layer.shadowColor = newValue?.cgColor
+            self.layer.masksToBounds = false
+        }
+    }
+    
+    /// Opacity for shadow of view
+    var shadowOpacity: Float {
+        get { self.layer.shadowOpacity }
+        set { self.layer.shadowOpacity = newValue }
+    }
 
     /// Border width of view
     var borderWidth: CGFloat {
@@ -130,8 +167,16 @@ public extension SQExtensions where Base: UIView {
     /// - Parameters:
     ///   - effect: blur effect. `UIBlurEffect`
     ///   - color: color for blure. `UIColor`
-    func addBlur(_ style: UIBlurEffect.Style = .light, color: UIColor = .clear) {
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style))
+    ///   - intensity: intensity for blure effect. `CGFloat`
+    func addBlur(
+        _ style: UIBlurEffect.Style = .light,
+        color: UIColor = .clear,
+        intensity: CGFloat = 1.0
+    ) {
+        let blurEffectView = CustomIntensityVisualEffectView(
+            effect: UIBlurEffect(style: style),
+            intensity: intensity
+        )
         
         blurEffectView.backgroundColor = color
         blurEffectView.layer.masksToBounds = true
@@ -179,4 +224,42 @@ public extension SQExtensions where Base: UIView {
         self.base.layer.mask = shape
     }
 
+}
+
+/// Create visual effect view with given effect and its intensity
+final class CustomIntensityVisualEffectView: UIVisualEffectView {
+    
+    private let theEffect: UIVisualEffect
+    private let customIntensity: CGFloat
+    private var animator: UIViewPropertyAnimator?
+    
+    init(
+        effect: UIVisualEffect,
+        intensity: CGFloat
+    ) {
+        theEffect = effect
+        customIntensity = intensity
+        super.init(effect: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) { nil }
+    
+    deinit {
+        animator?.stopAnimation(true)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        effect = nil
+        animator?.stopAnimation(true)
+        animator = UIViewPropertyAnimator(
+            duration: 1,
+            curve: .linear
+        ) { [unowned self] in
+            self.effect = theEffect
+        }
+        animator?.fractionComplete = customIntensity
+    }
+    
 }
