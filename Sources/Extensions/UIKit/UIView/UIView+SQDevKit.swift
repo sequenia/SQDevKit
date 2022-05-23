@@ -53,39 +53,42 @@ public extension SQExtensions where Base: UIView {
     
     /// Radius for shadow of view
     var shadowRadius: CGFloat {
-        get { self.layer.shadowRadius }
+        get { self.base.layer.shadowRadius }
         set {
-            self.layer.shadowRadius = newValue
-            self.layer.masksToBounds = false
+            self.base.layer.shadowRadius = newValue
+            self.base.layer.masksToBounds = false
         }
     }
     
     /// Offset for shadow of view
     var shadowOffset: CGSize {
-        get { self.layer.shadowOffset }
+        get { self.base.layer.shadowOffset }
         set {
-            self.layer.shadowOffset = newValue
-            self.layer.masksToBounds = false
+            self.base.layer.shadowOffset = newValue
+            self.base.layer.masksToBounds = false
         }
     }
     
     /// Color for shadow of view
     var shadowColor: UIColor? {
         get {
-            guard let cgColor = self.layer.shadowColor else { return nil }
+            guard let cgColor = self.base.layer.shadowColor else { return nil }
             
             return UIColor(cgColor: cgColor)
         }
         set {
-            self.layer.shadowColor = newValue?.cgColor
-            self.layer.masksToBounds = false
+            self.base.layer.shadowColor = newValue?.cgColor
+            self.base.layer.masksToBounds = false
         }
     }
     
     /// Opacity for shadow of view
     var shadowOpacity: Float {
-        get { self.layer.shadowOpacity }
-        set { self.layer.shadowOpacity = newValue }
+        get { self.base.layer.shadowOpacity }
+        set {
+            self.base.layer.shadowOpacity = newValue
+            self.base.layer.masksToBounds = false
+        }
     }
     
     /// Set shadow to view with parameters
@@ -95,7 +98,7 @@ public extension SQExtensions where Base: UIView {
     ///   - offset: offset for shadow of view. `CGSize`
     ///   - color: color for shadow of view. `UIColor?`
     ///   - opacity: opacity for shadow of view. `Float`
-    func setShadow(
+    mutating func setShadow(
         radius: CGFloat,
         offset: CGSize,
         color: UIColor?,
