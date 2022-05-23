@@ -87,6 +87,25 @@ public extension SQExtensions where Base: UIView {
         get { self.layer.shadowOpacity }
         set { self.layer.shadowOpacity = newValue }
     }
+    
+    /// Set shadow to view with parameters
+    ///
+    /// - Parameters:
+    ///   - radius: radius for shadow of view. `CGFloat`
+    ///   - offset: offset for shadow of view. `CGSize`
+    ///   - color: color for shadow of view. `UIColor?`
+    ///   - opacity: opacity for shadow of view. `Float`
+    func setShadow(
+        radius: CGFloat,
+        offset: CGSize,
+        color: UIColor?,
+        opacity: Float
+    ) {
+        self.shadowRadius = radius
+        self.shadowOffset = offset
+        self.shadowColor = color
+        self.shadowOpacity = opacity
+    }
 
     /// Border width of view
     var borderWidth: CGFloat {
