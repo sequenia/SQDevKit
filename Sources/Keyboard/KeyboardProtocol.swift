@@ -7,8 +7,16 @@
 
 import UIKit
 
+// MARK: - Associated keys
+private struct SQKeyboardProtocolKeys {
+
+    static var didEndShowKeyboardTimer: UInt8 = 0
+}
+
 // MARK: - Keyboard Protocol
 public protocol KeyboardProtocol: NSObjectProtocol {
+
+    var didEndShowKeyboardTimer: Timer? { get set }
 
 // MARK: - Register/Unregister keyboard
     func registerForKeyboardEvents()
@@ -19,10 +27,24 @@ public protocol KeyboardProtocol: NSObjectProtocol {
                         animationDuration: TimeInterval,
                         animationOptions: UIView.AnimationOptions,
                         isShow: Bool)
+
+    func didEndShowKeyboard()
 }
 
 // MARK: - Keyboard Protocol - Default implementation
 public extension KeyboardProtocol {
+
+    internal(set) var didEndShowKeyboardTimer: Timer? {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SQKeyboardProtocolKeys.didEndShowKeyboardTimer) as? Timer
+            else { return nil }
+
+            return value
+        }
+        set {
+            objc_setAssociatedObject(self, &SQKeyboardProtocolKeys.didEndShowKeyboardTimer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
 // MARK: - Register/Unregister keyboard
     func registerForKeyboardEvents() {
@@ -77,4 +99,22 @@ public extension KeyboardProtocol {
                             isShow: isShow)
     }
 
+    func didEndShowKeyboard() {}
+
+// MARK: - wait show keyboard
+    private func willShowKeyboard() {
+        if didEndShowKeyboardTimer != nil { return }
+
+        self.didEndShowKeyboardTimer = Timer
+            .scheduledTimer(
+                withTimeInterval: 0.1,
+                repeats: false
+            ) { [weak self] timer in
+
+            self?.didEndShowKeyboard()
+            timer.invalidate()
+
+            self?.didEndShowKeyboardTimer = nil
+        }
+    }
 }
