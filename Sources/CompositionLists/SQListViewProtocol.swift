@@ -88,7 +88,7 @@ public extension SQListViewProtocol {
 
         dataSource.supplementaryViewProvider = { [weak self] _, kind, indexPath in
             if let collectionHeaderFooter = self?.factory
-                .view(forCollectionHeaderFooter: kind) {
+                .globalView(forCollectionHeaderFooter: kind) {
                 return collectionHeaderFooter
             }
 

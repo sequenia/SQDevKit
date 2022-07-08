@@ -53,7 +53,7 @@ public protocol SQListFactory: AnyObject {
     /// - Parameters:
     ///   - kind: kind of section view. `String`.
     /// - Returns: Dequeued collection view. `UICollectionReusableView`, nullable
-    func view(
+    func globalView(
         forCollectionHeaderFooter kind: String
     ) -> UICollectionReusableView?
 }
@@ -68,7 +68,7 @@ public extension SQListFactory {
         nil
     }
 
-    func view(
+    func globalView(
         forCollectionHeaderFooter kind: String
     ) -> UICollectionReusableView? {
         nil
