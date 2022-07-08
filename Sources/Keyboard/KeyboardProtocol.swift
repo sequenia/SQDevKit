@@ -54,6 +54,7 @@ public extension KeyboardProtocol {
                                                using: { [weak self] (notification) in
                                                 guard let self = self else { return }
 
+                                                self.willShowKeyboard()
                                                 self.processKeyboard(withNotification: notification,
                                                                      isShow: true)
         })
@@ -103,7 +104,7 @@ public extension KeyboardProtocol {
 
 // MARK: - wait show keyboard
     private func willShowKeyboard() {
-        if didEndShowKeyboardTimer != nil { return }
+        if self.didEndShowKeyboardTimer != nil { return }
 
         self.didEndShowKeyboardTimer = Timer
             .scheduledTimer(

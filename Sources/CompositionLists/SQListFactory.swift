@@ -49,6 +49,13 @@ public protocol SQListFactory: AnyObject {
         kind: String,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionReusableView?
+
+    /// - Parameters:
+    ///   - kind: kind of section view. `String`.
+    /// - Returns: Dequeued collection view. `UICollectionReusableView`, nullable
+    func view(
+        forCollectionHeaderFooter kind: String
+    ) -> UICollectionReusableView?
 }
 
 public extension SQListFactory {
@@ -57,6 +64,12 @@ public extension SQListFactory {
         forSectionContent sectionContent: SQSectionContent,
         kind: String,
         atIndexPath indexPath: IndexPath
+    ) -> UICollectionReusableView? {
+        nil
+    }
+
+    func view(
+        forCollectionHeaderFooter kind: String
     ) -> UICollectionReusableView? {
         nil
     }

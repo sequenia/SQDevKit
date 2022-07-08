@@ -85,7 +85,13 @@ public extension SQListViewProtocol {
                 self?.factory.cell(forItemModel: item, atIndexPath: indexPath)
             }
         )
+
         dataSource.supplementaryViewProvider = { [weak self] _, kind, indexPath in
+            if let collectionHeaderFooter = self?.factory
+                .view(forCollectionHeaderFooter: kind) {
+                return collectionHeaderFooter
+            }
+
             guard let sectionContent = self?.sections[safe: indexPath.section]?.content else { return nil }
 
             return self?.factory.view(
