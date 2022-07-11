@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Semen Kologrivov on 11.01.2022.
 //
@@ -56,6 +56,13 @@ public protocol SQListFactory: AnyObject {
     func globalView(
         forCollectionHeaderFooter kind: String
     ) -> UICollectionReusableView?
+
+    /// - Parameters:
+    ///   - class: type of view. `String`.
+    func updateGlobalView<T: UICollectionReusableView>(
+        forHeaderFooterView class: T.Type,
+        handler: (_ reusableView: T) -> Void
+    )
 }
 
 public extension SQListFactory {
@@ -73,4 +80,9 @@ public extension SQListFactory {
     ) -> UICollectionReusableView? {
         nil
     }
+
+    func updateGlobalView<T: UICollectionReusableView>(
+        forHeaderFooterView class: T.Type,
+        handler: (_ reusableView: T) -> Void
+    ) { }
 }

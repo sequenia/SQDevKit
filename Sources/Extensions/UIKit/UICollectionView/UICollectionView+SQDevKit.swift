@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Semen Kologrivov on 01.03.2021.
 //
@@ -9,6 +9,27 @@ import UIKit
 
 // MARK: - Work with cells
 public extension SQExtensions where Base: UICollectionView {
+
+    /// Register header/footer with class in the global collection view
+    ///
+    /// - Parameters:
+    ///   - viewClass: type of view. `String`.
+    ///
+    /// - Returns: supplementary registration of collection
+    @available(iOS 14.0, *)
+    static func supplementaryRegistration<T: UICollectionReusableView>(
+        _ cellClass: T.Type,
+        handler: UICollectionView.SupplementaryRegistration<T>.Handler? = nil
+    ) -> UICollectionView.SupplementaryRegistration<T> {
+
+        guard let handler = handler else {
+            return UICollectionView.SupplementaryRegistration(
+                elementKind: T.sq.identifier, handler: { _, _, _ in })
+        }
+
+        return UICollectionView.SupplementaryRegistration<T>(
+            elementKind: T.sq.identifier, handler: handler)
+    }
 
     /// Register cell with class in the collection view
     ///
@@ -42,7 +63,7 @@ public extension SQExtensions where Base: UICollectionView {
         }
         self.base.register(T.self, forCellWithReuseIdentifier: cellIdentifier)
     }
-    
+
     /// Register cell with unique nib name
     ///
     /// - Parameters:
@@ -71,7 +92,7 @@ public extension SQExtensions where Base: UICollectionView {
         return self.base.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
                                              for: indexPath) as? T
     }
-    
+
     /// Dequeue cell at index path with unique nib name
     ///
     /// - Parameters:
@@ -139,7 +160,7 @@ public extension SQExtensions where Base: UICollectionView {
             for: indexPath
         ) as? T
     }
-    
+
 }
 
 // MARK: - Utils
