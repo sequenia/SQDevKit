@@ -58,9 +58,9 @@ public protocol SQListFactory: AnyObject {
     ) -> UICollectionReusableView?
 
     /// - Parameters:
-    ///   - viewClass: type of view. `String`.
-    func updateGlobalHeaderFooter<T: UICollectionReusableView>(
-        _ viewClass: T.Type,
+    ///   - class: type of view. `String`.
+    func updateGlobalView<T: UICollectionReusableView>(
+        forHeaderFooterView class: T.Type,
         handler: (_ reusableView: T) -> Void
     )
 }
@@ -81,8 +81,8 @@ public extension SQListFactory {
         nil
     }
 
-    func updateGlobalHeaderFooter<T: UICollectionReusableView>(
-        _ viewClass: T.Type,
+    func updateGlobalView<T: UICollectionReusableView>(
+        forHeaderFooterView class: T.Type,
         handler: (_ reusableView: T) -> Void
     ) { }
 }
