@@ -28,12 +28,14 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setColor(forText textForAttribute: String,
                   withColor color: UIColor?,
-                  caseSensitive: Bool = true) -> NSAttributedString {
+                  caseSensitive: Bool = true,
+                  onlyFirstMatch: Bool = false) -> NSAttributedString {
         
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setColor(forText: textForAttribute,
                          withColor: color,
-                         caseSensitive: caseSensitive)
+                         caseSensitive: caseSensitive,
+                         onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set font color for all string and return NSAttributedString
@@ -55,12 +57,14 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setFont(forText textForAttribute: String,
                  withFont font: UIFont?,
-                 caseSensitive: Bool = true) -> NSAttributedString {
+                 caseSensitive: Bool = true,
+                 onlyFirstMatch: Bool = false) -> NSAttributedString {
         
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setFont(forText: textForAttribute,
                         withFont: font,
-                        caseSensitive: caseSensitive)
+                        caseSensitive: caseSensitive,
+                        onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set underscore for all string and return NSAttributedString
@@ -77,11 +81,13 @@ public extension SQExtensions where Base: NSAttributedString {
     ///   - forText: substring for setting underscoring.`String`.
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setUnderscore(forText textForAttribute: String,
-                       caseSensitive: Bool = true) -> NSAttributedString {
+                       caseSensitive: Bool = true,
+                       onlyFirstMatch: Bool = false) -> NSAttributedString {
         
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setUnderscore(forText: textForAttribute,
-                              caseSensitive: caseSensitive)
+                              caseSensitive: caseSensitive,
+                              onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set strikethrough for all string
@@ -100,11 +106,13 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     @discardableResult
     func setStrikethrough(forText textForAttribute: String,
-                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+                          caseSensitive: Bool = true,
+                          onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setStrikethrough(forText: textForAttribute,
-                                 caseSensitive: caseSensitive)
+                                 caseSensitive: caseSensitive,
+                                 onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set line height for all string and return NSAttributedString
@@ -125,11 +133,14 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setLineHeight(forText textForAttribute: String,
                        withLineHeight lineHeight: CGFloat,
-                       caseSensitive: Bool = true) -> NSAttributedString {
+                       caseSensitive: Bool = true,
+                       onlyFirstMatch: Bool = false) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setLineHeight(forText: textForAttribute,
                               withLineHeight: lineHeight,
-                              caseSensitive: caseSensitive)
+                              caseSensitive: caseSensitive,
+                              onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set text alignment
@@ -150,10 +161,14 @@ public extension SQExtensions where Base: NSAttributedString {
     /// - Returns: NSAttributedString object with setted parameters `NSAttributedString`
     func setAlignment(forText textForAttribute: String,
                       withAlignment alignment: NSTextAlignment,
-                      caseSensitive: Bool = true) -> NSAttributedString {
+                      caseSensitive: Bool = true,
+                      onlyFirstMatch: Bool = false) -> NSAttributedString {
         
         return NSMutableAttributedString(attributedString: self.base)
-            .sq.setAlignment(forText: textForAttribute, withAlignment: alignment)
+            .sq.setAlignment(forText: textForAttribute,
+                             withAlignment: alignment,
+                             caseSensitive: caseSensitive,
+                             onlyFirstMatch: onlyFirstMatch)
     }
 
     /// Set line breaking mode for text
@@ -176,10 +191,14 @@ public extension SQExtensions where Base: NSAttributedString {
     @discardableResult
     func setLineBreakMode(forText textForAttribute: String,
                           withLineBreakMode lineBreakMode: NSLineBreakMode,
-                          caseSensitive: Bool = true) -> NSAttributedString {
+                          caseSensitive: Bool = true,
+                          onlyFirstMatch: Bool = false) -> NSAttributedString {
+        
         return NSMutableAttributedString(attributedString: self.base)
             .sq.setLineBreakMode(forText: textForAttribute,
-                                 withLineBreakMode: lineBreakMode, caseSensitive: caseSensitive)
+                                 withLineBreakMode: lineBreakMode,
+                                 caseSensitive: caseSensitive,
+                                 onlyFirstMatch: onlyFirstMatch)
     }
 
 

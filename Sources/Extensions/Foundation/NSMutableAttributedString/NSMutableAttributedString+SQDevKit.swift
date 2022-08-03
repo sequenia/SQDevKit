@@ -27,7 +27,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     @discardableResult
     func setColor(forText textForAttribute: String,
                   withColor color: UIColor?,
-                  caseSensitive: Bool = true) -> NSMutableAttributedString {
+                  caseSensitive: Bool = true,
+                  onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         guard let color = color,
               !textForAttribute.isEmpty else { return self.base }
@@ -38,6 +39,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             self.base.addAttribute(.foregroundColor,
                                    value: color,
                                    range: range)
+            
+            if onlyFirstMatch { break }
         }
         
         return self.base
@@ -60,7 +63,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     @discardableResult
     func setFont(forText textForAttribute: String,
                  withFont font: UIFont?,
-                 caseSensitive: Bool = true) -> NSMutableAttributedString {
+                 caseSensitive: Bool = true,
+                 onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         guard let font = font,
               !textForAttribute.isEmpty else { return self.base }
@@ -71,6 +75,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             self.base.addAttribute(.font,
                                    value: font,
                                    range: range)
+            
+            if onlyFirstMatch { break }
         }
         
         return self.base
@@ -89,7 +95,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting color.`String`.
     @discardableResult
     func setUnderscore(forText textForAttribute: String,
-                       caseSensitive: Bool = true) -> NSMutableAttributedString {
+                       caseSensitive: Bool = true,
+                       onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         if textForAttribute.isEmpty { return self.base }
 
@@ -99,6 +106,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             self.base.addAttribute(.underlineStyle,
                                    value: NSUnderlineStyle.thick.rawValue,
                                    range: range)
+            
+            if onlyFirstMatch { break }
         }
         
         return self.base
@@ -117,7 +126,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     ///   - forText: substring for setting strikethrough.`String`.
     @discardableResult
     func setStrikethrough(forText textForAttribute: String,
-                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+                          caseSensitive: Bool = true,
+                          onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         if textForAttribute.isEmpty { return self.base }
 
@@ -127,6 +137,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             self.base.addAttribute(.strikethroughStyle,
                                    value: NSUnderlineStyle.single.rawValue,
                                    range: range)
+            
+            if onlyFirstMatch { break }
         }
         
         return self.base
@@ -149,7 +161,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     @discardableResult
     func setLineHeight(forText textForAttribute: String,
                        withLineHeight lineHeight: CGFloat,
-                       caseSensitive: Bool = true) -> NSMutableAttributedString {
+                       caseSensitive: Bool = true,
+                       onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         if textForAttribute.isEmpty { return self.base }
 
@@ -165,6 +178,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             paragraph.lineHeightMultiple = lineHeight
 
             self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+            
+            if onlyFirstMatch { break }
         }
 
         return self.base
@@ -187,7 +202,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     @discardableResult
     func setAlignment(forText textForAttribute: String,
                       withAlignment alignment: NSTextAlignment,
-                      caseSensitive: Bool = true) -> NSMutableAttributedString {
+                      caseSensitive: Bool = true,
+                      onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
         
         if textForAttribute.isEmpty { return self.base }
         
@@ -200,6 +216,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             paragraph.alignment = alignment
 
             self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+            
+            if onlyFirstMatch { break }
         }
         
         return self.base
@@ -222,7 +240,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
     @discardableResult
     func setLineBreakMode(forText textForAttribute: String,
                           withLineBreakMode lineBreakMode: NSLineBreakMode,
-                          caseSensitive: Bool = true) -> NSMutableAttributedString {
+                          caseSensitive: Bool = true,
+                          onlyFirstMatch: Bool = false) -> NSMutableAttributedString {
 
         if textForAttribute.isEmpty { return self.base }
 
@@ -235,6 +254,8 @@ public extension SQExtensions where Base: NSMutableAttributedString {
             paragraph.lineBreakMode = lineBreakMode
 
             self.base.addAttribute(.paragraphStyle, value: paragraph, range: range)
+            
+            if onlyFirstMatch { break }
         }
 
         return self.base
