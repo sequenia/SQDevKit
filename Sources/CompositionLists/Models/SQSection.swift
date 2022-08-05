@@ -13,6 +13,11 @@ public struct SQSection {
     /// Content of section
     public let content: SQSectionContent
 
+    /// Section identifier
+    public var id: String {
+        self.content.id
+    }
+
     public init(_ content: SQSectionContent) {
         self.content = content
     }
@@ -22,19 +27,7 @@ public struct SQSection {
 extension SQSection: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.content.id)
-        hasher.combine(self.content.items)
-        if let headerHash = self.content.header?.hashValue {
-            hasher.combine(headerHash)
-        }
-
-        if let footerHash = self.content.footer?.hashValue {
-            hasher.combine(footerHash)
-        }
-
-        if let badgeHash = self.content.badge?.hashValue {
-            hasher.combine(badgeHash)
-        }
+        hasher.combine(self.id)
     }
 }
 
@@ -42,6 +35,6 @@ extension SQSection: Hashable {
 extension SQSection: Equatable {
 
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.content.isEqual(to: rhs.content)
+        lhs.id == rhs.id
     }
 }

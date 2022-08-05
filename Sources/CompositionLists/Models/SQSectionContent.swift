@@ -24,8 +24,6 @@ public protocol SQSectionContent: Any {
 
     /// Section footer
     var footer: AnyHashable? { get }
-
-    func isEqual(to other: SQSectionContent) -> Bool
 }
 
 public extension SQSectionContent {
@@ -34,13 +32,9 @@ public extension SQSectionContent {
 
     var badge: AnyHashable? { nil }
 
-    var footer: AnyHashable? { nil }
-
-    func isEqual(to other: SQSectionContent) -> Bool {
-        self.id == other.id &&
-            self.header == other.header &&
-            self.footer == other.footer &&
-            self.badge == other.badge &&
-            self.items == other.items
+    var items: [AnyHashable] {
+        []
     }
+
+    var footer: AnyHashable? { nil }
 }

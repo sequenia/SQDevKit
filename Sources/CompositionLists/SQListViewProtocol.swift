@@ -127,16 +127,17 @@ public extension SQListViewProtocol {
         animated: Bool,
         completion: (() -> Void)?
     ) {
-        var snapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
-        var currentSnapshot = self.dataSource.snapshot()
+        var snapshot = self.dataSource.snapshot()
+        var newSnapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
+
         self.sections = content.map { SQSection($0) }
         self.sections.forEach { section in
-            snapshot.appendSections([section])
-            snapshot.appendItems(section.content.items)
+            newSnapshot.appendSections([section])
+            newSnapshot.appendItems(section.content.items)
         }
 
         self.dataSource.apply(
-            snapshot,
+            newSnapshot,
             animatingDifferences: animated,
             completion: {
                 completion?()
