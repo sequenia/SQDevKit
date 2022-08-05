@@ -128,15 +128,19 @@ public extension SQListViewProtocol {
         completion: (() -> Void)?
     ) {
         var snapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
+        var currentSnapshot = self.dataSource.snapshot()
         self.sections = content.map { SQSection($0) }
         self.sections.forEach { section in
             snapshot.appendSections([section])
             snapshot.appendItems(section.content.items)
         }
+
         self.dataSource.apply(
             snapshot,
             animatingDifferences: animated,
-            completion: completion
+            completion: {
+                completion?()
+            }
         )
     }
 }

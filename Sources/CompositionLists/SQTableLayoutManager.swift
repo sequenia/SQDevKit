@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Semen Kologrivov on 12.01.2022.
 //
@@ -11,6 +11,7 @@ import UIKit
 public protocol SQTableLayoutManagerDelegate: AnyObject {
 
     func configureLayout(into config: inout UICollectionLayoutListConfiguration)
+    func configureWholeLayout(into config: inout UICollectionViewCompositionalLayoutConfiguration)
     func content(forSection section: Int) -> SQSectionContent?
 }
 
@@ -22,6 +23,8 @@ public extension SQTableLayoutManagerDelegate {
         config.showsSeparators = false
     }
 
+    func configureWholeLayout(into config: inout UICollectionViewCompositionalLayoutConfiguration) {}
+
     func content(forSection section: Int) -> SQSectionContent? { nil }
 }
 
@@ -32,7 +35,7 @@ open class SQTableLayoutManager {
     public weak var delegate: SQTableLayoutManagerDelegate!
 
     public init(
-        appearance: UICollectionLayoutListConfiguration.Appearance = .grouped,
+        appearance: UICollectionLayoutListConfiguration.Appearance = .plain,
         delegate: SQTableLayoutManagerDelegate
     ) {
         self.appearance = appearance
@@ -40,7 +43,7 @@ open class SQTableLayoutManager {
     }
 
     open func createLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout(
+        let collectionViewLayout = UICollectionViewCompositionalLayout(
             sectionProvider: { index, environment in
                 var config = UICollectionLayoutListConfiguration(appearance: self.appearance)
                 self.delegate.configureLayout(into: &config)
@@ -55,5 +58,11 @@ open class SQTableLayoutManager {
                 )
             }
         )
+
+        var config = UICollectionViewCompositionalLayoutConfiguration()
+        self.delegate.configureWholeLayout(into: &config)
+        collectionViewLayout.configuration = config
+
+        return collectionViewLayout
     }
 }
