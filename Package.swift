@@ -24,6 +24,10 @@ let package = Package(
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.1")
+        ),
+        .package(
+            url: "https://github.com/ra1028/DiffableDataSources.git",
+            .upToNextMajor(from: "0.5.0")
         )
     ],
     targets: [
@@ -49,7 +53,8 @@ let package = Package(
         .target(
             name: "SQCompositionLists",
             dependencies: [
-                "SQExtensions"
+                "SQExtensions",
+                .product(name: "DiffableDataSources", package: "DiffableDataSources")
             ],
             path: "./Sources/CompositionLists"
         ),

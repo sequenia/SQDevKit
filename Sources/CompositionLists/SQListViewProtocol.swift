@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DiffableDataSources
 
 // MARK: - Associated keys
 private struct SQListViewAssociatedKeys {
@@ -17,7 +18,7 @@ private struct SQListViewAssociatedKeys {
 
 // MARK: - Typealias
 @available(iOS 13.0, *)
-public typealias SQDataSource = UICollectionViewDiffableDataSource<SQSection, AnyHashable>
+public typealias SQDataSource = CollectionViewDiffableDataSource<SQSection, AnyHashable>
 
 // MARK: - Protocol
 @available(iOS 13.0, *)
@@ -128,7 +129,7 @@ public extension SQListViewProtocol {
         completion: (() -> Void)?
     ) {
         var snapshot = self.dataSource.snapshot()
-        var newSnapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
+        var newSnapshot = DiffableDataSourceSnapshot<SQSection, AnyHashable>()
 
         self.sections = content.map { SQSection($0) }
         self.sections.forEach { section in

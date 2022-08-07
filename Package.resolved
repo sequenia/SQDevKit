@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "DiffableDataSources",
+        "repositoryURL": "https://github.com/ra1028/DiffableDataSources.git",
+        "state": {
+          "branch": null,
+          "revision": "a457cf63456b3aeec2a3626af0230c98b0733927",
+          "version": "0.5.0"
+        }
+      },
+      {
         "package": "DifferenceKit",
         "repositoryURL": "https://github.com/ra1028/DifferenceKit.git",
         "state": {
