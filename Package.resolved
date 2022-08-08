@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "DiffableDataSources",
-        "repositoryURL": "https://github.com/ra1028/DiffableDataSources.git",
+        "repositoryURL": "https://github.com/cefiro666/DiffableDataSources",
         "state": {
-          "branch": null,
-          "revision": "a457cf63456b3aeec2a3626af0230c98b0733927",
-          "version": "0.5.0"
+          "branch": "master",
+          "revision": "23d05ca2887e311c7073ffbca0c185b5e1539a76",
+          "version": null
         }
       },
       {

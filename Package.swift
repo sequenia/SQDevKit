@@ -26,8 +26,8 @@ let package = Package(
             .upToNextMajor(from: "5.0.1")
         ),
         .package(
-            url: "https://github.com/ra1028/DiffableDataSources.git",
-            .upToNextMajor(from: "0.5.0")
+            url: "https://github.com/cefiro666/DiffableDataSources",
+            .branch("master")
         )
     ],
     targets: [
