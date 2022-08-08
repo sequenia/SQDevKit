@@ -13,6 +13,8 @@ public protocol SQTableLayoutManagerDelegate: AnyObject {
     func configureLayout(into config: inout UICollectionLayoutListConfiguration)
     func configureWholeLayout(into config: inout UICollectionViewCompositionalLayoutConfiguration)
     func content(forSection section: Int) -> SQSectionContent?
+    func leadingSwipeActionConfiguration(atIndexPath indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    func trailingSwipeActionConfiguration(atIndexPath indexPath: IndexPath) -> UISwipeActionsConfiguration?
 }
 
 @available(iOS 14.0, *)
@@ -26,6 +28,9 @@ public extension SQTableLayoutManagerDelegate {
     func configureWholeLayout(into config: inout UICollectionViewCompositionalLayoutConfiguration) {}
 
     func content(forSection section: Int) -> SQSectionContent? { nil }
+    
+    func leadingSwipeActionConfiguration(atIndexPath indexPath: IndexPath) -> UISwipeActionsConfiguration? { nil }
+    func trailingSwipeActionConfiguration(atIndexPath indexPath: IndexPath) -> UISwipeActionsConfiguration? { nil }
 }
 
 @available(iOS 14.0, *)
@@ -46,6 +51,15 @@ open class SQTableLayoutManager {
         let collectionViewLayout = UICollectionViewCompositionalLayout(
             sectionProvider: { index, environment in
                 var config = UICollectionLayoutListConfiguration(appearance: self.appearance)
+                
+                config.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                    return self?.delegate.trailingSwipeActionConfiguration(atIndexPath: indexPath)
+                }
+                
+                config.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                    return self?.delegate.leadingSwipeActionConfiguration(atIndexPath: indexPath)
+                }
+                
                 self.delegate.configureLayout(into: &config)
 
                 let content = self.delegate.content(forSection: index)
