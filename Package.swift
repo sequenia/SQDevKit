@@ -24,13 +24,18 @@ let package = Package(
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.1")
+        ),
+        .package(
+            url: "https://github.com/SnapKit/SnapKit.git",
+            .upToNextMajor(from: "5.6.0")
         )
     ],
     targets: [
         .target(
             name: "SQExtensions",
             dependencies: [
-                .product(name: "SwiftyJSON", package: "SwiftyJSON")
+                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+                .product(name: "SnapKit", package: "SnapKit")
             ],
             path: "./Sources/Extensions"
         ),
