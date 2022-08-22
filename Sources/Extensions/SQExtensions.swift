@@ -77,3 +77,9 @@ extension NSObject: SQExtensionsCompatible { }
 import SwiftyJSON
 /// Extend JSON with `sq` proxy.
 extension JSON: SQExtensionsCompatible { }
+
+import SnapKit
+
+extension ConstraintMakerExtendable: SQExtensionsCompatible {}
+
+extension ConstraintMakerEditable: SQExtensionsCompatible {}
