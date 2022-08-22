@@ -16,7 +16,7 @@ public struct SQSectionSettings {
     let alternativeGroupSize: NSCollectionLayoutSize
     let itemSize: NSCollectionLayoutSize
     let itemEdgeSpacing: NSCollectionLayoutEdgeSpacing
-    let groupEdgeSpacing: NSCollectionLayoutEdgeSpacing?
+    let groupEdgeSpacing: NSCollectionLayoutEdgeSpacing
     let groupInterItemSpacing: NSCollectionLayoutSpacing
     let groupContentInsets: NSDirectionalEdgeInsets
     let sectionLayoutContentInsets: NSDirectionalEdgeInsets
@@ -26,13 +26,29 @@ public struct SQSectionSettings {
 // MARK: - Init
     public init(
         groupSize: NSCollectionLayoutSize,
-        alternativeGroupSize: NSCollectionLayoutSize = .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
-        itemSize: NSCollectionLayoutSize = .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
-        itemEdgeSpacing: NSCollectionLayoutEdgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .none, trailing: .none, bottom: .none),
+        alternativeGroupSize: NSCollectionLayoutSize = .init(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        ),
+        itemSize: NSCollectionLayoutSize = .init(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        ),
+        itemEdgeSpacing: NSCollectionLayoutEdgeSpacing = .init(
+            leading: .none,
+            top: .none,
+            trailing: .none,
+            bottom: .none
+        ),
         groupInterItemSpacing: NSCollectionLayoutSpacing = .fixed(.zero),
         groupContentInsets: NSDirectionalEdgeInsets = .zero,
         sectionLayoutContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(),
-        groupEdgeSpacing: NSCollectionLayoutEdgeSpacing? = nil,
+        groupEdgeSpacing: NSCollectionLayoutEdgeSpacing = .init(
+            leading: .none,
+            top: .none,
+            trailing: .none,
+            bottom: .none
+        ),
         bannersVerticalWidth: CGFloat = UIScreen.sq.width - 16 * 2,
         bannersVerticalItemsSpacing: CGFloat = 6
     ) {
