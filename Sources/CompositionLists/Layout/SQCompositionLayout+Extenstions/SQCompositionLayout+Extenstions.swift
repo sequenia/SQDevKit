@@ -10,8 +10,16 @@ import UIKit
 @available(iOS 13.0, *)
 public extension NSCollectionLayoutSection {
     
-// MARK: - createFiltersLayoutSection
-    static func createFiltersLayoutSection(
+// MARK: - createTagsCloudLayoutSection
+    /// Make a tags cloud layout
+    ///
+    ///  - Parameters:
+    ///   - uiSettings: Settings for layout, can choose default - tagsCloudSettings.`SQSectionSettings`.
+    ///
+    /// Example Layout:
+    ///    |──────|  |──────| |──────|
+
+    static func createTagsCloudLayoutSection(
         uiSettings: SQSectionSettings
     ) -> NSCollectionLayoutSection {
         let groupSize = uiSettings.groupSize
@@ -32,6 +40,21 @@ public extension NSCollectionLayoutSection {
     }
     
 // MARK: - createTwoColumnLayoutSection
+    /// Make a two column layout
+    ///
+    ///  - Parameters:
+    ///   - uiSettings: Settings for layout, can choose default - twoColumnSettings.`SQSectionSettings`.
+    ///
+    /// Example Layout:
+    ///    ──────────────────
+    ///    ──                    ──                      ──
+    ///    ──                    ──                      ──
+    ///    ──                    ──                      ──
+    ///    ──                    ──                      ──
+    ///    ──                    ──                      ──
+    ///    ──                    ──                      ──
+    ///    ──────────────────
+    
     static func createTwoColumnLayoutSection(
         uiSettings: SQSectionSettings
     ) -> NSCollectionLayoutSection {
@@ -59,8 +82,21 @@ public extension NSCollectionLayoutSection {
         return sectionLayout
     }
     
-// MARK: - createHorizontalBannersLayoutSection
-    static func createHorizontalBannersLayoutSection(
+// MARK: - createHorizontalLayoutSection
+    /// Make a horizontal layout
+    ///
+    ///  - Parameters:
+    ///   - uiSettings: Settings for layout, can choose default - horizontalSettings.`SQSectionSettings`.
+    ///   - scrollBehavior: The section’s scrolling behavior in relation to the main layout axis.`UICollectionLayoutSectionOrthogonalScrollingBehavior`.
+    ///
+    /// Example Layout:
+    ///        ──────────────────
+    ///        ──                                                  ──
+    ///        ──                                                  ──
+    ///        ──                                                  ──
+    ///        ──────────────────
+
+    static func createHorizontalLayoutSection(
         uiSettings: SQSectionSettings,
         scrollBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior
     ) -> NSCollectionLayoutSection {
@@ -83,8 +119,25 @@ public extension NSCollectionLayoutSection {
         return layoutSection
     }
     
-// MARK: - createVerticalBannersLayoutSection
-    static func createVerticalBannersBlockLayoutSection(
+// MARK: - createTilesLayoutSection
+    /// Make a tiles layout
+    ///
+    ///  - Parameters:
+    ///   - uiSettings: Settings for layout, can choose default - tilesSettings.`SQSectionSettings`.
+    ///   - metrics: metrics for tile width
+    ///
+    /// Example Layout:
+    /// |–––––––––––––––––––––––––––|
+    /// |                    tile 1                     |
+    /// |–––––––––––––––––––––––––––|
+    /// |    tile 2  |             tile 3             |
+    /// |    tile 2  |             tile 3             |
+    /// |–––––––––––––––––––––––––––|
+    /// |         tile 4               |    tile 5    |
+    /// |         tile 4               |    tile 5    |
+    /// |–––––––––––––––––––––––––––|
+    
+    static func createTilesLayoutSection(
         uiSettings: SQSectionSettings,
         metrics: [SQSectionMetrics]
     ) -> NSCollectionLayoutSection {

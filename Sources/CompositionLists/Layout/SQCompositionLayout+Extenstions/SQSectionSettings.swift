@@ -70,8 +70,8 @@ public struct SQSectionSettings {
 @available(iOS 13.0, *)
 public extension SQSectionSettings {
     
-// MARK: - defaultFiltersSettings
-    static var defaultFiltersSettings: SQSectionSettings {
+// MARK: - defaultTagsCloudSettings
+    static var defaultTagsCloudSettings: SQSectionSettings {
         return .init(
             groupSize: .init(
                 widthDimension: .fractionalWidth(1),
@@ -130,8 +130,8 @@ public extension SQSectionSettings {
         )
     }
     
-// MARK: - defaultHorizontalBannerSettings
-    static var defaultHorizontalBannerSettings: SQSectionSettings {
+// MARK: - defaultHorizontalSettings
+    static var defaultHorizontalSettings: SQSectionSettings {
         .init(
             groupSize: .init(
                 widthDimension: .fractionalWidth(1),
@@ -150,8 +150,8 @@ public extension SQSectionSettings {
         )
     }
     
-// MARK: - defaultVerticalBannersSettings
-    static var defaultVerticalBannersSettings: SQSectionSettings {
+// MARK: - defaultTilesSettings
+    static var defaultTilesSettings: SQSectionSettings {
         .init(
             groupSize: .init(
                 widthDimension: .fractionalWidth(1),
