@@ -59,7 +59,8 @@ public extension SQExtensions where Base == JSON {
             self.base.object = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? NSNull()
         }
     }
-    
+
+// MARK: - CGFLoat
     var cgFloat: CGFloat? {
         get {
             if let value = base.number?.floatValue {
