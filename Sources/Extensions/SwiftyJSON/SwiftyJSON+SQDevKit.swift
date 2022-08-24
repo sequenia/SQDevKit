@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftyJSON
+import UIKit
+import SQExtensions
 
 public extension SQExtensions where Base == JSON {
     
@@ -55,6 +57,22 @@ public extension SQExtensions where Base == JSON {
         }
         set {
             self.base.object = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? NSNull()
+        }
+    }
+    
+    var cgFloat: CGFloat? {
+        get {
+            if let value = base.number?.floatValue {
+                return CGFloat(value)
+            }
+            return nil
+        }
+        set {
+            if let newValue = newValue {
+                base.object = NSNumber(value: newValue)
+            } else {
+                base.object = NSNull()
+            }
         }
     }
 }

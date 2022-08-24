@@ -57,6 +57,16 @@ public protocol SQListViewProtocol: AnyObject {
         animated: Bool,
         completion: (() -> Void)?
     )
+    
+    /// Add section with settings
+    ///
+    /// - Parameters:
+    ///   - section: sections content.`SQSectionContent`.
+    ///   - spacings: section top & bottom spacings.`Spacings`.
+    func addSectionWithSettings(
+        _ section: SQSectionContent,
+        withSpacings spacings: Spacings
+    ) -> [SQSectionContent]
 }
 
 // MARK: - Default implementation
@@ -144,4 +154,49 @@ public extension SQListViewProtocol {
             }
         )
     }
+    
+// MARK: - AddSectionWithSettings
+    func addSectionWithSettings(
+        _ section: SQSectionContent,
+        withSpacings spacings: Spacings
+    ) -> [SQSectionContent] {
+        self.addSectionWithSettings(section, .clear, withSpacings: spacings)
+    }
+    
+    func addSectionWithSettings(
+        _ section: SQSectionContent,
+        _ backgroundColor: UIColor = .clear,
+        withSpacings spacings: Spacings
+    ) -> [SQSectionContent] {
+        var result = [section]
+        let backgroundColor = backgroundColor
+        
+        if spacings.top > .zero {
+            result.insert(
+                SpacerSection(
+                    id: "\(section.id)" + .topSpacerAdditional,
+                    height: spacings.top,
+                    backgroundColor: backgroundColor
+                ),
+                at: .zero
+            )
+        }
+        if spacings.bottom > .zero {
+            result.append(
+                SpacerSection(
+                    id: "\(section.id)" + .bottomSpacerAdditional,
+                    height: spacings.bottom,
+                    backgroundColor: backgroundColor
+                )
+            )
+        }
+        return result
+    }
+}
+
+// MARK: - String
+private extension String {
+    
+    static let topSpacerAdditional = "topSpacer"
+    static let bottomSpacerAdditional = "bottomSpacer"
 }
