@@ -43,7 +43,6 @@ public class EmptyCell: UICollectionViewCell {
         
         self.backgroundColor = model.backgroundColor
         self.contentView.backgroundColor = model.backgroundColor
-        self.setupLayout()
         
         return self
     }
