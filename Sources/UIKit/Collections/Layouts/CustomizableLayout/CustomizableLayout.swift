@@ -6,29 +6,11 @@
 //
 
 import UIKit
-import SQCompositionLists
 
-// MARK: - CustomizableLayoutAttributes
-public class CustomizableLayoutAttributes: UICollectionViewLayoutAttributes {
-
-    var settings: UISettings?
-    
-    override open func copy(with zone: NSZone? = nil) -> Any {
-        // swiftlint:disable force_cast
-        let copy = super.copy(with: zone) as! CustomizableLayoutAttributes
-        copy.settings = self.settings
-        return copy
-    }
-
-    override open func isEqual(_ object: Any?) -> Bool {
-        if let attributes = object as? CustomizableLayoutAttributes {
-            return super.isEqual(object) &&
-            attributes.settings == self.settings
-        } else {
-            return false
-        }
-    }
-}
+#if canImport(SQExtensions)
+import SQExtensions
+import SQEntities
+#endif
 
 // MARK: - CustomizableLayoutDelegate
 public protocol CustomizableLayoutDelegate: AnyObject {
@@ -110,6 +92,7 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
             guard let settings = self.delegate?.uiSettings(for: attribute.indexPath),
                   let customAttribute = attribute as? CustomizableLayoutAttributes
             else { return }
+            
             customAttribute.settings = settings
         }
         return superAttributes

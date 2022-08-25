@@ -12,7 +12,7 @@ import SQExtensions
 #endif
 
 /// Inheritance of UINavigationController for easy work with screen-specified status bar style
-public class SQNavigationController: UINavigationController {
+open class SQNavigationController: UINavigationController {
 
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         self.topViewController?.preferredStatusBarStyle ?? .default

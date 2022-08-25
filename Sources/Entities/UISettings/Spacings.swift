@@ -11,11 +11,11 @@ import UIKit
 
 // MARK: - Spacings
 public final class Spacings {
-    
+
 // MARK: - Properties
     public var top: CGFloat = .zero
     public var bottom: CGFloat = .zero
-    
+
 // MARK: - Inits
     public init(
         top: CGFloat = .zero,
@@ -24,7 +24,7 @@ public final class Spacings {
         self.top = top
         self.bottom = bottom
     }
-    
+
     public init?(withJSON json: JSON) {
         self.top = json["top"].sq.cgFloat ?? .zero
         self.bottom = json["bottom"].sq.cgFloat ?? .zero

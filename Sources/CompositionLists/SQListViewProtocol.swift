@@ -7,12 +7,17 @@
 
 import UIKit
 
+#if canImport(SQExtensions)
+import SQExtensions
+import SQEntities
+#endif
+
 // MARK: - Associated keys
 private struct SQListViewAssociatedKeys {
 
-    static var sections: UInt8 = 0
+    static var sections: UInt8   = 0
     static var dataSource: UInt8 = 1
-    static var factory: UInt8 = 2
+    static var factory: UInt8    = 2
 }
 
 // MARK: - Typealias
@@ -57,15 +62,35 @@ public protocol SQListViewProtocol: AnyObject {
         animated: Bool,
         completion: (() -> Void)?
     )
+
+    /// Add section with settings
+    ///
+    /// - Parameters:
+    ///   - section: sections content.`SQSectionContent`
+    func addSection(
+        _ section: SQSectionContent
+    ) -> [SQSectionContent]
     
     /// Add section with settings
     ///
     /// - Parameters:
     ///   - section: sections content.`SQSectionContent`.
     ///   - spacings: section top & bottom spacings.`Spacings`.
-    func addSectionWithSettings(
+    func addSection(
         _ section: SQSectionContent,
         withSpacings spacings: Spacings
+    ) -> [SQSectionContent]
+
+    /// Add section with settings
+    ///
+    /// - Parameters:
+    ///   - section: sections content.`SQSectionContent`.
+    ///   - spacings: section top & bottom spacings.`Spacings`.
+    ///   - backgroundColor: background color of section.`UIColor?`.
+    func addSection(
+        _ section: SQSectionContent,
+        withSpacings spacings: Spacings,
+        backgroundColor: UIColor?
     ) -> [SQSectionContent]
 }
 
@@ -137,7 +162,6 @@ public extension SQListViewProtocol {
         animated: Bool,
         completion: (() -> Void)?
     ) {
-        var snapshot = self.dataSource.snapshot()
         var newSnapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
 
         self.sections = content.map { SQSection($0) }
@@ -154,19 +178,24 @@ public extension SQListViewProtocol {
             }
         )
     }
-    
-// MARK: - AddSectionWithSettings
-    func addSectionWithSettings(
+
+    func addSection(
+        _ section: SQSectionContent
+    ) -> [SQSectionContent] {
+        self.addSection(section, withSpacings: .default, backgroundColor: nil)
+    }
+
+    func addSection(
         _ section: SQSectionContent,
         withSpacings spacings: Spacings
     ) -> [SQSectionContent] {
-        self.addSectionWithSettings(section, .clear, withSpacings: spacings)
+        self.addSection(section, withSpacings: spacings, backgroundColor: nil)
     }
-    
-    func addSectionWithSettings(
+
+    func addSection(
         _ section: SQSectionContent,
-        _ backgroundColor: UIColor = .clear,
-        withSpacings spacings: Spacings
+        withSpacings spacings: Spacings,
+        backgroundColor: UIColor?
     ) -> [SQSectionContent] {
         var result = [section]
         let backgroundColor = backgroundColor
@@ -176,7 +205,7 @@ public extension SQListViewProtocol {
                 SpacerSection(
                     id: "\(section.id)" + .topSpacerAdditional,
                     height: spacings.top,
-                    backgroundColor: backgroundColor
+                    backgroundColor: backgroundColor ?? .clear
                 ),
                 at: .zero
             )
@@ -186,7 +215,7 @@ public extension SQListViewProtocol {
                 SpacerSection(
                     id: "\(section.id)" + .bottomSpacerAdditional,
                     height: spacings.bottom,
-                    backgroundColor: backgroundColor
+                    backgroundColor: backgroundColor ?? .clear
                 )
             )
         }

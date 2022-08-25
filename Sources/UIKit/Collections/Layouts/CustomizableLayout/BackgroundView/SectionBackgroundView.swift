@@ -6,11 +6,15 @@
 //
 
 import UIKit
-import SQExtensions
 import SnapKit
-import SQUIKit
+
+#if canImport(SQExtensions)
+import SQExtensions
+import SQEntities
+#endif
 
 // MARK: - SectionBackgroundView
+@available(iOS 13.0, *)
 class SectionBackgroundView: UICollectionReusableView {
 
 // MARK: - Properties
@@ -58,6 +62,7 @@ class SectionBackgroundView: UICollectionReusableView {
 }
 
 // MARK: - SQConfigurableView
+@available(iOS 13.0, *)
 extension SectionBackgroundView: SQConfigurableView {
 
     func configure() {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SQCompositionLists
 
 public struct SpacerSection: SQSectionContent {
 

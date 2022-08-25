@@ -6,7 +6,6 @@
 //
 
 import SwiftyJSON
-import SQCompositionLists
 import UIKit
 
 // MARK: - UISettings

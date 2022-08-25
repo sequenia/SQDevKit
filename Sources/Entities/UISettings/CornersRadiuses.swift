@@ -13,10 +13,10 @@ import SQExtensions
 public final class CornersRadiuses {
     
 // MARK: - Properties
-    var topLeft: CGFloat = .zero
-    var topRight: CGFloat = .zero
-    var bottomLeft: CGFloat = .zero
-    var bottomRight: CGFloat = .zero
+    public private(set) var topLeft: CGFloat = .zero
+    public private(set) var topRight: CGFloat = .zero
+    public private(set) var bottomLeft: CGFloat = .zero
+    public private(set) var bottomRight: CGFloat = .zero
     
 // MARK: - Inits
     public init(

@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "SQOperations", targets: ["SQOperations"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
+        .library(name: "SQEntities", targets: ["SQEntities"])
     ],
     dependencies: [
         .package(
@@ -54,7 +55,8 @@ let package = Package(
         .target(
             name: "SQCompositionLists",
             dependencies: [
-                "SQExtensions"
+                "SQExtensions",
+                "SQEntities"
             ],
             path: "./Sources/CompositionLists"
         ),
@@ -73,6 +75,7 @@ let package = Package(
             dependencies: [
                 "SQExtensions",
                 "SQLists",
+                "SQEntities",
                 .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
             ],
             path: "./Sources/UIKit"
@@ -81,6 +84,14 @@ let package = Package(
             name: "SQDefaults",
             dependencies: ["SQExtensions"],
             path: "./Sources/Defaults"
+        ),
+        .target(
+            name: "SQEntities",
+            dependencies: [
+                "SQExtensions",
+                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+            ],
+            path: "./Sources/Entities"
         ),
     ]
 )

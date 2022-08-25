@@ -8,7 +8,6 @@
 import Foundation
 import SwiftyJSON
 import UIKit
-import SQExtensions
 
 public extension SQExtensions where Base == JSON {
     
