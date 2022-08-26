@@ -32,7 +32,8 @@ public extension NSCollectionLayoutSection {
         itemHeight: NSCollectionLayoutDimension,
         itemsHorizontalSpacing: CGFloat = .zero,
         itemsVerticalSpacing: CGFloat = .zero,
-        contentInsets: NSDirectionalEdgeInsets = .zero,
+        groupContentInsets: NSDirectionalEdgeInsets = .zero,
+        sectionContentInsets: NSDirectionalEdgeInsets = .zero,
         widths: [CGFloat]
     ) -> NSCollectionLayoutSection {
         var itemsGrouping = [[CGFloat]]()
@@ -57,8 +58,8 @@ public extension NSCollectionLayoutSection {
         let groups = itemsGrouping.map { widths -> NSCollectionLayoutGroup in
             let spacingsCount = CGFloat(widths.count - 1)
             let availableWidth: CGFloat = UIScreen.main.bounds.width -
-                contentInsets.leading -
-                contentInsets.trailing -
+                sectionContentInsets.leading -
+                sectionContentInsets.trailing -
                 itemsHorizontalSpacing * spacingsCount
             let items = widths.map { width -> NSCollectionLayoutItem in
                 let itemSize = NSCollectionLayoutSize(
@@ -89,8 +90,11 @@ public extension NSCollectionLayoutSection {
         )
 
         mainGroup.interItemSpacing = .fixed(itemsVerticalSpacing)
-        mainGroup.contentInsets = contentInsets
+        mainGroup.contentInsets = groupContentInsets
 
-        return NSCollectionLayoutSection(group: mainGroup)
+        let section = NSCollectionLayoutSection(group: mainGroup)
+        section.contentInsets = sectionContentInsets
+        
+        return section
     }
 }

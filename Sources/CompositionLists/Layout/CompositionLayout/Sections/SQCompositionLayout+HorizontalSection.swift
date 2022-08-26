@@ -9,8 +9,6 @@ import UIKit
 
 @available(iOS 13.0, *)
 public extension NSCollectionLayoutSection {
-
-// MARK: - createHorizontalLayoutSection
     /// Make a horizontal layout
     ///
     ///  - Parameters:
@@ -26,7 +24,8 @@ public extension NSCollectionLayoutSection {
         itemWidth: NSCollectionLayoutDimension,
         itemHeight: NSCollectionLayoutDimension,
         itemsSpacing: CGFloat = .zero,
-        contentInsets: NSDirectionalEdgeInsets = .zero,
+        groupContentInsets: NSDirectionalEdgeInsets = .zero,
+        sectionContentInsets: NSDirectionalEdgeInsets = .zero,
         scrollBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuous
     ) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -45,12 +44,13 @@ public extension NSCollectionLayoutSection {
            layoutSize: groupSize,
            subitems: [item]
        )
+        group.contentInsets = groupContentInsets
 
        let layoutSection = NSCollectionLayoutSection(group: group)
        layoutSection.interGroupSpacing = itemsSpacing
 
        layoutSection.orthogonalScrollingBehavior = scrollBehavior
-       layoutSection.contentInsets = contentInsets
+       layoutSection.contentInsets = sectionContentInsets
        return layoutSection
     }
 }

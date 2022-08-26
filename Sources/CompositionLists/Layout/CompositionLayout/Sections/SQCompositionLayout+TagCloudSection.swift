@@ -23,7 +23,8 @@ public extension NSCollectionLayoutSection {
     static func createTagsCloudLayoutSection(
         itemEdgeSpacing: NSCollectionLayoutEdgeSpacing = .zero,
         itemsHorizontalSpacing: NSCollectionLayoutSpacing = .fixed(.zero),
-        contentInsets: NSDirectionalEdgeInsets = .zero
+        groupContentInsets: NSDirectionalEdgeInsets = .zero,
+        sectionContentInsets: NSDirectionalEdgeInsets = .zero
     ) -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
@@ -40,10 +41,11 @@ public extension NSCollectionLayoutSection {
             ),
             subitems: [item]
         )
-
+        group.contentInsets = groupContentInsets
         group.interItemSpacing = itemsHorizontalSpacing
+
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = contentInsets
+        section.contentInsets = sectionContentInsets
         return section
     }
 }

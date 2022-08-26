@@ -9,6 +9,13 @@ import Foundation
 import SnapKit
 import UIKit
 
+public extension Float {
+
+    static let layoutLowPriority: Float = 250
+    static let layoutDefaultPriority: Float = 750
+    static let layoutHighPriority: Float = 1000
+}
+
 public extension SQExtensions where Base == ConstraintMakerExtendable {
 
     @discardableResult

@@ -75,4 +75,13 @@ public extension SQExtensions where Base == JSON {
             }
         }
     }
+
+    var htmlFormattedString: String? {
+        self.base.string?.sq.htmlAttributed(
+            with: .systemFont(ofSize: 14),
+            color: .white
+        )?.string
+    }
+
+    
 }

@@ -11,10 +11,12 @@ import UIKit
 public extension NSCollectionLayoutSection {
 
 // MARK: - createPlainLayoutSection
-    static func createPlainLayoutSection() -> NSCollectionLayoutSection {
+    static func createPlainLayoutSection(
+        estimatedHeight: NSCollectionLayoutDimension = .defaultEstimatedHeight
+    ) -> NSCollectionLayoutSection {
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .defaultEstimatedHeight
+            heightDimension: estimatedHeight
         )
         let item = NSCollectionLayoutItem(
             layoutSize: size

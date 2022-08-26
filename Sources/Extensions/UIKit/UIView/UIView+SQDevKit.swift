@@ -246,10 +246,23 @@ public extension SQExtensions where Base: UIView {
         self.base.layer.mask = shape
     }
 
+    func rotate(duration: CFTimeInterval) {
+        let rotation = CABasicAnimation(keyPath: .animationKeyPath)
+        rotation.toValue = NSNumber(value: Double.pi * 2)
+        rotation.duration = duration
+        rotation.isCumulative = true
+        rotation.repeatCount = Float.greatestFiniteMagnitude
+        self.base.layer.add(rotation, forKey: .animationName)
+    }
+
+    func stopRotation() {
+        self.base.layer.removeAllAnimations()
+    }
+
 }
 
 /// Create visual effect view with given effect and its intensity
-final class CustomIntensityVisualEffectView: UIVisualEffectView {
+private class CustomIntensityVisualEffectView: UIVisualEffectView {
     
     private let theEffect: UIVisualEffect
     private let customIntensity: CGFloat
@@ -284,4 +297,10 @@ final class CustomIntensityVisualEffectView: UIVisualEffectView {
         animator?.fractionComplete = customIntensity
     }
     
+}
+
+private extension String {
+
+    static let animationKeyPath = "transform.rotation.z"
+    static let animationName = "rotationAnimation"
 }

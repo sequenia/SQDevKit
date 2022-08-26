@@ -34,11 +34,12 @@ public extension NSCollectionLayoutSection {
     ///    ──                     ──                       ──
     ///    ──────────────────
     static func createMultiColumnLayoutSection(
-        columnsCount: Int = 2,
+        columnsCount: Int,
         itemHeight: NSCollectionLayoutDimension,
         itemsHorizontalSpacing: NSCollectionLayoutSpacing = .zero,
         itemsVerticalSpacing: CGFloat = .zero,
-        contentInsets: NSDirectionalEdgeInsets = .zero
+        groupContentInsets: NSDirectionalEdgeInsets = .zero,
+        sectionContentInsets: NSDirectionalEdgeInsets = .zero
     ) -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
@@ -57,10 +58,12 @@ public extension NSCollectionLayoutSection {
         )
 
         group.interItemSpacing = itemsHorizontalSpacing
-        group.contentInsets = contentInsets
+        group.contentInsets = groupContentInsets
 
         let sectionLayout = NSCollectionLayoutSection(group: group)
         sectionLayout.interGroupSpacing = itemsVerticalSpacing
+        sectionLayout.contentInsets = sectionContentInsets
+        
         return sectionLayout
     }
 }
