@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Semen Kologrivov on 24.08.2022.
 //
@@ -29,7 +29,7 @@ public extension NSCollectionLayoutSection {
         scrollBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuous
     ) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-           widthDimension: .fractionalWidth(1),
+           widthDimension: itemWidth,
            heightDimension: itemHeight
        )
 

@@ -11,13 +11,13 @@ import SQCompositionLists
 import SnapKit
 
 @available(iOS 13.0, *)
-public protocol SQListViewDelegate: AnyObject {
+public protocol ListViewDelegate: AnyObject {
 
     func didSelectModel(_ model: AnyHashable?)
 }
 
 @available(iOS 13.0, *)
-open class SQListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectionViewDelegate {
+open class ListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectionViewDelegate {
 
 // MARK: - UI
     public lazy var collectionView: UICollectionView! = {
@@ -32,10 +32,10 @@ open class SQListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectio
     }()
 
     public var factory: SQListFactory!
-    public weak var delegate: SQListViewDelegate?
+    public weak var delegate: ListViewDelegate?
 
 // MARK: - init
-    public init(collectionViewLayout: UICollectionViewLayout, delegate: SQListViewDelegate? = nil) {
+    public init(collectionViewLayout: UICollectionViewLayout, delegate: ListViewDelegate? = nil) {
         super.init(frame: .zero)
 
         self.factory = T(collectionView: self.collectionView)
@@ -57,7 +57,7 @@ open class SQListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectio
     }
 
 // MARK: - Data source
-    internal func reloadDataWithSectionsContent(
+    open func reloadDataWithSectionsContent(
         _ sectionsContent: [SQSectionContent],
         animated: Bool,
         completion: (() -> Void)? = nil
@@ -71,7 +71,7 @@ open class SQListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectio
     }
 
 // MARK: - UICollectionViewDelegate
-    public func collectionView(
+    open func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
@@ -87,7 +87,7 @@ open class SQListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectio
 
 // MARK: - SQConfigurableView
 @available(iOS 13.0, *)
-extension SQListView: SQConfigurableView {
+extension ListView: SQConfigurableView {
 
     public func configure() {}
 
@@ -99,4 +99,3 @@ extension SQListView: SQConfigurableView {
         }
     }
 }
-
