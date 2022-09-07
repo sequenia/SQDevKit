@@ -76,6 +76,7 @@ let package = Package(
                 "SQExtensions",
                 "SQLists",
                 "SQEntities",
+                "SQCompositionLists",
                 .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
             ],
             path: "./Sources/UIKit"
