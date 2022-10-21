@@ -44,7 +44,7 @@ public extension NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1 / CGFloat(columnsCount)),
-                heightDimension: .fractionalHeight(1)
+                heightDimension: itemHeight
             )
         )
 
