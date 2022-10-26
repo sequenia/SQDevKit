@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,7 +15,8 @@ let package = Package(
         .library(name: "SQOperations", targets: ["SQOperations"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
-        .library(name: "SQEntities", targets: ["SQEntities"])
+        .library(name: "SQEntities", targets: ["SQEntities"]),
+        .plugin(name: "SQSwiftLint", targets: ["SQSwiftLint"]),
     ],
     dependencies: [
         .package(
@@ -29,6 +30,10 @@ let package = Package(
         .package(
             url: "https://github.com/SnapKit/SnapKit.git",
             .upToNextMajor(from: "5.6.0")
+        ),
+        .package(
+            url: "https://github.com/realm/SwiftLint.git",
+            .upToNextMajor(from: "0.49.1")
         )
     ],
     targets: [
@@ -93,6 +98,14 @@ let package = Package(
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
             ],
             path: "./Sources/Entities"
+        ),
+        .plugin(
+            name: "SQSwiftLint",
+            capability: .buildTool(),
+            dependencies: [
+                .product(name: "swiftlint", package: "SwiftLint"),
+            ],
+            path: "./Sources/Plugins"
         ),
     ]
 )
