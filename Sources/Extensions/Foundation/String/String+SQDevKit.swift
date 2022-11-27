@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Виталий Баник on 25.03.2021.
 //
@@ -24,7 +24,7 @@ public extension SQExtensions where Base == String {
     var attributedString: NSAttributedString {
         NSAttributedString(string: self.base)
     }
-    
+
     /// Converts string with ISO 8601 format to date (example "2005-08-09T18:31:42")
     var toDate: Date? {
         ISO8601DateFormatter.sq.formatter.date(from: self.base)
@@ -35,7 +35,7 @@ public extension SQExtensions where Base == String {
         let clearedString = self.base.components(separatedBy: .whitespacesAndNewlines).joined()
         return URL(string: "tel://\(clearedString)")
     }
-    
+
     /// Converts string to date with selected format
     ///
     /// - Parameters:
@@ -47,7 +47,7 @@ public extension SQExtensions where Base == String {
 
         return dateFormatter.date(from: self.base)
     }
-    
+
     /// Generating a NSAttributedString from a raw string with html markup
     ///
     /// - Parameters:
@@ -63,12 +63,12 @@ public extension SQExtensions where Base == String {
             "font-family: \(font.familyName), Helvetica !important;" +
             "text-overflow: ellipsis;" +
         "}</style> \(self.base)"
-        
+
         guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }
 
         return data.sq.html2AttributedString
     }
-    
+
     /// Generating a NSAttributedString from a raw string with html markup
     ///
     /// - Parameters:
@@ -76,24 +76,30 @@ public extension SQExtensions where Base == String {
     ///   - size: base font size. `CGFloat`.
     ///   - color: base font color. `UIColor`.
     /// - Returns: NSAttributedString with the passed attributes
-    func htmlAttributed(family: String?, size: CGFloat, color: UIColor) -> NSAttributedString? {
+    func htmlAttributed(
+        family: String?,
+        size: CGFloat,
+        color: UIColor,
+        lineHeight: Int?
+    ) -> NSAttributedString? {
         do {
             let htmlCSSString = "<style>" +
                 "html *" +
                 "{" +
                 "font-size: \(size)px !important;" +
-                "color: #\(color.sq.hexString) !important;" +
+                "line-height: \(lineHeight ?? Int(size))px;" +
+                "color: \(color.sq.hexString) !important;" +
                 "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
                 "text-overflow: ellipsis;" +
                 "}</style> \(self.base)"
-            
+
             guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
                 return nil
             }
-            
+
             var dict: NSDictionary?
             dict = NSMutableDictionary()
-            
+
             return try NSAttributedString(data: data,
                                           options: [
                                                 .documentType: NSAttributedString.DocumentType.html,
@@ -115,7 +121,7 @@ public extension SQExtensions where Base == String {
 
         return String(self.base[range])
     }
-    
+
     /// Returns ranges of substring
     ///
     /// - Parameters:
@@ -123,7 +129,7 @@ public extension SQExtensions where Base == String {
     /// - Returns: Array of ranges for the found string. `[Range]`
     func ranges(of substring: String,
                 caseSensitive: Bool = true) -> [Range<Base.Index>] {
-        
+
         var ranges: [Range<Base.Index>] = []
         while ranges.last.map({ $0.upperBound < self.base.endIndex }) ?? true,
               let range = self.base.range(of: substring,
@@ -131,7 +137,7 @@ public extension SQExtensions where Base == String {
                                           range: (ranges.last?.upperBound ?? self.base.startIndex) ..< self.base.endIndex) {
             ranges.append(range)
         }
-        
+
         return ranges
     }
 
