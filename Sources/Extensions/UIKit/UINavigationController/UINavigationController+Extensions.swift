@@ -9,6 +9,7 @@ import UIKit
 
 /// Protocol for styling navigation bar
 public protocol NavigationBarStyle {
+
     /// Navigation's bar background image. Required
     var backgroundImage: UIImage? { get }
 
@@ -31,7 +32,7 @@ public protocol NavigationBarStyle {
     var titleAttributes: [NSAttributedString.Key: Any] { get }
 
     /// Navigation's bar blur effect. style Not required, will be equal nil without implementation
-    var blurStyle: UIBlurEffect.Style?  { get }
+    var blurStyle: UIBlurEffect.Style? { get }
 }
 
 public extension NavigationBarStyle {
@@ -41,7 +42,7 @@ public extension NavigationBarStyle {
 
     var shadowColor: UIColor? { .clear }
     var isTranslucent: Bool { false }
-    var titleAttributes: [NSAttributedString.Key: Any] { [ : ] }
+    var titleAttributes: [NSAttributedString.Key: Any] { [:] }
     var blurStyle: UIBlurEffect.Style? { nil }
 
     var shadowImage: UIImage? { UIImage.sq.create(withColor: self.shadowColor) }
@@ -57,7 +58,11 @@ public extension SQExtensions where Base: UINavigationController {
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             if #available(iOS 15.0, *) {
-                style.isTranslucent ? appearance.configureWithTransparentBackground() : appearance.configureWithOpaqueBackground()
+                if style.isTranslucent {
+                    appearance.configureWithTransparentBackground()
+                } else {
+                    appearance.configureWithOpaqueBackground()
+                }
             } else {
                 self.base.navigationBar.isTranslucent = style.isTranslucent
             }
@@ -81,7 +86,6 @@ public extension SQExtensions where Base: UINavigationController {
         }
         self.base.navigationBar.tintColor = style.tintColor
 
-
         self.setupBlur(forStyle: style)
     }
 
@@ -99,4 +103,3 @@ public extension SQExtensions where Base: UINavigationController {
     }
 
 }
-

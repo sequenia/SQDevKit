@@ -14,5 +14,3 @@ public extension SQExtensions where Base: NSObject {
         return String(describing: Base.self)
     }
 }
-
-

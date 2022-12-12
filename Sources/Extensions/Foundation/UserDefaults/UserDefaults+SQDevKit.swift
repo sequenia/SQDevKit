@@ -37,4 +37,3 @@ public extension SQExtensions where Base: UserDefaults {
         return decodedData
     }
 }
-

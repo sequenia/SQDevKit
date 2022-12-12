@@ -29,5 +29,3 @@ public extension SQExtensions where Base == ISO8601DateFormatter {
         return formatter
     }
 }
-
-

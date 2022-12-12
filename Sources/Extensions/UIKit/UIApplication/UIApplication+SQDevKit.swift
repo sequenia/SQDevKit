@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 public extension SQExtensions where Base: UIApplication {
 
     /// Application's version number (f.e., 1.0.0)

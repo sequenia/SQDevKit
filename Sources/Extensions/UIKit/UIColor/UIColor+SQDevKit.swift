@@ -93,10 +93,8 @@ public extension UIColor {
     ///   - rgb: digit for representation as hex string. `Int`
     ///
     convenience init?(withInt int: Int) {
-        self.init(withRGBA: String(format:"%02x", int))
+        self.init(withRGBA: String(format: "%02x", int))
     }
-
-    
 }
 
 public extension SQExtensions where Base: UIColor {
@@ -106,6 +104,19 @@ public extension SQExtensions where Base: UIColor {
         var white: CGFloat = .zero
         self.base.getWhite(&white, alpha: nil)
         return white > 0.5
+    }
+
+    var hexString: String {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+
+        self.base.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        let rgba: Int = (Int)(red * 255)<<16 | (Int)(green * 255)<<8 | (Int)(blue * 255)<<0
+
+        return String(format: "#%06x", rgba)
     }
 
     static func interpolate(from: UIColor, to: UIColor, with fraction: CGFloat) -> UIColor {
@@ -127,19 +138,6 @@ public extension SQExtensions where Base: UIColor {
         } else {
             return (color[0], color[1], color[2], color[3])
         }
-    }
-
-    var hexString: String {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-
-        self.base.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-        let rgba: Int = (Int)(red * 255)<<16 | (Int)(green * 255)<<8 | (Int)(blue * 255)<<0
-
-        return String(format: "#%06x", rgba)
     }
 }
 

@@ -14,7 +14,7 @@ public extension SQExtensions where Base: UITableView {
     ///
     /// - Parameters:
     ///   - cellClass: class of cell
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     ///
     /// - Precondition: Cell must have .xib-file and that name must be equal to cell's class
     func register<T: UITableViewCell>(_ cellClass: T.Type,
@@ -32,7 +32,7 @@ public extension SQExtensions where Base: UITableView {
     ///
     /// - Parameters:
     ///   - cellClass: class of cell
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     ///
     func registerClass<T: UITableViewCell>(_ cellClass: T.Type,
                                            identifier: String? = nil) {
@@ -48,7 +48,7 @@ public extension SQExtensions where Base: UITableView {
     /// - Parameters:
     ///   - cellClass: class of cell
     ///   - indexPath: index path of cell. `IndexPath`
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     /// - Returns: cell of table
     func dequeueReusableCell<T: UITableViewCell>(_ cellClass: T.Type,
                                                  indexPath: IndexPath? = nil,

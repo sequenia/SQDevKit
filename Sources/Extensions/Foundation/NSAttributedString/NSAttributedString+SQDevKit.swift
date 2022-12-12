@@ -201,7 +201,6 @@ public extension SQExtensions where Base: NSAttributedString {
                                  onlyFirstMatch: onlyFirstMatch)
     }
 
-
     /// Set line spacing
     ///
     /// - Parameters:

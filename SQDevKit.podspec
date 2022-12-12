@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
     s.platform = :ios
-    s.ios.deployment_target = '10.0'
+    s.ios.deployment_target = '14.0'
     s.name = "SQDevKit"
     s.summary = "Toolkit for iOS developers by Sequenia"
     s.requires_arc = true

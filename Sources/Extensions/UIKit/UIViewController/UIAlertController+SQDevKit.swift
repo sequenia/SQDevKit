@@ -27,7 +27,7 @@ public extension SQExtensions where Base: UIAlertController {
 private class WindowAlertPresentationController: UIViewController {
 
 // MARK: - Properties
-    private lazy var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
+    private lazy var window = UIWindow(frame: UIScreen.main.bounds)
     private let alert: UIAlertController
 
 // MARK: - Initialization
@@ -53,27 +53,24 @@ private class WindowAlertPresentationController: UIViewController {
                 }
             }
             if !existed {
-                window?.rootViewController = self
-                window?.windowLevel = UIWindow.Level.alert + 1
-                window?.makeKeyAndVisible()
+                window.rootViewController = self
+                window.windowLevel = UIWindow.Level.alert + 1
+                window.makeKeyAndVisible()
                 present(alert, animated: animated, completion: completion)
             }
         } else {
-            window?.rootViewController = self
-            window?.windowLevel = UIWindow.Level.alert + 1
-            window?.makeKeyAndVisible()
+            window.rootViewController = self
+            window.windowLevel = UIWindow.Level.alert + 1
+            window.makeKeyAndVisible()
             present(alert, animated: animated, completion: completion)
         }
-
 
     }
 
 // MARK: - Overrides
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag) {
-            self.window = nil
             completion?()
         }
     }
 }
-

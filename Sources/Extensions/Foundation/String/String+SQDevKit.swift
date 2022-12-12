@@ -19,7 +19,6 @@ public extension SQExtensions where Base == String {
         return self.base.removingPercentEncoding
     }
 
-
     /// Converts string to attributed string
     var attributedString: NSAttributedString {
         NSAttributedString(string: self.base)
