@@ -9,6 +9,7 @@ import UIKit
 
 @available(iOS 13.0, *)
 public extension NSCollectionLayoutSection {
+
     /// Make a horizontal layout
     ///
     ///  - Parameters:

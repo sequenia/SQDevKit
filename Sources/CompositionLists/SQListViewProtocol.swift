@@ -25,8 +25,8 @@ private struct SQListViewAssociatedKeys {
 public typealias SQDataSource = UICollectionViewDiffableDataSource<SQSection, AnyHashable>
 
 // MARK: - Protocol
-@available(iOS 13.0, *)
 /// Protocol, describing all things for draw list
+@available(iOS 13.0, *)
 public protocol SQListViewProtocol: AnyObject {
 
     /// Collection view that displayed list

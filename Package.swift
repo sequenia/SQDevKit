@@ -7,13 +7,13 @@ let package = Package(
     name: "SQDevKit",
     platforms: [.iOS(.v14)],
     products: [
+        .library(name: "SQEntities", targets: ["SQEntities"]),
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
         .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
-        .library(name: "SQOperations", targets: ["SQOperations"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
-        .library(name: "SQEntities", targets: ["SQEntities"])
+        .library(name: "SQUtils", targets: ["SQUtils"])
     ],
     dependencies: [
         .package(
@@ -83,17 +83,6 @@ let package = Package(
             ]
         ),
         .target(
-            name: "SQOperations",
-            dependencies: ["SQExtensions"],
-            path: "./Sources/Operations",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
-        ),
-        .target(
             name: "SQUIKit",
             dependencies: [
                 "SQExtensions",
@@ -112,6 +101,16 @@ let package = Package(
             name: "SQDefaults",
             dependencies: ["SQExtensions"],
             path: "./Sources/Defaults",
+            plugins: [
+                .plugin(
+                    name: "SwiftLint",
+                    package: "SwiftLintPlugin"
+                )
+            ]
+        ),
+        .target(
+            name: "SQUtils",
+            path: "./Sources/Utils",
             plugins: [
                 .plugin(
                     name: "SwiftLint",

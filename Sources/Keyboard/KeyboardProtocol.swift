@@ -106,11 +106,10 @@ public extension KeyboardProtocol {
     private func willShowKeyboard() {
         if self.didEndShowKeyboardTimer != nil { return }
 
-        self.didEndShowKeyboardTimer = Timer
-            .scheduledTimer(
-                withTimeInterval: 0.1,
-                repeats: false
-            ) { [weak self] timer in
+        self.didEndShowKeyboardTimer = .scheduledTimer(
+            withTimeInterval: 0.1,
+            repeats: false
+        ) { [weak self] timer in
 
             self?.didEndShowKeyboard()
             timer.invalidate()

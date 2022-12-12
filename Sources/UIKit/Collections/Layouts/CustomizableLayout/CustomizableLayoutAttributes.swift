@@ -19,6 +19,7 @@ open class CustomizableLayoutAttributes: UICollectionViewLayoutAttributes {
     var settings: UISettings?
 
     override open func copy(with zone: NSZone? = nil) -> Any {
+        // swiftlint:disable:next force_cast
         let copy = super.copy(with: zone) as! CustomizableLayoutAttributes
         copy.settings = self.settings
         return copy
