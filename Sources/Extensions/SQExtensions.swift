@@ -86,3 +86,5 @@ import SnapKit
 extension ConstraintMakerExtendable: SQExtensionsCompatible {}
 
 extension ConstraintMakerEditable: SQExtensionsCompatible {}
+
+extension Constraint: SQExtensionsCompatible {}

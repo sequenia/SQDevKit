@@ -98,7 +98,7 @@ public extension UIColor {
 }
 
 public extension SQExtensions where Base: UIColor {
-
+    
     /// Check color is light
     var isLight: Bool {
         var white: CGFloat = .zero
@@ -128,6 +128,22 @@ public extension SQExtensions where Base: UIColor {
         let blue = color1.2 + (color2.2 - color1.2) * frac
         let alpha = color1.3 + (color2.3 - color1.3) * frac
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+
+    static func create(withName name: String, from bundle: Bundle = .main, fallbackBundle: Bundle) -> UIColor? {
+        if let color = UIColor(
+            named: name,
+            in: bundle,
+            compatibleWith: nil
+        ) {
+            return color
+        }
+
+        return UIColor(
+            named: name,
+            in: fallbackBundle,
+            compatibleWith: nil
+        )
     }
 
     func components() -> (CGFloat, CGFloat, CGFloat, CGFloat) {

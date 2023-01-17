@@ -36,6 +36,22 @@ public extension SQExtensions where Base: UIImage {
         return image
     }
 
+    static func create(withName name: String, from bundle: Bundle = .main, fallbackBundle: Bundle) -> UIImage? {
+        if let color = UIImage(
+            named: name,
+            in: bundle,
+            compatibleWith: nil
+        ) {
+            return color
+        }
+
+        return UIImage(
+            named: name,
+            in: fallbackBundle,
+            compatibleWith: nil
+        )
+    }
+
     /// Scales image to fit that into `targetSize`
     ///
     /// - Parameters:

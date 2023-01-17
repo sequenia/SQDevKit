@@ -25,8 +25,8 @@ let package = Package(
             .upToNextMajor(from: "5.6.0")
         ),
         .package(
-            url: "https://github.com/lukepistrol/SwiftLintPlugin.git",
-            from: "0.2.2"
+            url: "https://github.com/luximetr/AnyFormatKit.git",
+            .upToNextMajor(from: "2.5.2")
         )
     ],
     targets: [
@@ -36,13 +36,7 @@ let package = Package(
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 .product(name: "SnapKit", package: "SnapKit")
             ],
-            path: "./Sources/Extensions",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/Extensions"
         ),
         .target(
             name: "SQEntities",
@@ -50,23 +44,11 @@ let package = Package(
                 "SQExtensions",
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
             ],
-            path: "./Sources/Entities",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/Entities"
         ),
         .target(
             name: "SQKeyboard",
-            path: "./Sources/Keyboard",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/Keyboard"
         ),
         .target(
             name: "SQCompositionLists",
@@ -74,49 +56,26 @@ let package = Package(
                 "SQExtensions",
                 "SQEntities"
             ],
-            path: "./Sources/CompositionLists",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/CompositionLists"
         ),
         .target(
             name: "SQUIKit",
             dependencies: [
                 "SQExtensions",
                 "SQEntities",
-                "SQCompositionLists"
+                "SQCompositionLists",
+                .product(name: "AnyFormatKit", package: "AnyFormatKit"),
             ],
-            path: "./Sources/UIKit",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/UIKit"
         ),
         .target(
             name: "SQDefaults",
             dependencies: ["SQExtensions"],
-            path: "./Sources/Defaults",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
+            path: "./Sources/Defaults"
         ),
         .target(
             name: "SQUtils",
-            path: "./Sources/Utils",
-            plugins: [
-                .plugin(
-                    name: "SwiftLint",
-                    package: "SwiftLintPlugin"
-                )
-            ]
-        ),
+            path: "./Sources/Utils"
+        )
     ]
 )

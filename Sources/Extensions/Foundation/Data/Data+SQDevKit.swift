@@ -29,8 +29,8 @@ public extension SQExtensions where Base == Data {
     /// Converts data to string
     var html2String: String? { self.html2AttributedString?.string }
 
-    static func mockDataFromJSON(withName name: String) -> Data {
-        guard let path = Bundle.main.path(forResource: name, ofType: "json"),
+    static func mockDataFromJSON(withName name: String, inBundle bundle: Bundle = .main) -> Data {
+        guard let path = bundle.path(forResource: name, ofType: "json"),
               let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
         else { return Data() }
 
