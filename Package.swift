@@ -14,7 +14,8 @@ let package = Package(
         .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
-        .library(name: "SQUtils", targets: ["SQUtils"])
+        .library(name: "SQUtils", targets: ["SQUtils"]),
+        .library(name: "SQOperations", targets: ["SQOperations"])
     ],
     dependencies: [
         .package(
@@ -94,6 +95,11 @@ let package = Package(
         .target(
             name: "SQUtils",
             path: "./Sources/Utils"
-        )
+        ),
+        .target(
+            name: "SQOperations",
+            dependencies: ["SQExtensions"],
+            path: "./Sources/Operations"
+        ),
     ]
 )
