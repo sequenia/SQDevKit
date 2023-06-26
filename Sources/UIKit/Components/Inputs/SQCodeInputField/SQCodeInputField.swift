@@ -60,7 +60,7 @@ public class SQCodeInputField: UITextField, StyledComponent {
         }
     }
 
-    public var fieldIsEnabled: Bool = true {
+    public var editable: Bool = true {
         didSet {
             self.redraw()
         }
@@ -104,13 +104,6 @@ public class SQCodeInputField: UITextField, StyledComponent {
         self.setupLayout()
     }
 
-    @discardableResult
-    public func style(_ style: ElementStyle) -> ElementStyle {
-        self.style = style
-        self.style.component = self
-        return style
-    }
-
     open func build() {
         self.redraw()
     }
@@ -126,6 +119,7 @@ public class SQCodeInputField: UITextField, StyledComponent {
         for _ in .zero ..< self.numberOfDigits {
             let label = SQCodeInputFieldLabel()
             label.textColor = self.style.textColor
+            label.backgroundColor = self.style.backgroundColor
             label.emptyTextColor = self.style.emptyTextColor
             label.errorTextColor = self.style.errorTextColor
             label.font = self.style.font
@@ -264,7 +258,7 @@ extension SQCodeInputField: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        if !self.fieldIsEnabled {
+        if !self.editable {
             return false
         }
 
@@ -293,4 +287,9 @@ extension SQCodeInputField: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         self.removeFocus()
     }
+}
+
+private extension String {
+
+    static let dotSymbol = "●"
 }

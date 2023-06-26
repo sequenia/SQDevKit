@@ -16,11 +16,19 @@ public extension SQExtensions where Base: UserDefaults {
     ///   - value: object for saving.`T`.
     ///   - forKey: key for saving.`String`.
     static func set<T>(_ value: T, forKey key: String) where T: Encodable {
-
         if let encoded = try? JSONEncoder().encode(value) {
             UserDefaults.standard.set(encoded, forKey: key)
         }
 
+        UserDefaults.standard.synchronize()
+    }
+
+    /// Remove decodable object in standard user defaults
+    ///
+    /// - Parameters:
+    ///   - atKey: key for saving.`String`.
+    static func remove(atKey key: String) {
+        UserDefaults.standard.set(nil, forKey: key)
         UserDefaults.standard.synchronize()
     }
 

@@ -36,17 +36,54 @@ public class SQPhoneField: UIView {
 
     public weak var delegate: SQPhoneFieldDelegate?
 
-    public var style = SQPhoneFieldStyle() {
+    public var inputStyle: SQInputStyle {
+        get { self.textField.style }
+        set { self.textField.style = newValue }
+    }
+
+    public var buttonStyle: SQButtonStyle {
+        get { self.countryButton.style }
+        set { self.countryButton.style = newValue }
+    }
+
+    public var dropdownIcon: UIImage? {
         didSet {
-            self.onChangeStyle()
+            self.countryButton.setImage(
+                self.dropdownIcon,
+                for: .normal
+            )
+            self.countryButton.setImage(
+                self.dropdownIcon,
+                for: .disabled
+            )
+        }
+    }
+
+    public var separatorColor: UIColor? {
+        didSet {
+            self.separator.backgroundColor = self.separatorColor
+        }
+    }
+
+    public var separatorWidth: CGFloat = .zero {
+        didSet {
+            self.separatorWidthConstraint?.update(offset: self.separatorWidth)
+            self.separator.setNeedsLayout()
         }
     }
 
     public private(set) var phoneNumber: SQPhone?
 
+    public var editable: Bool = true {
+        didSet {
+            self.countryButton.isEnabled = self.editable
+        }
+    }
+
     public var isEnabled: Bool = true {
         didSet {
             self.countryButton.isEnabled = self.isEnabled
+            self.textField.isEnabled = self.isEnabled
         }
     }
 
@@ -87,6 +124,7 @@ public class SQPhoneField: UIView {
     private lazy var textField: SQTextField = {
         let field = SQTextField()
         field.delegate = self
+        field.backgroundColor = .clear
         field.autocorrectionType = .yes
         field.rightViewMode = .whileEditing
         field.keyboardType = .numberPad
@@ -94,11 +132,7 @@ public class SQPhoneField: UIView {
         return field
     }()
 
-    private var separatorWidth: Constraint?
-
-    override public var canBecomeFirstResponder: Bool {
-        return true
-    }
+    private var separatorWidthConstraint: Constraint?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,31 +155,6 @@ public class SQPhoneField: UIView {
         self.onSetPhoneNumber()
     }
 
-    private func onChangeStyle() {
-        self.sq.setCornerRadius(self.style.cornerRadius)
-
-        self.sq.setBorderWidth(self.style.borderWidth)
-        self.separatorWidth?.update(offset: self.style.borderWidth)
-
-        self.separator.backgroundColor = self.style.borderColor
-        self.sq.setBorderColor(self.style.borderColor)
-
-        self.countryButton.setImage(
-            self.style.buttonArrowImage,
-            for: .normal
-        )
-
-        self.countryButton
-            .style(self.style.countryCodeButtonStyle)
-            .build()
-
-        self.textField
-            .style(self.style.phoneInputStyle)
-            .build()
-
-        self.setNeedsLayout()
-    }
-
     private func onSetPhoneNumber() {
         guard let phoneNumber = self.phoneNumber else { return }
 
@@ -164,12 +173,6 @@ public class SQPhoneField: UIView {
     private func onClickCountryButton() {
         self.delegate?.onClickCountryButton()
     }
-
-//    public var numberOfDigits: Int {
-//        self.country.phoneNumberInputMask.reduce(.zero) { partialResult, character in
-//            character == "#" ? partialResult + 1 : partialResult
-//        }
-//    }
 }
 
 extension SQPhoneField: UITextFieldDelegate {
@@ -179,7 +182,7 @@ extension SQPhoneField: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        if !self.isEnabled {
+        if !self.editable {
             return false
         }
 
@@ -230,9 +233,8 @@ extension SQPhoneField: SQConfigurableView {
         self.countryButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
-            $0.bottom.equalToSuperview().priority(.medium)
-            $0.height.sq.equalTo(.fieldHeight)
-            $0.width.sq.greaterThanOrEqualTo(55)
+            $0.bottom.equalToSuperview()
+            $0.width.sq.greaterThanOrEqualTo(.countryCodeButtonMinWidth)
         }
 
         self.textField.snp.makeConstraints {
@@ -240,24 +242,18 @@ extension SQPhoneField: SQConfigurableView {
             $0.leading.equalTo(self.countryButton.snp.trailing)
             $0.bottom.equalToSuperview()
             $0.trailing.equalToSuperview()
-            $0.height.sq.equalTo(.fieldHeight)
         }
 
         self.separator.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().priority(.medium)
             $0.leading.equalTo(self.countryButton.snp.trailing)
-            self.separatorWidth = $0.width.equalTo(1).constraint
+            self.separatorWidthConstraint = $0.width.equalTo(self.separatorWidth).constraint
         }
 
         self.countryButton.snp.contentHuggingHorizontalPriority = .layoutHighPriority
     }
 
-}
-
-private extension CGFloat {
-
-    static let fieldHeight: CGFloat = 46
 }
 
 private extension UITextField {
@@ -272,4 +268,9 @@ private extension UITextField {
         }
     }
 
+}
+
+private extension CGFloat {
+
+    static let countryCodeButtonMinWidth: CGFloat = 68
 }

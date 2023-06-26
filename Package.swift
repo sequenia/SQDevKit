@@ -27,6 +27,10 @@ let package = Package(
         .package(
             url: "https://github.com/luximetr/AnyFormatKit.git",
             .upToNextMajor(from: "2.5.2")
+        ),
+        .package(
+            url: "https://github.com/onevcat/Kingfisher.git",
+            .upToNextMajor(from: "7.7.0")
         )
     ],
     targets: [
@@ -34,7 +38,8 @@ let package = Package(
             name: "SQExtensions",
             dependencies: [
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
-                .product(name: "SnapKit", package: "SnapKit")
+                .product(name: "SnapKit", package: "SnapKit"),
+                .product(name: "Kingfisher", package: "Kingfisher"),
             ],
             path: "./Sources/Extensions"
         ),

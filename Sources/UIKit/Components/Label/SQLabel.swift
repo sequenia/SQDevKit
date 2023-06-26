@@ -19,13 +19,6 @@ open class SQLabel: UILabel, StyledComponent {
         }
     }
 
-    @discardableResult
-    public func style(_ style: ElementStyle) -> ElementStyle {
-        self.style = style
-        self.style.component = self
-        return style
-    }
-
     open func build() {
         self.updateAttributedText()
     }

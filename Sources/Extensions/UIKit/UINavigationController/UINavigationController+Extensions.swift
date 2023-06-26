@@ -33,6 +33,8 @@ public protocol NavigationBarStyle {
 
     /// Navigation's bar blur effect. style Not required, will be equal nil without implementation
     var blurStyle: UIBlurEffect.Style? { get }
+
+    var statusBarStyle: UIStatusBarStyle? { get }
 }
 
 public extension NavigationBarStyle {
@@ -46,6 +48,8 @@ public extension NavigationBarStyle {
     var blurStyle: UIBlurEffect.Style? { nil }
 
     var shadowImage: UIImage? { UIImage.sq.create(withColor: self.shadowColor) }
+
+    var statusBarStyle: UIStatusBarStyle? { nil }
 }
 
 public extension SQExtensions where Base: UINavigationController {

@@ -31,14 +31,16 @@ public protocol SQListFactory: AnyObject {
     /// Register all cells and views
     func registerElements()
 
-    /// Returns cell for model and index path
+    /// Returns cell for model, section and index path
     ///
     /// - Parameters:
     ///   - itemModel: model with data for cell.`AnyHashable`.
+    ///   - section: section of model, `SQSectionContent`
     ///   - indexPath: Index path of cell.`IndexPath`.
     /// - Returns: Dequeued collection cell. `UICollectionViewCell`, nullable
     func cell(
         forItemModel itemModel: AnyHashable,
+        inSection section: SQSectionContent?,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionViewCell?
 

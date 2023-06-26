@@ -51,7 +51,7 @@ public class EmptyCell: UICollectionViewCell {
         self.contentView.addSubview(self.emptyView)
         
         self.emptyView.snp.makeConstraints {
-            $0.left.right.top.equalToSuperview()
+            $0.leading.trailing.top.equalToSuperview()
             $0.bottom.equalToSuperview().priority(.medium)
             $0.height.equalTo(CGFloat.zero)
         }

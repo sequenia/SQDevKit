@@ -9,6 +9,8 @@ import UIKit
 
 open class SQCodeInputFieldStyle: SQTextStyle {
 
+    public private(set) var backgroundColor: UIColor?
+
     public private(set) var emptyTextColor: UIColor?
     public private(set) var errorTextColor: UIColor?
 
@@ -17,6 +19,12 @@ open class SQCodeInputFieldStyle: SQTextStyle {
 
     public private(set) var borderWidth: CGFloat = .zero
     public private(set) var cornerRadius: CGFloat = .zero
+
+    @discardableResult
+    open func backgroundColor(_ color: UIColor?) -> Self {
+        self.backgroundColor = color
+        return self
+    }
 
     @discardableResult
     open func emptyTextColor(_ color: UIColor?) -> Self {

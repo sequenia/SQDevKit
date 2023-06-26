@@ -39,12 +39,6 @@ open class SQTextView: UITextView {
         }
     }
 
-    @discardableResult
-    public func style(_ style: ElementStyle) -> ElementStyle {
-        self.style = style
-        return style
-    }
-
     override open func gestureRecognizerShouldBegin(
         _ gestureRecognizer: UIGestureRecognizer
     ) -> Bool {

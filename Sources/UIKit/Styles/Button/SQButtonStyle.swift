@@ -9,6 +9,7 @@ import UIKit
 
 open class SQButtonStyle: SQStyle {
 
+    public private(set) var contentInsets: UIEdgeInsets = .zero
     private var textStyles = [UIControl.State: SQFont]()
     private var textColors = [UIControl.State: UIColor]()
     private var backgroundColors = [UIControl.State: UIColor]()
@@ -16,6 +17,12 @@ open class SQButtonStyle: SQStyle {
     private var borderColors = [UIControl.State: UIColor]()
     private var borderWidths = [UIControl.State: CGFloat]()
     private var cornerRadiuses = [UIControl.State: CGFloat]()
+
+    @discardableResult
+    open func contentInsets(_ contentInsets: UIEdgeInsets) -> Self {
+        self.contentInsets = contentInsets
+        return self
+    }
 
     @discardableResult
     open func textStyle(_ font: SQFont, forState state: UIControl.State = .normal) -> Self {

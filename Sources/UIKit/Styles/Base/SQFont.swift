@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import SQExtensions
+import SwiftyJSON
 
 public struct SQFont {
     
-    let font: UIFont
-    let letterSpacing: CGFloat?
-    let lineHeight: CGFloat
+    public let font: UIFont
+    public let letterSpacing: CGFloat?
+    public let lineHeight: CGFloat
 
     public init(
         name: String,
@@ -28,14 +30,17 @@ public struct SQFont {
         self.lineHeight = lineHeight
     }
 
-    public init(
-        font: UIFont,
-        letterSpacing: CGFloat? = nil,
-        lineHeight: CGFloat
-    ) {
+    public init?(json: JSON) {
+        guard let name = json["name"].string,
+              let size = json["size"].sq.cgFloat,
+              let lineHeight = json["lineHeight"].sq.cgFloat else { return nil }
 
-        self.font = font
-        self.letterSpacing = letterSpacing
+        if let font = UIFont(name: name, size: size) {
+            self.font = font
+        } else {
+            self.font = .systemFont(ofSize: size)
+        }
+        self.letterSpacing = json["letterSpacing"].sq.cgFloat
         self.lineHeight = lineHeight
     }
 }

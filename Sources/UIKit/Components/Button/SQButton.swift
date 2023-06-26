@@ -86,6 +86,15 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         }
     }
 
+    override open var isHidden: Bool {
+        didSet {
+            self.setupColor()
+            self.updateAttributedText()
+            self.updateTintColor()
+            self.setNeedsDisplay()
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -109,15 +118,42 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         self.updateLayer()
     }
 
-    @discardableResult
-    public func style(_ style: ElementStyle) -> ElementStyle {
-        self.style = style
-        self.style.component = self
-        return style
-    }
-
     public func configure() {
         self.clipsToBounds = true
+        if #available(iOS 15.0, *) {
+            self.configurationUpdateHandler = { button in
+                let title = button.title(for: button.state)
+                let attributes = self.style.attributes(forState: button.state)
+                var container = AttributeContainer()
+                if button.state == .loading {
+                    container.foregroundColor = .clear
+                } else {
+                    if let color = self.style.textColor(forState: button.state) {
+                        container.foregroundColor = color
+                    }
+                }
+                if let font = attributes[.font] as? UIFont {
+                    container.font = font
+                }
+                if let kern = attributes[.kern] as? CGFloat {
+                    container.kern = kern
+                }
+                if let strikethroughStyle = attributes[.strikethroughStyle] as? NSUnderlineStyle {
+                    container.strikethroughStyle = strikethroughStyle
+                }
+                if let underlineStyle = attributes[.underlineStyle] as? NSUnderlineStyle {
+                    container.underlineStyle = underlineStyle
+                }
+                button.configuration?.attributedTitle = AttributedString(
+                    title ?? "",
+                    attributes: container
+                )
+
+                var background = UIBackgroundConfiguration.clear()
+                background.backgroundColor = self.style.backgroundColor(forState: button.state)
+                button.configuration?.background = background
+            }
+        }
     }
 
     public func setupLayout() {
@@ -134,8 +170,26 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
     }
 
     open func build() {
-        self.setupColor()
-        self.updateAttributedText()
+        if #available(iOS 15.0, *) {
+            var configuration = UIButton.Configuration.plain()
+            configuration.contentInsets = .init(
+                top: .zero,
+                leading: self.style.contentInsets.left,
+                bottom: .zero,
+                trailing: self.style.contentInsets.right
+            )
+            self.configuration = configuration
+        } else {
+            self.setupColor()
+            self.updateAttributedText()
+            self.contentEdgeInsets = .init(
+                top: .zero,
+                left: self.style.contentInsets.left,
+                bottom: .zero,
+                right: self.style.contentInsets.right
+            )
+        }
+
         self.updateTintColor()
         self.setNeedsDisplay()
     }
