@@ -10,12 +10,17 @@ let package = Package(
         .library(name: "SQEntities", targets: ["SQEntities"]),
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
+        .library(name: "SQLists", targets: ["SQLists"]),
         .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
         .library(name: "SQUtils", targets: ["SQUtils"])
     ],
     dependencies: [
+        .package(
+            url: "https://github.com/sequenia/SQDifferenceKit.git",
+            .upToNextMajor(from: "1.0.1")
+        ),
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.1")
@@ -54,6 +59,14 @@ let package = Package(
         .target(
             name: "SQKeyboard",
             path: "./Sources/Keyboard"
+        ),
+        .target(
+            name: "SQLists",
+            dependencies: [
+                "SQExtensions",
+                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
+            ],
+            path: "./Sources/Lists"
         ),
         .target(
             name: "SQCompositionLists",
