@@ -19,27 +19,85 @@ public extension SQExtensions where Base: UIView {
         return UINib(nibName: self.identifier, bundle: Bundle(for: Base.self))
     }
 
-    /// Create view's example
-    ///
-    /// - Precondition: View must have .xib-file and that name must be equal to view's class
-    /// - Returns: example of view
-    static func instance() -> Base {
-        if let nib = UINib(nibName: self.identifier,
-                            bundle: nil)
-            .instantiate(withOwner: self, options: nil).first as? Base {
-            
-            return nib
-        }
-        
-        fatalError("not found nib file!")
-    }
-
     /// Corner radius of view
     var cornerRadius: CGFloat {
         get { self.base.layer.cornerRadius }
         set {
             self.setCornerRadius(newValue)
         }
+    }
+
+    /// Radius for shadow of view
+    var shadowRadius: CGFloat {
+        get { self.base.layer.shadowRadius }
+        set {
+            self.base.layer.shadowRadius = newValue
+            self.base.layer.masksToBounds = false
+        }
+    }
+
+    /// Offset for shadow of view
+    var shadowOffset: CGSize {
+        get { self.base.layer.shadowOffset }
+        set {
+            self.base.layer.shadowOffset = newValue
+            self.base.layer.masksToBounds = false
+        }
+    }
+
+    /// Color for shadow of view
+    var shadowColor: UIColor? {
+        get {
+            guard let cgColor = self.base.layer.shadowColor else { return nil }
+
+            return UIColor(cgColor: cgColor)
+        }
+        set {
+            self.base.layer.shadowColor = newValue?.cgColor
+            self.base.layer.masksToBounds = false
+        }
+    }
+
+    /// Opacity for shadow of view
+    var shadowOpacity: Float {
+        get { self.base.layer.shadowOpacity }
+        set {
+            self.base.layer.shadowOpacity = newValue
+            self.base.layer.masksToBounds = false
+        }
+    }
+
+    /// Border width of view
+    var borderWidth: CGFloat {
+        get { self.base.layer.borderWidth }
+        set { self.setBorderWidth(newValue) }
+    }
+
+    /// Border color of view
+    var borderColor: UIColor? {
+        get {
+            guard let cgColor = self.base.layer.borderColor else { return nil }
+
+            return UIColor(cgColor: cgColor)
+        }
+        set {
+            self.setBorderColor(newValue)
+        }
+    }
+
+    /// Create view's example
+    ///
+    /// - Precondition: View must have .xib-file and that name must be equal to view's class
+    /// - Returns: example of view
+    static func instance() -> Base {
+        if let nib = UINib(
+            nibName: self.identifier,
+            bundle: nil
+        ).instantiate(withOwner: self, options: nil).first as? Base {
+            return nib
+        }
+
+        fatalError("not found nib file!")
     }
 
     /// Set corner radius for view
@@ -50,47 +108,7 @@ public extension SQExtensions where Base: UIView {
         self.base.layer.cornerRadius = cornerRadius
         self.base.clipsToBounds = true
     }
-    
-    /// Radius for shadow of view
-    var shadowRadius: CGFloat {
-        get { self.base.layer.shadowRadius }
-        set {
-            self.base.layer.shadowRadius = newValue
-            self.base.layer.masksToBounds = false
-        }
-    }
-    
-    /// Offset for shadow of view
-    var shadowOffset: CGSize {
-        get { self.base.layer.shadowOffset }
-        set {
-            self.base.layer.shadowOffset = newValue
-            self.base.layer.masksToBounds = false
-        }
-    }
-    
-    /// Color for shadow of view
-    var shadowColor: UIColor? {
-        get {
-            guard let cgColor = self.base.layer.shadowColor else { return nil }
-            
-            return UIColor(cgColor: cgColor)
-        }
-        set {
-            self.base.layer.shadowColor = newValue?.cgColor
-            self.base.layer.masksToBounds = false
-        }
-    }
-    
-    /// Opacity for shadow of view
-    var shadowOpacity: Float {
-        get { self.base.layer.shadowOpacity }
-        set {
-            self.base.layer.shadowOpacity = newValue
-            self.base.layer.masksToBounds = false
-        }
-    }
-    
+
     /// Set shadow to view with parameters
     ///
     /// - Parameters:
@@ -110,30 +128,12 @@ public extension SQExtensions where Base: UIView {
         self.shadowOpacity = opacity
     }
 
-    /// Border width of view
-    var borderWidth: CGFloat {
-        get { self.base.layer.borderWidth }
-        set { self.setBorderWidth(newValue) }
-    }
-
     /// Set border's width for view
     ///
     /// - Parameters:
     ///   - borderWidth: border width for view. `CGFloat`
     func setBorderWidth(_ borderWidth: CGFloat) {
         self.base.layer.borderWidth = borderWidth
-    }
-
-    /// Border color of view
-    var borderColor: UIColor? {
-        get {
-            guard let cgColor = self.base.layer.borderColor else { return nil }
-
-            return UIColor(cgColor: cgColor)
-        }
-        set {
-            self.setBorderColor(newValue)
-        }
     }
 
     /// Set border's color for view
@@ -279,10 +279,6 @@ private class CustomIntensityVisualEffectView: UIVisualEffectView {
     
     required init?(coder aDecoder: NSCoder) { nil }
     
-    deinit {
-        animator?.stopAnimation(true)
-    }
-    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -295,6 +291,10 @@ private class CustomIntensityVisualEffectView: UIVisualEffectView {
             self.effect = theEffect
         }
         animator?.fractionComplete = customIntensity
+    }
+
+    deinit {
+        animator?.stopAnimation(true)
     }
     
 }

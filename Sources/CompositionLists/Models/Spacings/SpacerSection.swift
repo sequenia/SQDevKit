@@ -19,7 +19,7 @@ public struct SpacerSection: SQSectionContent {
         height: CGFloat,
         backgroundColor: UIColor = .clear
     ) {
-        self.id = id + "EmptyCell"
+        self.id = [id, "EmptyCell"].joined(separator: "_")
         self.items = [
             EmptyModel(
                 id: id,

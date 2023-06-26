@@ -10,11 +10,12 @@
 
  General pattern would be:
 
- // 1. Extend SQExtensions protocol with constrain on Base
- // Read as: SQExtensions Extension where Base is a SomeType
- extension SQExtensions where Base: SomeType {
- // 2. Put any specific reactive extension for SomeType here
- }
+ 1. Extend SQExtensions protocol with constrain on Base
+   Read as: SQExtensions Extension where Base is a SomeType
+   extension SQExtensions where Base: SomeType  {
+
+    2. Put any specific reactive extension for SomeType here
+   }
 
  With this approach we can have more specialized methods and properties using
  `Base` and not just specialized on common base type.
@@ -35,6 +36,7 @@ public struct SQExtensions<Base> {
 
 /// A type that has sq extensions.
 public protocol SQExtensionsCompatible {
+
     /// Extended type
     associatedtype SQExtensionsBase
     
@@ -46,6 +48,7 @@ public protocol SQExtensionsCompatible {
 }
 
 extension SQExtensionsCompatible {
+
     /// Sq extensions.
     public static var sq: SQExtensions<Self>.Type {
         get {
@@ -83,3 +86,5 @@ import SnapKit
 extension ConstraintMakerExtendable: SQExtensionsCompatible {}
 
 extension ConstraintMakerEditable: SQExtensionsCompatible {}
+
+extension Constraint: SQExtensionsCompatible {}

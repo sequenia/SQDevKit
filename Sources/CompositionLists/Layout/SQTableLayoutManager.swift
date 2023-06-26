@@ -68,7 +68,6 @@ open class SQTableLayoutManager {
                 config.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
                     self?.delegate.leadingSwipeActionConfiguration(atIndexPath: indexPath)
                 }
-                
 
                 let content = self.delegate.content(forSection: index)
                 config.headerMode = content?.header == nil ? .none : .supplementary

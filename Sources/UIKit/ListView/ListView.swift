@@ -38,14 +38,15 @@ open class ListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectionV
     public init(collectionViewLayout: UICollectionViewLayout, delegate: ListViewDelegate? = nil) {
         super.init(frame: .zero)
 
-        self.factory = T(collectionView: self.collectionView)
+        self.factory = T()
+            .setup(collectionView: self.collectionView)
         self.collectionView.collectionViewLayout = collectionViewLayout
         self.delegate = delegate
 
         self.setupLayout()
     }
 
-    required public init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

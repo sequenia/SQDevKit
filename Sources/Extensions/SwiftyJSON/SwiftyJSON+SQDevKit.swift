@@ -10,6 +10,33 @@ import SwiftyJSON
 import UIKit
 
 public extension SQExtensions where Base == JSON {
+
+    // MARK: - String
+    var clearString: String? {
+        get {
+            return self.base.string?.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        set {
+            self.base.object = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? NSNull()
+        }
+    }
+
+    // MARK: - CGFLoat
+    var cgFloat: CGFloat? {
+        get {
+            if let value = base.number?.floatValue {
+                return CGFloat(value)
+            }
+            return nil
+        }
+        set {
+            if let newValue = newValue {
+                base.object = NSNumber(value: newValue)
+            } else {
+                base.object = NSNull()
+            }
+        }
+    }
     
     /// Returns string identifier in JSON of passed field
     ///
@@ -48,40 +75,5 @@ public extension SQExtensions where Base == JSON {
 
         return false
     }
-    
-// MARK: - String
-    var clearString: String? {
-        get {
-            return self.base.string?.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        set {
-            self.base.object = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? NSNull()
-        }
-    }
 
-// MARK: - CGFLoat
-    var cgFloat: CGFloat? {
-        get {
-            if let value = base.number?.floatValue {
-                return CGFloat(value)
-            }
-            return nil
-        }
-        set {
-            if let newValue = newValue {
-                base.object = NSNumber(value: newValue)
-            } else {
-                base.object = NSNull()
-            }
-        }
-    }
-
-    var htmlFormattedString: String? {
-        self.base.string?.sq.htmlAttributed(
-            with: .systemFont(ofSize: 14),
-            color: .white
-        )?.string
-    }
-
-    
 }

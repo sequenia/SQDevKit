@@ -20,20 +20,27 @@ public protocol SQListFactory: AnyObject {
     /// Parent view or view controller for collection view. Use as delegate for collection's views and cells
     var parent: AnyObject? { get set }
 
-    init(collectionView: UICollectionView)
-    init(collectionView: UICollectionView, parent: AnyObject?)
+    init()
+
+    @discardableResult
+    func setup(collectionView: UICollectionView) -> Self
+
+    @discardableResult
+    func setup(collectionView: UICollectionView, parent: AnyObject?) -> Self
 
     /// Register all cells and views
     func registerElements()
 
-    /// Returns cell for model and index path
+    /// Returns cell for model, section and index path
     ///
     /// - Parameters:
     ///   - itemModel: model with data for cell.`AnyHashable`.
+    ///   - section: section of model, `SQSectionContent`
     ///   - indexPath: Index path of cell.`IndexPath`.
     /// - Returns: Dequeued collection cell. `UICollectionViewCell`, nullable
     func cell(
         forItemModel itemModel: AnyHashable,
+        inSection section: SQSectionContent?,
         atIndexPath indexPath: IndexPath
     ) -> UICollectionViewCell?
 
@@ -66,6 +73,19 @@ public protocol SQListFactory: AnyObject {
 }
 
 public extension SQListFactory {
+
+    @discardableResult
+    func setup(collectionView: UICollectionView) -> Self {
+        self.setup(collectionView: collectionView, parent: nil)
+    }
+
+    @discardableResult
+    func setup(collectionView: UICollectionView, parent: AnyObject?) -> Self {
+        self.collectionView = collectionView
+        self.parent = parent
+
+        return self
+    }
 
     func view(
         forSectionContent sectionContent: SQSectionContent,

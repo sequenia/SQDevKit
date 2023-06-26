@@ -13,7 +13,7 @@ public extension SQExtensions where Base: UIViewController {
     /// Returns UINavigationController with self as root
     @available(*, deprecated, message: "Use withNavigationController from SQUIKit")
     var wrappedIntoNavigationController: UINavigationController {
-        UINavigationController.init(rootViewController: self.base)
+        UINavigationController(rootViewController: self.base)
     }
 
     /// Create view controller from storyboard, named as self
@@ -24,8 +24,10 @@ public extension SQExtensions where Base: UIViewController {
     /// - Returns:new view controller
     @available(*, deprecated, message: "Use builder instead storyboard in the new projects")
     static func create(configureBlock: ((_ result: Base) -> Void)? = nil) -> Base? {
-        let storyboard = UIStoryboard(name: Base.sq.identifier,
-                                      bundle: Bundle.init(for: Base.self))
+        let storyboard = UIStoryboard(
+            name: Base.sq.identifier,
+            bundle: Bundle(for: Base.self)
+        )
 
         guard let controller = storyboard.instantiateInitialViewController() else { return nil }
 

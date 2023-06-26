@@ -14,7 +14,6 @@ public extension SQExtensions where Base: Bundle {
 
     static func boolPropertyForKey(_ key: String) -> Bool? {
         guard let stringProperty = self.stringPropertyForKey(key) else { return nil }
-
         return Bool(stringProperty)
     }
 

@@ -35,7 +35,7 @@ public extension SQExtensions where Base: UICollectionView {
     ///
     /// - Parameters:
     ///   - cellClass: class of cell
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     ///
     /// - Precondition: Cell must have .xib-file and that name must be equal to cell's class
     func register<T: UICollectionViewCell>(_ cellClass: T.Type,
@@ -53,7 +53,7 @@ public extension SQExtensions where Base: UICollectionView {
     ///
     /// - Parameters:
     ///   - cellClass: class of cell
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     ///
     func registerClass<T: UICollectionViewCell>(_ cellClass: T.Type,
                                                 identifier: String? = nil) {
@@ -79,7 +79,7 @@ public extension SQExtensions where Base: UICollectionView {
     /// - Parameters:
     ///   - cellClass: class of cell
     ///   - indexPath: index path of cell. `IndexPath`
-    ///   - identifier: optional reuse identifier for cell.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for cell. By default, for identifier will be used cell's class name `String`
     /// - Returns: cell of collection
     func dequeueReusableCell<T: UICollectionViewCell>(_ cellClass: T.Type,
                                                       indexPath: IndexPath,
@@ -117,7 +117,7 @@ public extension SQExtensions where Base: UICollectionView {
     /// - Parameters:
     ///   - view: class of view
     ///   - kind: kind of view. `String`
-    ///   - identifier: optional reuse identifier for view.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for view. By default, for identifier will be used cell's class name `String`
     func registerSupplementaryView<T: UICollectionReusableView>(
         _ viewClass: T.Type,
         viewOfKind kind: String,
@@ -141,7 +141,7 @@ public extension SQExtensions where Base: UICollectionView {
     ///   - view: class of view
     ///   - kind: kind of view. `String`
     ///   - indexPath: index path of view. `IndexPath`
-    ///   - identifier: optional reuse identifier for view.  By default, for identifier will be used cell's class name `String`
+    ///   - identifier: optional reuse identifier for view. By default, for identifier will be used cell's class name `String`
     /// - Returns: supplementary view of collection
     func dequeueReusableSupplementaryView<T: UICollectionReusableView>(
         _ view: T.Type,

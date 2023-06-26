@@ -9,6 +9,11 @@ import UIKit
 
 public extension SQExtensions where Base == String {
 
+    var digits: String {
+        return self.base.components(separatedBy: CharacterSet.decimalDigits.inverted)
+            .joined()
+    }
+
     /// Returns string ready for use as URL (with percent encoding)
     var encodedUrl: String? {
         return self.base.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
@@ -18,7 +23,6 @@ public extension SQExtensions where Base == String {
     var decodedUrl: String? {
         return self.base.removingPercentEncoding
     }
-
 
     /// Converts string to attributed string
     var attributedString: NSAttributedString {
@@ -48,69 +52,25 @@ public extension SQExtensions where Base == String {
         return dateFormatter.date(from: self.base)
     }
 
-    /// Generating a NSAttributedString from a raw string with html markup
-    ///
-    /// - Parameters:
-    ///   - with: base font class. `UIFont`.
-    ///   - color: base font color. `UIColor`.
-    /// - Returns: NSAttributedString with the passed attributes
-    func htmlAttributed(with font: UIFont, color: UIColor) -> NSAttributedString? {
-        let htmlCSSString = "<style>" +
-            "html *" +
-            "{" +
-            "font-size: \(font.pointSize)px !important;" +
-            "color: #\(color.sq.hexString) !important;" +
-            "font-family: \(font.familyName), Helvetica !important;" +
-            "text-overflow: ellipsis;" +
-        "}</style> \(self.base)"
-
+    func htmlAttributed(withStyles styles: String) -> NSAttributedString? {
+        let htmlCSSString = """
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                    \(styles)
+                </style>
+            </head>
+            <body>
+                \(self.base)
+            </body>
+        </html>
+        """
         guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }
 
         return data.sq.html2AttributedString
     }
 
-    /// Generating a NSAttributedString from a raw string with html markup
-    ///
-    /// - Parameters:
-    ///   - family: base font family. `String`.
-    ///   - size: base font size. `CGFloat`.
-    ///   - color: base font color. `UIColor`.
-    /// - Returns: NSAttributedString with the passed attributes
-    func htmlAttributed(
-        family: String?,
-        size: CGFloat,
-        color: UIColor,
-        lineHeight: Int?
-    ) -> NSAttributedString? {
-        do {
-            let htmlCSSString = "<style>" +
-                "html *" +
-                "{" +
-                "font-size: \(size)px !important;" +
-                "line-height: \(lineHeight ?? Int(size))px;" +
-                "color: \(color.sq.hexString) !important;" +
-                "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
-                "text-overflow: ellipsis;" +
-                "}</style> \(self.base)"
-
-            guard let data = htmlCSSString.data(using: String.Encoding.utf8) else {
-                return nil
-            }
-
-            var dict: NSDictionary?
-            dict = NSMutableDictionary()
-
-            return try NSAttributedString(data: data,
-                                          options: [
-                                                .documentType: NSAttributedString.DocumentType.html,
-                                                .characterEncoding: String.Encoding.utf8.rawValue
-                                          ],
-                                          documentAttributes: &dict)
-        } catch {
-            print("htmlAttributed error: ", error)
-            return nil
-        }
-    }
     /// Returns substring in NSRange
     ///
     /// - Parameters:
@@ -144,6 +104,14 @@ public extension SQExtensions where Base == String {
     /// Returns string with capitalized first letter
     func capitalisingFirstLetter() -> String {
         return self.base.prefix(1).capitalized + self.base.dropFirst()
+    }
+
+    func localized(from bundle: Bundle = .main, fallbackBundle: Bundle) -> String {
+        let localized = NSLocalizedString(self.base, bundle: bundle, comment: "")
+        if localized != self.base {
+            return localized
+        }
+        return NSLocalizedString(self.base, bundle: fallbackBundle, comment: "")
     }
 }
 

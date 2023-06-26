@@ -14,14 +14,6 @@ import SQExtensions
 @propertyWrapper
 public struct StoredValue<T: Codable> {
 
-    private let key: String
-    private let defaultValue: T?
-
-    public init(key: String, defaultValue: T? = nil) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-
     public var wrappedValue: T? {
         get {
             UserDefaults.sq.get(forKey: self.key) ?? self.defaultValue
@@ -30,5 +22,12 @@ public struct StoredValue<T: Codable> {
             UserDefaults.sq.set(newValue, forKey: self.key)
         }
     }
-}
 
+    private let key: String
+    private let defaultValue: T?
+
+    public init(key: String, defaultValue: T? = nil) {
+        self.key = key
+        self.defaultValue = defaultValue
+    }
+}

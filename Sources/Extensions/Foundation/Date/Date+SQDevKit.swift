@@ -18,6 +18,32 @@ public extension SQExtensions where Base == Date {
     var ISOString: String {
         ISO8601DateFormatter.sq.formatter.string(from: self.base)
     }
+
+    /// Returns an array with the names of the months between two dates
+    ///
+    /// - Parameters:
+    ///   - startDate: start date.`Date`.
+    ///   - endDate: endDate date.`Date`.
+    /// - Returns: array of strings with names of months `[String]`
+    static func monthsBetweenDates(startDate: Date?, endDate: Date?) -> [String] {
+         var monthsStringsArray = [String]()
+         let calendar = Calendar.current
+
+         if let startDate = startDate, let endDate = endDate,
+             let diffInMonth = calendar.dateComponents([.month], from: startDate, to: endDate).month {
+
+             for month in .zero..<diffInMonth + 1 {
+                 var components = calendar.dateComponents([.month], from: startDate)
+                 components.month = calendar.component(.month, from: startDate) + month
+
+                if let monthString = calendar.date(from: components)?.sq.toString(format: "LLLL").capitalized {
+                     monthsStringsArray.append(monthString)
+                 }
+             }
+         }
+
+         return monthsStringsArray
+     }
     
     /// Converts date to string
     ///
@@ -92,34 +118,12 @@ public extension SQExtensions where Base == Date {
     func isYesterday(date: Date?) -> Bool {
         guard let date = date else { return false }
 
-        return Calendar.current.compare(self.base, to: date.addingTimeInterval(-86400), toGranularity: .day) == .orderedSame
+        return Calendar.current.compare(
+            self.base,
+            to: date.addingTimeInterval(-86_400),
+            toGranularity: .day
+        ) == .orderedSame
     }
-      
-    /// Returns an array with the names of the months between two dates
-    ///
-    /// - Parameters:
-    ///   - startDate: start date.`Date`.
-    ///   - endDate: endDate date.`Date`.
-    /// - Returns: array of strings with names of months `[String]`
-    static func monthsBetweenDates(startDate: Date?, endDate: Date?) -> [String] {
-         var monthsStringsArray = [String]()
-         let calendar = Calendar.current
-
-         if let startDate = startDate, let endDate = endDate,
-             let diffInMonth = calendar.dateComponents([.month], from: startDate, to: endDate).month {
-             
-             for month in .zero..<diffInMonth + 1 {
-                 var components = calendar.dateComponents([.month], from: startDate)
-                 components.month = calendar.component(.month, from: startDate) + month
-
-                if let monthString = calendar.date(from: components)?.sq.toString(format: "LLLL").capitalized {
-                     monthsStringsArray.append(monthString)
-                 }
-             }
-         }
-
-         return monthsStringsArray
-     }
     
 }
 

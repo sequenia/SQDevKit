@@ -93,40 +93,17 @@ public extension UIColor {
     ///   - rgb: digit for representation as hex string. `Int`
     ///
     convenience init?(withInt int: Int) {
-        self.init(withRGBA: String(format:"%02x", int))
+        self.init(withRGBA: String(format: "%02x", int))
     }
-
-    
 }
 
 public extension SQExtensions where Base: UIColor {
-
+    
     /// Check color is light
     var isLight: Bool {
         var white: CGFloat = .zero
         self.base.getWhite(&white, alpha: nil)
         return white > 0.5
-    }
-
-    static func interpolate(from: UIColor, to: UIColor, with fraction: CGFloat) -> UIColor {
-        let frac = min(1, max(0, fraction))
-        let color1 = from.sq.components()
-        let color2 = to.sq.components()
-        let red = color1.0 + (color2.0 - color1.0) * frac
-        let green = color1.1 + (color2.1 - color1.1) * frac
-        let blue = color1.2 + (color2.2 - color1.2) * frac
-        let alpha = color1.3 + (color2.3 - color1.3) * frac
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }
-
-    func components() -> (CGFloat, CGFloat, CGFloat, CGFloat) {
-        guard let color = self.base.cgColor.components else { return (0, 0, 0, 1) }
-
-        if self.base.cgColor.numberOfComponents == 2 {
-            return (color[0], color[0], color[0], color[1])
-        } else {
-            return (color[0], color[1], color[2], color[3])
-        }
     }
 
     var hexString: String {
@@ -140,6 +117,43 @@ public extension SQExtensions where Base: UIColor {
         let rgba: Int = (Int)(red * 255)<<16 | (Int)(green * 255)<<8 | (Int)(blue * 255)<<0
 
         return String(format: "#%06x", rgba)
+    }
+
+    static func interpolate(from: UIColor, to: UIColor, with fraction: CGFloat) -> UIColor {
+        let frac = min(1, max(0, fraction))
+        let color1 = from.sq.components()
+        let color2 = to.sq.components()
+        let red = color1.0 + (color2.0 - color1.0) * frac
+        let green = color1.1 + (color2.1 - color1.1) * frac
+        let blue = color1.2 + (color2.2 - color1.2) * frac
+        let alpha = color1.3 + (color2.3 - color1.3) * frac
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+
+    static func create(withName name: String, from bundle: Bundle = .main, fallbackBundle: Bundle) -> UIColor? {
+        if let color = UIColor(
+            named: name,
+            in: bundle,
+            compatibleWith: nil
+        ) {
+            return color
+        }
+
+        return UIColor(
+            named: name,
+            in: fallbackBundle,
+            compatibleWith: nil
+        )
+    }
+
+    func components() -> (CGFloat, CGFloat, CGFloat, CGFloat) {
+        guard let color = self.base.cgColor.components else { return (0, 0, 0, 1) }
+
+        if self.base.cgColor.numberOfComponents == 2 {
+            return (color[0], color[0], color[0], color[1])
+        } else {
+            return (color[0], color[1], color[2], color[3])
+        }
     }
 }
 

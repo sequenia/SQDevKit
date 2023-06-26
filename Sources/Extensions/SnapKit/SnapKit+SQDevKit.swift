@@ -20,17 +20,17 @@ public extension SQExtensions where Base == ConstraintMakerExtendable {
 
     @discardableResult
     func equalTo(_ other: CGFloat) -> ConstraintMakerEditable {
-        return base.equalTo(other as ConstraintRelatableTarget)
+        base.equalTo(other as ConstraintRelatableTarget)
     }
 
     @discardableResult
     func lessThanOrEqualTo(_ other: CGFloat) -> ConstraintMakerEditable {
-        return base.lessThanOrEqualTo(other as ConstraintRelatableTarget)
+        base.lessThanOrEqualTo(other as ConstraintRelatableTarget)
     }
 
     @discardableResult
     func greaterThanOrEqualTo(_ other: CGFloat) -> ConstraintMakerEditable {
-        return base.greaterThanOrEqualTo(other as ConstraintRelatableTarget)
+        base.greaterThanOrEqualTo(other as ConstraintRelatableTarget)
     }
 }
 
@@ -39,25 +39,21 @@ public extension SQExtensions where Base == ConstraintMakerEditable {
     @discardableResult
     func multipliedBy(_ amount: CGFloat) -> ConstraintMakerEditable {
         base.multipliedBy(amount as ConstraintMultiplierTarget)
-        return base
     }
 
     @discardableResult
     func dividedBy(_ amount: CGFloat) -> ConstraintMakerEditable {
         base.dividedBy(amount as ConstraintMultiplierTarget)
-        return base
     }
 
     @discardableResult
     func offset(_ amount: CGFloat) -> ConstraintMakerEditable {
         base.offset(amount as ConstraintOffsetTarget)
-        return base
     }
 
     @discardableResult
     func inset(_ amount: CGFloat) -> ConstraintMakerEditable {
         base.inset(amount as ConstraintInsetTarget)
-        return base
     }
 }
 
@@ -71,4 +67,17 @@ public extension SQExtensions where Base == ConstraintViewDSL {
         }
     }
 
+}
+
+public extension SQExtensions where Base == Constraint {
+
+    @discardableResult
+    func update(offset: CGFloat) -> Constraint {
+        base.update(offset: offset as ConstraintOffsetTarget)
+    }
+
+    @discardableResult
+    func update(inset: CGFloat) -> Constraint {
+        base.update(inset: inset as ConstraintInsetTarget)
+    }
 }

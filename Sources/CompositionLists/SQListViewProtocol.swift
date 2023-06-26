@@ -18,6 +18,7 @@ private struct SQListViewAssociatedKeys {
     static var sections: UInt8   = 0
     static var dataSource: UInt8 = 1
     static var factory: UInt8    = 2
+    static var provider: UInt8   = 3
 }
 
 // MARK: - Typealias
@@ -25,8 +26,8 @@ private struct SQListViewAssociatedKeys {
 public typealias SQDataSource = UICollectionViewDiffableDataSource<SQSection, AnyHashable>
 
 // MARK: - Protocol
-@available(iOS 13.0, *)
 /// Protocol, describing all things for draw list
+@available(iOS 13.0, *)
 public protocol SQListViewProtocol: AnyObject {
 
     /// Collection view that displayed list
@@ -34,6 +35,9 @@ public protocol SQListViewProtocol: AnyObject {
 
     /// Sections for displaying
     var sections: [SQSection] { get }
+
+    /// Factory for generation sections for content
+    var provider: SQListProvider! { get set }
 
     /// Factory for generation collection views and cells
     var factory: SQListFactory! { get set }
@@ -63,35 +67,8 @@ public protocol SQListViewProtocol: AnyObject {
         completion: (() -> Void)?
     )
 
-    /// Add section with settings
-    ///
-    /// - Parameters:
-    ///   - section: sections content.`SQSectionContent`
-    func addSection(
-        _ section: SQSectionContent
-    ) -> [SQSectionContent]
-    
-    /// Add section with settings
-    ///
-    /// - Parameters:
-    ///   - section: sections content.`SQSectionContent`.
-    ///   - spacings: section top & bottom spacings.`Spacings`.
-    func addSection(
-        _ section: SQSectionContent,
-        withSpacings spacings: Spacings
-    ) -> [SQSectionContent]
-
-    /// Add section with settings
-    ///
-    /// - Parameters:
-    ///   - section: sections content.`SQSectionContent`.
-    ///   - spacings: section top & bottom spacings.`Spacings`.
-    ///   - backgroundColor: background color of section.`UIColor?`.
-    func addSection(
-        _ section: SQSectionContent,
-        withSpacings spacings: Spacings,
-        backgroundColor: UIColor?
-    ) -> [SQSectionContent]
+    /// Reloads empty data set if it exists
+    func reloadEmptyData()
 }
 
 // MARK: - Default implementation
@@ -117,7 +94,13 @@ public extension SQListViewProtocol {
         let dataSource = SQDataSource(
             collectionView: self.collectionView,
             cellProvider: { [weak self] _, indexPath, item in
-                self?.factory.cell(forItemModel: item, atIndexPath: indexPath)
+                let sectionContent = self?.sections[safe: indexPath.section]?.content
+
+                return self?.factory.cell(
+                    forItemModel: item,
+                    inSection: sectionContent,
+                    atIndexPath: indexPath
+                )
             }
         )
 
@@ -137,6 +120,17 @@ public extension SQListViewProtocol {
         }
         objc_setAssociatedObject(self, &SQListViewAssociatedKeys.dataSource, dataSource, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         return dataSource
+    }
+
+    var provider: SQListProvider! {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SQListViewAssociatedKeys.provider) as? SQListProvider else { return nil }
+
+            return value
+        }
+        set {
+            objc_setAssociatedObject(self, &SQListViewAssociatedKeys.provider, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
 
     var factory: SQListFactory! {
@@ -170,62 +164,36 @@ public extension SQListViewProtocol {
             newSnapshot.appendItems(section.content.items)
         }
 
+        var contentOffsetY: CGFloat = .zero
+        if !animated {
+            UIView.setAnimationsEnabled(false)
+            contentOffsetY = self.collectionView.contentOffset.y
+        }
+
         self.dataSource.apply(
             newSnapshot,
             animatingDifferences: animated,
             completion: {
+                CATransaction.begin()
+                if !animated {
+                    CATransaction.setDisableActions(true)
+                }
+                self.collectionView.layoutIfNeeded()
+                CATransaction.commit()
+
+                if animated {
+                    completion?()
+                    self.reloadEmptyData()
+                    return
+                }
+
+                self.collectionView.contentOffset.y = contentOffsetY
+                UIView.setAnimationsEnabled(true)
+                self.reloadEmptyData()
                 completion?()
             }
         )
     }
 
-    func addSection(
-        _ section: SQSectionContent
-    ) -> [SQSectionContent] {
-        self.addSection(section, withSpacings: .default, backgroundColor: nil)
-    }
-
-    func addSection(
-        _ section: SQSectionContent,
-        withSpacings spacings: Spacings
-    ) -> [SQSectionContent] {
-        self.addSection(section, withSpacings: spacings, backgroundColor: nil)
-    }
-
-    func addSection(
-        _ section: SQSectionContent,
-        withSpacings spacings: Spacings,
-        backgroundColor: UIColor?
-    ) -> [SQSectionContent] {
-        var result = [section]
-        let backgroundColor = backgroundColor
-        
-        if spacings.top > .zero {
-            result.insert(
-                SpacerSection(
-                    id: "\(section.id)" + .topSpacerAdditional,
-                    height: spacings.top,
-                    backgroundColor: backgroundColor ?? .clear
-                ),
-                at: .zero
-            )
-        }
-        if spacings.bottom > .zero {
-            result.append(
-                SpacerSection(
-                    id: "\(section.id)" + .bottomSpacerAdditional,
-                    height: spacings.bottom,
-                    backgroundColor: backgroundColor ?? .clear
-                )
-            )
-        }
-        return result
-    }
-}
-
-// MARK: - String
-private extension String {
-    
-    static let topSpacerAdditional = "topSpacer"
-    static let bottomSpacerAdditional = "bottomSpacer"
+    func reloadEmptyData() {}
 }

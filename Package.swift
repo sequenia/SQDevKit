@@ -1,27 +1,21 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "SQDevKit",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v14)],
     products: [
+        .library(name: "SQEntities", targets: ["SQEntities"]),
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
-        .library(name: "SQLists", targets: ["SQLists"]),
         .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
-        .library(name: "SQVUPER", targets: ["SQVUPER"]),
-        .library(name: "SQOperations", targets: ["SQOperations"]),
         .library(name: "SQUIKit", targets: ["SQUIKit"]),
         .library(name: "SQDefaults", targets: ["SQDefaults"]),
-        .library(name: "SQEntities", targets: ["SQEntities"])
+        .library(name: "SQUtils", targets: ["SQUtils"])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/sequenia/SQDifferenceKit.git",
-            .upToNextMajor(from: "1.0.1")
-        ),
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.1")
@@ -29,6 +23,14 @@ let package = Package(
         .package(
             url: "https://github.com/SnapKit/SnapKit.git",
             .upToNextMajor(from: "5.6.0")
+        ),
+        .package(
+            url: "https://github.com/luximetr/AnyFormatKit.git",
+            .upToNextMajor(from: "2.5.2")
+        ),
+        .package(
+            url: "https://github.com/onevcat/Kingfisher.git",
+            .upToNextMajor(from: "7.7.0")
         )
     ],
     targets: [
@@ -36,21 +38,22 @@ let package = Package(
             name: "SQExtensions",
             dependencies: [
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
-                .product(name: "SnapKit", package: "SnapKit")
+                .product(name: "SnapKit", package: "SnapKit"),
+                .product(name: "Kingfisher", package: "Kingfisher"),
             ],
             path: "./Sources/Extensions"
         ),
         .target(
-            name: "SQKeyboard",
-            path: "./Sources/Keyboard"
-        ),
-        .target(
-            name: "SQLists",
+            name: "SQEntities",
             dependencies: [
                 "SQExtensions",
-                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
+                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
             ],
-            path: "./Sources/Lists"
+            path: "./Sources/Entities"
+        ),
+        .target(
+            name: "SQKeyboard",
+            path: "./Sources/Keyboard"
         ),
         .target(
             name: "SQCompositionLists",
@@ -61,23 +64,12 @@ let package = Package(
             path: "./Sources/CompositionLists"
         ),
         .target(
-            name: "SQVUPER",
-            dependencies: ["SQExtensions"],
-            path: "./Sources/VUPER"
-        ),
-        .target(
-            name: "SQOperations",
-            dependencies: ["SQExtensions"],
-            path: "./Sources/Operations"
-        ),
-        .target(
             name: "SQUIKit",
             dependencies: [
                 "SQExtensions",
-                "SQLists",
                 "SQEntities",
                 "SQCompositionLists",
-                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
+                .product(name: "AnyFormatKit", package: "AnyFormatKit"),
             ],
             path: "./Sources/UIKit"
         ),
@@ -87,12 +79,8 @@ let package = Package(
             path: "./Sources/Defaults"
         ),
         .target(
-            name: "SQEntities",
-            dependencies: [
-                "SQExtensions",
-                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
-            ],
-            path: "./Sources/Entities"
-        ),
+            name: "SQUtils",
+            path: "./Sources/Utils"
+        )
     ]
 )

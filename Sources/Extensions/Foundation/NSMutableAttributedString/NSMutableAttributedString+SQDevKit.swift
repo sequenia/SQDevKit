@@ -280,7 +280,6 @@ public extension SQExtensions where Base: NSMutableAttributedString {
         return self.base
     }
 
-
     /// Return width of string
     /// - Parameters:
     ///   - height: height of string.`CGFloat`.

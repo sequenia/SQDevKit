@@ -22,4 +22,3 @@ public extension SQExtensions where Base == CGPoint {
 }
 
 extension CGPoint: SQExtensionsCompatible {}
-

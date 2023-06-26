@@ -23,20 +23,20 @@ public protocol CustomizableLayoutDelegate: AnyObject {
 open class CustomizableLayout: UICollectionViewCompositionalLayout {
 
 // MARK: - Properties
-    open override class var layoutAttributesClass: AnyClass {
+    override open class var layoutAttributesClass: AnyClass {
         return CustomizableLayoutAttributes.self
     }
     
     public weak var delegate: CustomizableLayoutDelegate?
 
 // MARK: - Inits
-    public override init(sectionProvider: @escaping UICollectionViewCompositionalLayoutSectionProvider) {
+    override public init(sectionProvider: @escaping UICollectionViewCompositionalLayoutSectionProvider) {
         super.init(sectionProvider: sectionProvider)
 
         self.configure()
     }
 
-    public override init(
+    override public init(
         sectionProvider: @escaping UICollectionViewCompositionalLayoutSectionProvider,
         configuration: UICollectionViewCompositionalLayoutConfiguration
     ) {
@@ -65,7 +65,7 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
     }
 
 // MARK: - Overrides
-    open override func layoutAttributesForDecorationView(
+    override open func layoutAttributesForDecorationView(
         ofKind elementKind: String,
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
@@ -83,7 +83,7 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
         return superAttributes
     }
 
-    open override func layoutAttributesForElements(
+    override open func layoutAttributesForElements(
         in rect: CGRect
     ) -> [UICollectionViewLayoutAttributes]? {
         let superAttributes = super.layoutAttributesForElements(in: rect)

@@ -95,6 +95,7 @@ public extension SQExtensions where Base: UIWindow {
     /// Left safe area inset of key window
     static var safeAreaLeft: CGFloat {
         guard let window = self.keyWindow else { return .zero }
+
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.left
         }
@@ -104,6 +105,7 @@ public extension SQExtensions where Base: UIWindow {
     /// Right safe area inset of key window
     static var safeAreaRight: CGFloat {
         guard let window = self.keyWindow else { return .zero }
+        
         if #available(iOS 11.0, *) {
             return window.safeAreaInsets.right
         }
