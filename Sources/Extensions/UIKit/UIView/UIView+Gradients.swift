@@ -60,7 +60,7 @@ public enum GradientDirection {
 
 public extension SQExtensions where Base: UIView {
 
-    func gradientLayer(withName name: String) -> CAGradientLayer? {
+    func layer(withName name: String) -> CALayer? {
         (self.base.layer.sublayers ?? []).first(where: { ($0 as? CAGradientLayer)?.name == name }) as? CAGradientLayer
     }
 
@@ -71,7 +71,7 @@ public extension SQExtensions where Base: UIView {
         locations: [CGFloat] = [0, 1],
         bounds: CGRect? = nil
     ) {
-        self.removeGradientLayer(withName: name)
+        self.removeLayer(withName: name)
 
         let gradientLayer = CAGradientLayer()
         gradientLayer.name = name
@@ -90,7 +90,7 @@ public extension SQExtensions where Base: UIView {
         self.base.layer.addSublayer(gradientLayer)
     }
 
-    func removeGradientLayer(withName name: String) {
-        self.gradientLayer(withName: name)?.removeFromSuperlayer()
+    func removeLayer(withName name: String) {
+        self.layer(withName: name)?.removeFromSuperlayer()
     }
 }

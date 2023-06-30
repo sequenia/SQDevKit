@@ -14,7 +14,7 @@ open class SQTextView: UITextView {
 
     public enum TextType {
         case plain
-        case html(styles: String)
+        case html(styles: String? = nil)
     }
 
     public lazy var style = ElementStyle(component: self)
@@ -78,8 +78,15 @@ open class SQTextView: UITextView {
             )
 
         case .html(let styles):
-            self.attributedText = (self.text ?? "")
-                    .sq.htmlAttributed(withStyles: styles)
+            let fullStyles = """
+            body {
+                \(self.style.attributes.cssStyle)
+            }
+            \(styles ?? "")
+            """
+            self.attributedText = (self.text ?? "").sq.htmlAttributed(
+                withStyles: fullStyles
+            )
         }
 
         self.invalidateIntrinsicContentSize()

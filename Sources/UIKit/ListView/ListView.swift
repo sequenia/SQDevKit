@@ -13,7 +13,14 @@ import SnapKit
 @available(iOS 13.0, *)
 public protocol ListViewDelegate: AnyObject {
 
+    func willDisplayModel(_ model: AnyHashable?)
     func didSelectModel(_ model: AnyHashable?)
+}
+
+extension ListViewDelegate {
+    public func willDisplayModel(_ model: AnyHashable?) {}
+
+    public func didSelectModel(_ model: AnyHashable?) {}
 }
 
 @available(iOS 13.0, *)
@@ -40,6 +47,7 @@ open class ListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectionV
 
         self.factory = T()
             .setup(collectionView: self.collectionView)
+        self.factory.registerElements()
         self.collectionView.collectionViewLayout = collectionViewLayout
         self.delegate = delegate
 
@@ -72,6 +80,11 @@ open class ListView<T: SQListFactory>: UIView, SQListViewProtocol, UICollectionV
     }
 
 // MARK: - UICollectionViewDelegate
+    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let model = self.sections[safe: indexPath.section]?.content.items[safe: indexPath.row]
+        self.delegate?.willDisplayModel(model)
+    }
+
     open func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath

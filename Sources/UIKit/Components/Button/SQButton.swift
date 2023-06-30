@@ -95,7 +95,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         }
     }
 
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
 
         self.configure()
@@ -103,7 +103,10 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
     }
 
     public required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        self.configure()
+        self.setupLayout()
     }
 
     override open func setTitle(_ title: String?, for state: UIControl.State) {
@@ -118,7 +121,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         self.updateLayer()
     }
 
-    public func configure() {
+    open func configure() {
         self.clipsToBounds = true
         if #available(iOS 15.0, *) {
             self.configurationUpdateHandler = { button in
@@ -138,11 +141,11 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
                 if let kern = attributes[.kern] as? CGFloat {
                     container.kern = kern
                 }
-                if let strikethroughStyle = attributes[.strikethroughStyle] as? NSUnderlineStyle {
-                    container.strikethroughStyle = strikethroughStyle
+                if let strikethroughStyle = attributes[.strikethroughStyle] as? Int {
+                    container.underlineStyle = .init(rawValue: strikethroughStyle)
                 }
-                if let underlineStyle = attributes[.underlineStyle] as? NSUnderlineStyle {
-                    container.underlineStyle = underlineStyle
+                if let underlineStyle = attributes[.underlineStyle] as? Int {
+                    container.underlineStyle = .init(rawValue: underlineStyle)
                 }
                 button.configuration?.attributedTitle = AttributedString(
                     title ?? "",
@@ -150,13 +153,14 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
                 )
 
                 var background = UIBackgroundConfiguration.clear()
-                background.backgroundColor = self.style.backgroundColor(forState: button.state)
+                background.backgroundColor = self.style.backgroundColor(forState: button.state) ?? .clear
                 button.configuration?.background = background
+
             }
         }
     }
 
-    public func setupLayout() {
+    open func setupLayout() {
         self.addSubview(self.activityContainerView)
         self.addSubview(self.activityIndicator)
 
