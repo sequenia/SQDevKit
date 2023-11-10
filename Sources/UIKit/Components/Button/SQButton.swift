@@ -115,7 +115,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         self.updateAttributedText()
     }
 
-    override public func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         super.draw(rect)
 
         self.updateLayer()
