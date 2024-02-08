@@ -16,6 +16,17 @@ import SQEntities
 public protocol CustomizableLayoutDelegate: AnyObject {
     
     func uiSettings(for indexPath: IndexPath) -> UISettings?
+
+    func onClickSection(sectionIndex: Int)
+}
+
+public extension CustomizableLayoutDelegate {
+
+    func uiSettings(for indexPath: IndexPath) -> UISettings? {
+        nil
+    }
+
+    func onClickSection(sectionIndex: Int) { }
 }
 
 // MARK: - CustomizableLayout
@@ -30,7 +41,9 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
     public weak var delegate: CustomizableLayoutDelegate?
 
 // MARK: - Inits
-    override public init(sectionProvider: @escaping UICollectionViewCompositionalLayoutSectionProvider) {
+    override public init(
+        sectionProvider: @escaping UICollectionViewCompositionalLayoutSectionProvider
+    ) {
         super.init(sectionProvider: sectionProvider)
 
         self.configure()
@@ -73,11 +86,13 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
             ofKind: elementKind,
             at: indexPath
         )
-        
+
+        let attributes = superAttributes as? CustomizableLayoutAttributes
+        attributes?.delegate = self.delegate
+
         if elementKind == .backgroundElementKind,
-           let attributes = superAttributes as? CustomizableLayoutAttributes,
            let settings = self.delegate?.uiSettings(for: indexPath) {
-            attributes.settings = settings
+            attributes?.settings = settings
         }
 
         return superAttributes
@@ -89,11 +104,14 @@ open class CustomizableLayout: UICollectionViewCompositionalLayout {
         let superAttributes = super.layoutAttributesForElements(in: rect)
 
         superAttributes?.forEach { attribute in
-            guard let settings = self.delegate?.uiSettings(for: attribute.indexPath),
-                  let customAttribute = attribute as? CustomizableLayoutAttributes
+            guard let customAttribute = attribute as? CustomizableLayoutAttributes
             else { return }
             
-            customAttribute.settings = settings
+            if let settings = self.delegate?.uiSettings(for: attribute.indexPath) {
+                customAttribute.settings = settings
+            }
+
+            customAttribute.delegate = self.delegate
         }
         return superAttributes
     }

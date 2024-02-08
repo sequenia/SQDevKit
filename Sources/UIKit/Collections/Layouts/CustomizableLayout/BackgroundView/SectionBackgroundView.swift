@@ -21,6 +21,8 @@ class SectionBackgroundView: UICollectionReusableView {
     private var insetView = UIView()
     
     private var settings: UISettings = .default
+    public weak var delegate: CustomizableLayoutDelegate?
+    private var sectionIndex: Int?
 
 // MARK: - Inits
     override init(frame: CGRect) {
@@ -56,8 +58,24 @@ class SectionBackgroundView: UICollectionReusableView {
         guard let customizableAttributes = attributes as? CustomizableLayoutAttributes else { return }
 
         self.settings = customizableAttributes.settings ?? .default
+        self.delegate = customizableAttributes.delegate
+        self.sectionIndex = customizableAttributes.indexPath.section
 
+        self.isUserInteractionEnabled = true
         self.insetView.backgroundColor = self.settings.backgroundColor
+
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(self.onClickView)
+        )
+
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc
+    private func onClickView() {
+        guard let sectionIndex = self.sectionIndex else { return }
+
+        self.delegate?.onClickSection(sectionIndex: sectionIndex)
     }
 }
 

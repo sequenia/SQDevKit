@@ -59,3 +59,14 @@ extension Array where Element: Equatable {
         }
     }
 }
+
+extension Array {
+
+    private init(repeating: [Element], count: Int) {
+        self.init([[Element]](repeating: repeating, count: count).flatMap { $0 })
+    }
+
+    public func repeated(count: Int) -> [Element] {
+        return [Element](repeating: self, count: count)
+    }
+}

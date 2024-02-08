@@ -18,6 +18,7 @@ public protocol ListViewDelegate: AnyObject {
 }
 
 extension ListViewDelegate {
+
     public func willDisplayModel(_ model: AnyHashable?) {}
 
     public func didSelectModel(_ model: AnyHashable?) {}

@@ -113,6 +113,17 @@ public extension SQExtensions where Base == String {
         }
         return NSLocalizedString(self.base, bundle: fallbackBundle, comment: "")
     }
+
+    func withPrefix(
+        _ prefix: String?,
+        separator: String = "___"
+    ) -> String {
+        guard let prefix = prefix else { return self.base }
+        
+        if prefix.isEmpty { return self.base }
+
+        return "\(prefix)\(separator)\(self.base)"
+    }
 }
 
 extension String: SQExtensionsCompatible {}

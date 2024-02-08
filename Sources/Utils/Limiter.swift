@@ -72,8 +72,4 @@ public actor Limiter {
     private func sleep() async throws {
         try await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
     }
-    
-    public func cancelTask() {
-        self.task?.cancel()
-    }
 }

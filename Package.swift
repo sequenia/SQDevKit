@@ -7,36 +7,35 @@ let package = Package(
     name: "SQDevKit",
     platforms: [.iOS(.v14)],
     products: [
-        .library(name: "SQEntities", targets: ["SQEntities"]),
-        .library(name: "SQExtensions", targets: ["SQExtensions"]),
-        .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
-        .library(name: "SQLists", targets: ["SQLists"]),
-        .library(name: "SQCompositionLists", targets: ["SQCompositionLists"]),
-        .library(name: "SQUIKit", targets: ["SQUIKit"]),
-        .library(name: "SQDefaults", targets: ["SQDefaults"]),
-        .library(name: "SQUtils", targets: ["SQUtils"]),
-        .library(name: "SQOperations", targets: ["SQOperations"])
+        .library(
+            name: "SQDevKit",
+            targets: [
+                "SQEntities",
+                "SQExtensions",
+                "SQKeyboard",
+                "SQCompositionLists",
+                "SQUIKit",
+                "SQDefaults",
+                "SQUtils"
+            ]
+        )
     ],
     dependencies: [
         .package(
-            url: "https://github.com/sequenia/SQDifferenceKit.git",
-            .upToNextMajor(from: "1.0.1")
+            url: "https://github.com/sequenia/SwiftyJSON.git",
+            .upToNextMajor(from: "5.0.2")
         ),
         .package(
-            url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
-            .upToNextMajor(from: "5.0.1")
+            url: "https://github.com/sequenia/SnapKit.git",
+            .upToNextMajor(from: "5.6.2")
         ),
         .package(
-            url: "https://github.com/SnapKit/SnapKit.git",
-            .upToNextMajor(from: "5.6.0")
-        ),
-        .package(
-            url: "https://github.com/luximetr/AnyFormatKit.git",
-            .upToNextMajor(from: "2.5.2")
+            url: "https://github.com/sequenia/AnyFormatKit.git",
+            .upToNextMajor(from: "2.5.3")
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            .upToNextMajor(from: "7.7.0")
+            .upToNextMajor(from: "7.10.0")
         )
     ],
     targets: [
@@ -62,14 +61,6 @@ let package = Package(
             path: "./Sources/Keyboard"
         ),
         .target(
-            name: "SQLists",
-            dependencies: [
-                "SQExtensions",
-                .product(name: "SQDifferenceKit", package: "SQDifferenceKit")
-            ],
-            path: "./Sources/Lists"
-        ),
-        .target(
             name: "SQCompositionLists",
             dependencies: [
                 "SQExtensions",
@@ -90,16 +81,14 @@ let package = Package(
         .target(
             name: "SQDefaults",
             dependencies: ["SQExtensions"],
-            path: "./Sources/Defaults"
+            path: "./Sources/Defaults",
+            resources: [
+                .process("Resources")
+            ]
         ),
         .target(
             name: "SQUtils",
             path: "./Sources/Utils"
-        ),
-        .target(
-            name: "SQOperations",
-            dependencies: ["SQExtensions"],
-            path: "./Sources/Operations"
-        ),
+        )
     ]
 )

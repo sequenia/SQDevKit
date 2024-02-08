@@ -21,6 +21,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         let view = UIView()
         view.backgroundColor = .clear
         view.isHidden = true
+        view.layer.zPosition = 9998
         return view
     }()
 
@@ -28,6 +29,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         let loader = UIActivityIndicatorView()
         loader.hidesWhenStopped = true
         loader.style = .medium
+        loader.layer.zPosition = 9999
         return loader
     }()
 
@@ -39,6 +41,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         get {
             return self._customState & UIControl.State.loading.rawValue == UIControl.State.loading.rawValue
         } set {
+            
             if newValue == true {
                 self._customState |= UIControl.State.loading.rawValue
             } else {
@@ -115,7 +118,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         self.updateAttributedText()
     }
 
-    override open func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
         self.updateLayer()
@@ -174,6 +177,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
     }
 
     open func build() {
+        self.activityContainerView.backgroundColor = self.style.backgroundColor(forState: .normal)
         if #available(iOS 15.0, *) {
             var configuration = UIButton.Configuration.plain()
             configuration.contentInsets = .init(

@@ -17,6 +17,7 @@ open class SQTextStyle: SQStyle {
     public private(set) var textColor: UIColor?
 
     public private(set) var lineHeightIsAllowed = true
+    public private(set) var baselineIsAllowed = true
 
     override open var attributes: [NSAttributedString.Key: Any] {
         var attrs = super.attributes
@@ -31,7 +32,9 @@ open class SQTextStyle: SQStyle {
             mutableParagraph.maximumLineHeight = lineHeight
 
             let adjustment = lineHeight > font.lineHeight ? 2.0 : 1.0
-            let baselineOffset = (lineHeight - font.lineHeight) / 2.0 / adjustment
+            let baselineOffset = baselineIsAllowed
+            ? (lineHeight - font.lineHeight) / 2.0 / adjustment
+            : 0.0
 
             attrs[.baselineOffset] = baselineOffset
             attrs[.paragraphStyle] = mutableParagraph
@@ -70,6 +73,12 @@ open class SQTextStyle: SQStyle {
     @discardableResult
     open func lineHeightIsAllowed(_ isAllowed: Bool) -> Self {
         self.lineHeightIsAllowed = isAllowed
+        return self
+    }
+    
+    @discardableResult
+    open func baselineIsAllowed(_ isAllowed: Bool) -> Self {
+        self.baselineIsAllowed = isAllowed
         return self
     }
 }

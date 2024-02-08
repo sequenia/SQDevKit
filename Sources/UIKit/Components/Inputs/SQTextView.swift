@@ -21,9 +21,27 @@ open class SQTextView: UITextView {
     public lazy var placeholderStyle = SQTextStyle()
 
     public var textType: TextType = .plain
+    
+    private var textInsets: UIEdgeInsets {
+        .init(
+            top: self.style.textInsets.top,
+            left: self.style.textInsets.left,
+            bottom: self.style.textInsets.bottom,
+            right: self.style.textInsets.right
+        )
+    }
+    
+    open var placeholder: String = "" {
+        didSet {
+            self.text = placeholder
+            self.updateAttributedText()
+        }
+    }
 
     override open var text: String? {
         didSet {
+            super.text = text
+            
             self.updateAttributedText()
         }
     }
@@ -34,7 +52,7 @@ open class SQTextView: UITextView {
         }
         set {
             if !self.isEditable { return }
-
+            
             super.selectedTextRange = newValue
         }
     }
@@ -60,10 +78,33 @@ open class SQTextView: UITextView {
         gestureRecognizer.isEnabled = false
         return false
     }
+    
+    public func setPlaceholderStyle() {
+        self.text = placeholder
+
+        self.font = self.placeholderStyle.font
+        self.textColor = self.placeholderStyle.textColor
+    }
+    
+    public func setTextStyle() {
+        self.font = self.style.font
+        self.textColor = self.style.textColor
+        self.tintColor = self.style.cursorColor
+        
+        self.textContainerInset = textInsets
+    }
+    
+    internal func updateBackground() {
+        self.backgroundColor = self.style.backgroundColor(forState: .normal)
+    }
+    
+    internal func updateBorders() {
+        self.layer.borderColor = self.style.borderColor(forState: .normal)?.cgColor
+        self.layer.borderWidth = self.style.borderWidth(forState: .normal)
+        self.layer.cornerRadius = self.style.cornerRadius(forState: .normal)
+    }
 
     private func updateAttributedText() {
-        if self.isEditable { return }
-
         switch self.textType {
         case .plain:
             let attributedString: NSAttributedString
@@ -72,10 +113,12 @@ open class SQTextView: UITextView {
             } else {
                 attributedString = NSAttributedString(string: self.text ?? "")
             }
-
-            self.attributedText = self.style.convertStringToAttributed(
-                attributedString
-            )
+            
+            if self.text == self.placeholder {
+                self.attributedText = self.placeholderStyle.convertStringToAttributed(attributedString)
+            } else {
+                self.attributedText = self.style.convertStringToAttributed(attributedString)
+            }
 
         case .html(let styles):
             let fullStyles = """
@@ -99,7 +142,11 @@ extension SQTextView: StyledComponent {
         self.font = self.style.font
         self.textColor = self.style.textColor
         self.tintColor = self.style.cursorColor
+        
+        self.textContainerInset = textInsets
 
+        self.updateBackground()
+        self.updateBorders()
         self.updateAttributedText()
 
         self.setNeedsDisplay()

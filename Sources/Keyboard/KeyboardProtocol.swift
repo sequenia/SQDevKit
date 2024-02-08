@@ -23,10 +23,12 @@ public protocol KeyboardProtocol: NSObjectProtocol {
     func unregisterForKeyboardEvents()
 
 // MARK: - Action
-    func handleKeyboard(withFrame frame: CGRect,
-                        animationDuration: TimeInterval,
-                        animationOptions: UIView.AnimationOptions,
-                        isShow: Bool)
+    func handleKeyboard(
+        withFrame frame: CGRect,
+        animationDuration: TimeInterval,
+        animationOptions: UIView.AnimationOptions,
+        isShow: Bool
+    )
 
     func didEndShowKeyboard()
 }
@@ -48,36 +50,54 @@ public extension KeyboardProtocol {
 
 // MARK: - Register/Unregister keyboard
     func registerForKeyboardEvents() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
-                                               object: nil,
-                                               queue: nil,
-                                               using: { [weak self] (notification) in
-                                                guard let self = self else { return }
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillShowNotification,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (notification) in
+                guard let self = self else { return }
 
-                                                self.willShowKeyboard()
-                                                self.processKeyboard(withNotification: notification,
-                                                                     isShow: true)
-        })
+                self.willShowKeyboard()
+                self.processKeyboard(
+                    withNotification: notification,
+                    isShow: true
+                )
+            }
+        )
 
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
-                                               object: nil,
-                                               queue: nil,
-                                               using: { [weak self] (notification) in
-                                                guard let self = self else { return }
-
-                                                self.processKeyboard(withNotification: notification,
-                                                                     isShow: false)
-        })
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillHideNotification,
+            object: nil,
+            queue: nil,
+            using: { [weak self] (notification) in
+                guard let self = self else { return }
+                
+                self.processKeyboard(
+                    withNotification: notification,
+                    isShow: false
+                )
+            }
+        )
     }
 
     func unregisterForKeyboardEvents() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
 
 // MARK: - Process keyboard
-    private func processKeyboard(withNotification notification: Notification,
-                                 isShow: Bool) {
+    private func processKeyboard(
+        withNotification notification: Notification,
+        isShow: Bool
+    ) {
         var keyboardFrame: CGRect = .zero
         var animationDuration: TimeInterval = 0.2
         var animationOptions: UIView.AnimationOptions = .curveLinear
@@ -94,10 +114,12 @@ public extension KeyboardProtocol {
             animationOptions = UIView.AnimationOptions(rawValue: UInt(rawOptions << 16))
         }
 
-        self.handleKeyboard(withFrame: keyboardFrame,
-                            animationDuration: animationDuration,
-                            animationOptions: animationOptions,
-                            isShow: isShow)
+        self.handleKeyboard(
+            withFrame: keyboardFrame,
+            animationDuration: animationDuration,
+            animationOptions: animationOptions,
+            isShow: isShow
+        )
     }
 
     func didEndShowKeyboard() {}

@@ -3,19 +3,10 @@
     {
       "identity" : "anyformatkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/luximetr/AnyFormatKit.git",
+      "location" : "https://github.com/sequenia/AnyFormatKit.git",
       "state" : {
-        "revision" : "ae3a965164005b07f81d6aa066520d7ad14ea54e",
-        "version" : "2.5.2"
-      }
-    },
-    {
-      "identity" : "differencekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ra1028/DifferenceKit.git",
-      "state" : {
-        "revision" : "073b9671ce2b9b5b96398611427a1f929927e428",
-        "version" : "1.3.0"
+        "revision" : "a8bbf0b84eaf638a9216aac52b0800073d17c0d0",
+        "version" : "2.5.3"
       }
     },
     {
@@ -23,35 +14,26 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "c1f60c63f356d364f4284ba82961acbe7de79bcc",
-        "version" : "7.8.1"
+        "revision" : "3ec0ab0bca4feb56e8b33e289c9496e89059dd08",
+        "version" : "7.10.2"
       }
     },
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "location" : "https://github.com/sequenia/SnapKit.git",
       "state" : {
-        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
-        "version" : "5.6.0"
-      }
-    },
-    {
-      "identity" : "sqdifferencekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sequenia/SQDifferenceKit.git",
-      "state" : {
-        "revision" : "b37725a7dea2c950ec4aded487d4e57da32b7db9",
-        "version" : "1.0.1"
+        "revision" : "19db4d361a0050166e13badbd42f6f0c63dfea09",
+        "version" : "5.6.2"
       }
     },
     {
       "identity" : "swiftyjson",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "location" : "https://github.com/sequenia/SwiftyJSON.git",
       "state" : {
-        "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
-        "version" : "5.0.1"
+        "revision" : "3c5168e449ef14241e85292dd0550cb696a889bc",
+        "version" : "5.0.2"
       }
     }
   ],
