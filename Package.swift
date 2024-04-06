@@ -22,20 +22,20 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/sequenia/SwiftyJSON.git",
+            url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
             .upToNextMajor(from: "5.0.2")
         ),
         .package(
-            url: "https://github.com/sequenia/SnapKit.git",
-            .upToNextMajor(from: "5.6.2")
+            url: "https://github.com/SnapKit/SnapKit.git",
+            .upToNextMajor(from: "5.7.1")
         ),
         .package(
-            url: "https://github.com/sequenia/AnyFormatKit.git",
-            .upToNextMajor(from: "2.5.3")
+            url: "https://github.com/luximetr/AnyFormatKit.git",
+            .upToNextMajor(from: "2.5.2")
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            .upToNextMajor(from: "7.10.0")
+            .upToNextMajor(from: "7.11.0")
         )
     ],
     targets: [
