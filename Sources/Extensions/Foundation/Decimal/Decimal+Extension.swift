@@ -30,8 +30,9 @@ public extension SQExtensions where Base == Decimal {
         }
         formatter.locale = Locale(identifier: langCode)
         formatter.maximumFractionDigits = maximumFractionDigits
+        formatter.maximumSignificantDigits = 1000
         formatter.usesSignificantDigits = true
-        
+
         return formatter.string(from: self.base as NSNumber) ?? ""
     }
 }
