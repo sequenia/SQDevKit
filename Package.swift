@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "SQDevKit",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v12)],
     products: [
         .library(name: "SQExtensions", targets: ["SQExtensions"]),
         .library(name: "SQKeyboard", targets: ["SQKeyboard"]),
@@ -24,11 +24,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
-            .upToNextMajor(from: "5.0.1")
+            .upToNextMajor(from: "5.0.2")
         ),
         .package(
             url: "https://github.com/SnapKit/SnapKit.git",
-            .upToNextMajor(from: "5.6.0")
+            .upToNextMajor(from: "5.7.1")
         )
     ],
     targets: [
