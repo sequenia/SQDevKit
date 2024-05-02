@@ -40,6 +40,14 @@ open class SQNavigationController: UINavigationController, UINavigationControlle
         let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         viewController.navigationItem.backBarButtonItem = item
     }
+    
+    public func navigationController(
+        _ navigationController: UINavigationController,
+        didShow viewController: UIViewController,
+        animated: Bool
+    ) {
+        self.interactivePopGestureRecognizer?.isEnabled = self.viewControllers.count > 1
+    }
 }
 
 public extension SQExtensions where Base: UIViewController {

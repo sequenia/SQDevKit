@@ -23,10 +23,9 @@ public extension NSCollectionLayoutSection {
         )
 
         return NSCollectionLayoutSection(
-            group: .horizontal(
+            group: .vertical(
                 layoutSize: size,
-                subitem: item,
-                count: 1
+                subitems: [item]
             )
         )
     }
