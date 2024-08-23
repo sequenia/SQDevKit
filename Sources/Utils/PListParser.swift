@@ -34,12 +34,24 @@ public class PListParser {
     }
     
     public func bool(forKey key: String, nestedIn dictionaryName: String? = nil) -> Bool {
+        let targetDictionary = self.getTargetDictionary(name: dictionaryName)
+
+        if let value = targetDictionary[key] as? Bool {
+            return value
+        }
+
         let stringValue = self.string(forKey: key, nestedIn: dictionaryName).lowercased()
         
         return stringValue == "true" || stringValue == "yes" || stringValue == "1"
     }
     
     public func int(forKey key: String, nestedIn dictionaryName: String? = nil) -> Int {
+        let targetDictionary = self.getTargetDictionary(name: dictionaryName)
+
+        if let value = targetDictionary[key] as? Int {
+            return value
+        }
+
         let stringValue = self.string(forKey: key, nestedIn: dictionaryName)
         let keyPath = self.keyPath(key, nestedIn: dictionaryName)
         
@@ -51,6 +63,12 @@ public class PListParser {
     }
     
     public func timeInterval(forKey key: String, nestedIn dictionaryName: String? = nil) -> TimeInterval {
+        let targetDictionary = self.getTargetDictionary(name: dictionaryName)
+
+        if let value = targetDictionary[key] as? TimeInterval {
+            return value
+        }
+
         let stringValue = self.string(forKey: key, nestedIn: dictionaryName)
         let keyPath = self.keyPath(key, nestedIn: dictionaryName)
         
