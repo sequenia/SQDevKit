@@ -11,6 +11,11 @@ import UIKit
 import SQExtensions
 #endif
 
+public protocol WithSelfControllSwipeToBack {
+    
+    var allowSwipeToBack: Bool { get }
+}
+
 /// Inheritance of UINavigationController for easy work with screen-specified status bar style
 open class SQNavigationController: UINavigationController, UINavigationControllerDelegate {
 
@@ -46,7 +51,12 @@ open class SQNavigationController: UINavigationController, UINavigationControlle
         didShow viewController: UIViewController,
         animated: Bool
     ) {
-        self.interactivePopGestureRecognizer?.isEnabled = self.viewControllers.count > 1
+        if let selfControll = viewController as? WithSelfControllSwipeToBack {
+            self.interactivePopGestureRecognizer?.isEnabled = selfControll.allowSwipeToBack
+        } else {
+            self.interactivePopGestureRecognizer?.isEnabled = self.viewControllers.count > 1
+        }
+        
     }
 }
 
