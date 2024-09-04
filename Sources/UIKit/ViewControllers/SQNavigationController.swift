@@ -11,13 +11,22 @@ import UIKit
 import SQExtensions
 #endif
 
-public protocol WithSelfControllSwipeToBack {
+public protocol SQNavigationControllerDelegate: AnyObject {
     
     var allowSwipeToBack: Bool { get }
 }
 
+public extension SQNavigationControllerDelegate {
+    
+    var allowSwipeToBack: Bool {
+        true
+    }
+}
+
 /// Inheritance of UINavigationController for easy work with screen-specified status bar style
 open class SQNavigationController: UINavigationController, UINavigationControllerDelegate {
+    
+    private weak var navigationDelegate: SQNavigationControllerDelegate?
 
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         self.topViewController?.preferredStatusBarStyle ?? .default
@@ -51,12 +60,12 @@ open class SQNavigationController: UINavigationController, UINavigationControlle
         didShow viewController: UIViewController,
         animated: Bool
     ) {
-        if let selfControll = viewController as? WithSelfControllSwipeToBack {
-            self.interactivePopGestureRecognizer?.isEnabled = selfControll.allowSwipeToBack
+        if let navigationControllerDelegate = viewController as? SQNavigationControllerDelegate {
+            self.navigationDelegate = navigationControllerDelegate
+            self.interactivePopGestureRecognizer?.isEnabled = navigationControllerDelegate.allowSwipeToBack
         } else {
             self.interactivePopGestureRecognizer?.isEnabled = self.viewControllers.count > 1
         }
-        
     }
 }
 
