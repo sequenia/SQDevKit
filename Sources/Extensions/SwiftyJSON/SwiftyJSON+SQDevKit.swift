@@ -38,6 +38,23 @@ public extension SQExtensions where Base == JSON {
         }
     }
     
+    // MARK: - Decimal
+    var decimal: Decimal? {
+        get {
+            if let value = base.string {
+                return Decimal(string: value)
+            }
+            return nil
+        }
+        set {
+            if let newValue = newValue {
+                base.object = "\(newValue)"
+            } else {
+                base.object = NSNull()
+            }
+        }
+    }
+    
     /// Returns string identifier in JSON of passed field
     ///
     /// - Parameters:
