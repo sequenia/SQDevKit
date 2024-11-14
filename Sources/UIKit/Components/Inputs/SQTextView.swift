@@ -99,6 +99,7 @@ open class SQTextView: UITextView {
     }
     
     internal func updateBorders() {
+        self.clipsToBounds = true
         self.layer.borderColor = self.style.borderColor(forState: .normal)?.cgColor
         self.layer.borderWidth = self.style.borderWidth(forState: .normal)
         self.layer.cornerRadius = self.style.cornerRadius(forState: .normal)

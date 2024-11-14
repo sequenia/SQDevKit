@@ -96,6 +96,7 @@ open class SQTextField: UITextField {
     }
 
     internal func updateBorders() {
+        self.clipsToBounds = true
         self.layer.borderColor = self.style.borderColor(forState: self.state)?.cgColor
         self.layer.borderWidth = self.style.borderWidth(forState: self.state)
         self.layer.cornerRadius = self.style.cornerRadius(forState: self.state)
