@@ -12,6 +12,7 @@ public typealias ImageDownloadedCompletion = (_ success: Bool, _ image: UIImage?
 
 extension SQExtensions where Base == UIImageView {
 
+    @MainActor
     @discardableResult
     public func setImage(
         fromURL url: URL?,

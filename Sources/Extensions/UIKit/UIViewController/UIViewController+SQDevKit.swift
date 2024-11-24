@@ -9,6 +9,22 @@ import UIKit
 
 // MARK: - Initialization
 public extension SQExtensions where Base: UIViewController {
+    
+    /// Returns current UIViewController for UITabController or UINavigationController, instead return self
+    var currentViewController: UIViewController? {
+        if let tabController = self.base as? UITabBarController {
+            let selectedViewController = tabController.selectedViewController
+            if let navController = selectedViewController as? UINavigationController {
+                return navController.viewControllers.last
+            }
+
+            return selectedViewController
+        } else if let navController = self.base as? UINavigationController {
+            return navController.viewControllers.last
+        }
+
+        return self.base
+    }
 
     /// Returns UINavigationController with self as root
     @available(*, deprecated, message: "Use withNavigationController from SQUIKit")

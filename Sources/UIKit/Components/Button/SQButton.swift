@@ -186,6 +186,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
                 bottom: .zero,
                 trailing: self.style.contentInsets.right
             )
+            configuration.imagePadding = self.style.iconSpacing
             self.configuration = configuration
         } else {
             self.setupColor()
@@ -196,8 +197,22 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
                 bottom: .zero,
                 right: self.style.contentInsets.right
             )
-        }
 
+            self.imageEdgeInsets = .init(
+                top: .zero,
+                left: .zero,
+                bottom: .zero,
+                right: self.style.iconSpacing
+            )
+            
+            self.titleEdgeInsets = .init(
+                top: .zero,
+                left: self.style.iconSpacing,
+                bottom: .zero,
+                right: .zero
+            )
+        }
+        
         self.updateTintColor()
         self.setNeedsDisplay()
     }
@@ -241,5 +256,28 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
             for: self.state
         )
         self.invalidateIntrinsicContentSize()
+    }
+    
+    open func requiredWidth(withHeight height: CGFloat) -> CGFloat {
+        guard let attributedString = self.attributedTitle(for: self.state) else { return .zero }
+
+        let buttonHeight = self.frame.height <= .zero ? height : self.frame.height
+        let constraintBox = CGSize(
+            width: .greatestFiniteMagnitude,
+            height: buttonHeight
+        )
+        
+        let width = NSAttributedString(attributedString: attributedString)
+            .boundingRect(
+                with: constraintBox,
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            .width
+            .rounded(.up)
+        
+        return width + self.style.contentInsets.left +
+            self.style.contentInsets.right +
+            self.style.iconSpacing
     }
 }

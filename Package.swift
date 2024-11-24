@@ -35,7 +35,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            .upToNextMajor(from: "7.11.0")
+            .upToNextMajor(from: "8.1.1")
         )
     ],
     targets: [

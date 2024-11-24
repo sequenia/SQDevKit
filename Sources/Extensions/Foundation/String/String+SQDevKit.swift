@@ -127,3 +127,8 @@ public extension SQExtensions where Base == String {
 }
 
 extension String: SQExtensionsCompatible {}
+
+public extension String {
+    
+    static let utcDateStringFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+}
