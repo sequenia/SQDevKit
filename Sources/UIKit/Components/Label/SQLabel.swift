@@ -26,6 +26,25 @@ open class SQLabel: UILabel, StyledComponent {
     open func resetStyle() {
         self.style = ElementStyle(component: self)
     }
+    
+    open func requiredWidth(withHeight height: CGFloat) -> CGFloat {
+        guard let attributedString = self.attributedText else { return .zero }
+
+        let labelHeight = self.frame.height <= .zero ? height : self.frame.height
+        let constraintBox = CGSize(
+            width: .greatestFiniteMagnitude,
+            height: labelHeight
+        )
+        
+        return NSAttributedString(attributedString: attributedString)
+            .boundingRect(
+                with: constraintBox,
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            .width
+            .rounded(.up)
+    }
 
     private func updateAttributedText() {
         let attributedString: NSAttributedString
