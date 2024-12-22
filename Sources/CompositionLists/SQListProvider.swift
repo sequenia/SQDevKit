@@ -8,10 +8,6 @@
 import UIKit
 import SQEntities
 
-public protocol SQListData: Any {
-
-}
-
 public protocol SQListProvider: AnyObject {
 
     /// Collection view
