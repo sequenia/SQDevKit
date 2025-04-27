@@ -28,4 +28,26 @@ public extension SQExtensions where Base: Bundle {
 
         return Double(stringProperty)
     }
+    
+    var displayName: String? {
+        let infoDictionary = self.base.localizedInfoDictionary ?? self.base.infoDictionary
+        
+        return (infoDictionary?["CFBundleDisplayName"] as? String) ??
+            infoDictionary?["CFBundleName"] as? String
+    }
+    
+    var releaseVersionNumber: String? {
+        return self.base.infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    
+    var buildVersionNumber: String? {
+        return self.base.infoDictionary?["CFBundleVersion"] as? String
+    }
+    
+    var fullVersionName: String? {
+        guard let releaseVersionNumber = self.releaseVersionNumber,
+              let buildVersionNumber = self.buildVersionNumber else { return nil }
+        
+        return "\(releaseVersionNumber) (\(buildVersionNumber))"
+    }
 }
