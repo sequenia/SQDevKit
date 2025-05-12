@@ -23,19 +23,19 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
-            .upToNextMajor(from: "5.0.2")
+            exact: .init("5.0.2")!
         ),
         .package(
             url: "https://github.com/SnapKit/SnapKit.git",
-            .upToNextMajor(from: "5.7.1")
+            exact: .init("5.7.1")!
         ),
         .package(
             url: "https://github.com/luximetr/AnyFormatKit.git",
-            .upToNextMajor(from: "2.5.2")
+            exact: .init("2.5.2")!
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            .upToNextMajor(from: "8.1.1")
+            exact: .init("8.1.1")!
         )
     ],
     targets: [
