@@ -35,7 +35,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            exact: .init("8.1.1")!
+            exact: .init("8.3.2")!
         )
     ],
     targets: [
