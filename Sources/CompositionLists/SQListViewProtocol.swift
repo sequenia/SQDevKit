@@ -50,7 +50,19 @@ public protocol SQListViewProtocol: AnyObject {
         withSectionsContent content: [SQSectionContent],
         animated: Bool
     )
-
+    
+    /// Reload collection view with new sections content
+    ///
+    /// - Parameters:
+    ///   - content: new sections content.`[SQSectionContent]`.
+    ///   - animated: need reload with animation.`Bool`.
+    ///   - keepContentOffset: should keep content offset after reload.`Bool`.
+    func reloadData(
+        withSectionsContent content: [SQSectionContent],
+        animated: Bool,
+        keepContentOffset: Bool
+    )
+    
     /// Reload collection view with new sections content
     ///
     /// - Parameters:
@@ -60,6 +72,20 @@ public protocol SQListViewProtocol: AnyObject {
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
+        completion: (() -> Void)?
+    )
+
+    /// Reload collection view with new sections content
+    ///
+    /// - Parameters:
+    ///   - content: new sections content.`[SQSectionContent]`.
+    ///   - animated: need reload with animation.`Bool`.
+    ///   - completion: closure calls on finish reloading data.`(() -> Void)?`, can be nil
+    ///   - keepContentOffset: should keep content offset after reload.`Bool`.
+    func reloadData(
+        withSectionsContent content: [SQSectionContent],
+        animated: Bool,
+        keepContentOffset: Bool,
         completion: (() -> Void)?
     )
 
@@ -144,12 +170,44 @@ public extension SQListViewProtocol {
         withSectionsContent content: [SQSectionContent],
         animated: Bool
     ) {
-        self.reloadData(withSectionsContent: content, animated: animated, completion: nil)
+        self.reloadData(
+            withSectionsContent: content,
+            animated: animated,
+            keepContentOffset: true,
+            completion: nil
+        )
+    }
+    
+    func reloadData(
+        withSectionsContent content: [SQSectionContent],
+        animated: Bool,
+        keepContentOffset: Bool
+    ) {
+        self.reloadData(
+            withSectionsContent: content,
+            animated: animated,
+            keepContentOffset: keepContentOffset,
+            completion: nil
+        )
+    }
+    
+    func reloadData(
+        withSectionsContent content: [SQSectionContent],
+        animated: Bool,
+        completion: (() -> Void)?
+    ) {
+        self.reloadData(
+            withSectionsContent: content,
+            animated: animated,
+            keepContentOffset: true,
+            completion: completion
+        )
     }
 
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
+        keepContentOffset: Bool,
         completion: (() -> Void)?
     ) {
         var newSnapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
@@ -183,7 +241,10 @@ public extension SQListViewProtocol {
                     return
                 }
 
-                self.collectionView.contentOffset.y = contentOffsetY
+                if keepContentOffset {
+                    self.collectionView.contentOffset.y = contentOffsetY
+                }
+
                 UIView.setAnimationsEnabled(true)
                 self.reloadEmptyData()
                 completion?()
