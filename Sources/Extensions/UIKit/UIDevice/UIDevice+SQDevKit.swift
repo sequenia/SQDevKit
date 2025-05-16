@@ -17,8 +17,15 @@ public extension SQExtensions where Base: UIDevice {
     
     /// Current screen orientation
     static var isLandscape: Bool {
-        return UIDevice.current.orientation.isValidInterfaceOrientation ?
-            UIDevice.current.orientation.isLandscape : UIApplication.shared.statusBarOrientation.isLandscape
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.windows
+                .first?
+                .windowScene?
+                .interfaceOrientation
+                .isLandscape ?? false
+        } else {
+            return UIApplication.shared.statusBarOrientation.isLandscape
+        }
     }
 
     /// Status bar height

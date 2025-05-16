@@ -37,7 +37,7 @@ extension SQExtensions where Base == UIImageView {
 
         let cacheKey = url.absoluteString
 
-        let resource = ImageResource(
+        let resource = KF.ImageResource(
             downloadURL: url,
             cacheKey: cacheKey
         )
