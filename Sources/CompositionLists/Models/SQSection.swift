@@ -35,6 +35,6 @@ extension SQSection: Hashable {
 extension SQSection: Equatable {
 
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
+        lhs.content.isEqualTo(rhs.content)
     }
 }
