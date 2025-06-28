@@ -11,6 +11,10 @@ public extension SQExtensions where Base: Bundle {
     static func stringPropertyForKey(_ key: String) -> String? {
         return Bundle.main.object(forInfoDictionaryKey: key.sq.capitalisingFirstLetter()) as? String
     }
+    
+    static func stringArrayPropertyForKey(_ key: String) -> [String]? {
+        return Bundle.main.object(forInfoDictionaryKey: key.sq.capitalisingFirstLetter()) as? [String]
+    }
 
     static func boolPropertyForKey(_ key: String) -> Bool? {
         guard let stringProperty = self.stringPropertyForKey(key) else { return nil }

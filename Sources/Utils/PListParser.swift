@@ -33,6 +33,17 @@ public class PListParser {
         return value
     }
     
+    public func stringArray(forKey key: String, nestedIn dictionaryName: String? = nil) -> [String] {
+        let targetDictionary = self.getTargetDictionary(name: dictionaryName)
+        
+        guard let value = targetDictionary[key] as? [String] else {
+            let keyPath = self.keyPath(key, nestedIn: dictionaryName)
+            fatalError("Unable to find key \(keyPath) in \(self.plistName).plist")
+        }
+        
+        return value
+    }
+    
     public func bool(forKey key: String, nestedIn dictionaryName: String? = nil) -> Bool {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
 
