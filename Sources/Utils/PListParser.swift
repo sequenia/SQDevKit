@@ -22,7 +22,10 @@ public class PListParser {
         self.plistContent = content
     }
     
-    public func string(forKey key: String, nestedIn dictionaryName: String? = nil) -> String {
+    public func string(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> String {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
         
         guard let value = targetDictionary[key] as? String else {
@@ -33,7 +36,10 @@ public class PListParser {
         return value
     }
     
-    public func stringArray(forKey key: String, nestedIn dictionaryName: String? = nil) -> [String] {
+    public func stringArray(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> [String] {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
         
         guard let value = targetDictionary[key] as? [String] else {
@@ -44,7 +50,10 @@ public class PListParser {
         return value
     }
     
-    public func bool(forKey key: String, nestedIn dictionaryName: String? = nil) -> Bool {
+    public func bool(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> Bool {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
 
         if let value = targetDictionary[key] as? Bool {
@@ -56,7 +65,10 @@ public class PListParser {
         return stringValue == "true" || stringValue == "yes" || stringValue == "1"
     }
     
-    public func int(forKey key: String, nestedIn dictionaryName: String? = nil) -> Int {
+    public func int(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> Int {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
 
         if let value = targetDictionary[key] as? Int {
@@ -73,7 +85,10 @@ public class PListParser {
         return intValue
     }
     
-    public func timeInterval(forKey key: String, nestedIn dictionaryName: String? = nil) -> TimeInterval {
+    public func timeInterval(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> TimeInterval {
         let targetDictionary = self.getTargetDictionary(name: dictionaryName)
 
         if let value = targetDictionary[key] as? TimeInterval {
@@ -90,7 +105,10 @@ public class PListParser {
         return timeIntervalValue
     }
     
-    public func url(forKey key: String, nestedIn dictionaryName: String? = nil) -> URL {
+    public func url(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> URL {
         let stringValue = self.string(forKey: key, nestedIn: dictionaryName)
         let keyPath = self.keyPath(key, nestedIn: dictionaryName)
         
@@ -100,8 +118,25 @@ public class PListParser {
         
         return url
     }
+    
+    public func dictionary(
+        forKey key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> [String: Any] {
+        
+        let targetDictionary = self.getTargetDictionary(name: dictionaryName)
+        let keyPath = self.keyPath(key, nestedIn: dictionaryName)
 
-    private func getTargetDictionary(name: String?) -> [String: Any] {
+        guard let dictionary = targetDictionary[key] as? [String : Any] else {
+            fatalError("Unable to parse dictionary from key \(keyPath) in \(self.plistName).plist")
+        }
+        
+        return dictionary
+    }
+
+    private func getTargetDictionary(
+        name: String?
+    ) -> [String: Any] {
         if let dictionaryName = name {
             guard let content = self.plistContent[dictionaryName] as? [String: Any] else {
                 fatalError("Unable to find dictionary \(dictionaryName) in \(self.plistName).plist")
@@ -113,7 +148,10 @@ public class PListParser {
         return self.plistContent
     }
     
-    private func keyPath(_ key: String, nestedIn dictionaryName: String? = nil) -> String {
+    private func keyPath(
+        _ key: String,
+        nestedIn dictionaryName: String? = nil
+    ) -> String {
         guard let dictionaryName = dictionaryName else {
             return key
         }
