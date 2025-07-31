@@ -27,8 +27,31 @@ open class SQLabel: UILabel, StyledComponent {
         self.style = ElementStyle(component: self)
     }
     
+    open func requiredHeight(withWidth width: CGFloat) -> CGFloat {
+        guard let attributedString = self.attributedText else { return .zero }
+        
+        if attributedString.string.isEmpty { return .zero }
+
+        let labelWidth = self.frame.width <= .zero ? width : self.frame.width
+        let constraintBox = CGSize(
+            width: labelWidth,
+            height: .greatestFiniteMagnitude
+        )
+
+        return self.attirubtedStringForCalculation(originalString: attributedString)
+            .boundingRect(
+                with: constraintBox,
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            .height
+            .rounded(.up)
+    }
+    
     open func requiredWidth(withHeight height: CGFloat) -> CGFloat {
         guard let attributedString = self.attributedText else { return .zero }
+        
+        if attributedString.string.isEmpty { return .zero }
 
         let labelHeight = self.frame.height <= .zero ? height : self.frame.height
         let constraintBox = CGSize(
@@ -36,7 +59,7 @@ open class SQLabel: UILabel, StyledComponent {
             height: labelHeight
         )
         
-        return NSAttributedString(attributedString: attributedString)
+        return self.attirubtedStringForCalculation(originalString: attributedString)
             .boundingRect(
                 with: constraintBox,
                 options: [.usesLineFragmentOrigin, .usesFontLeading],
@@ -44,6 +67,26 @@ open class SQLabel: UILabel, StyledComponent {
             )
             .width
             .rounded(.up)
+    }
+    
+    private func attirubtedStringForCalculation(originalString: NSAttributedString) -> NSAttributedString {
+        var newAttributedString = NSMutableAttributedString(string: originalString.string)
+        originalString.attributes(at: .zero, effectiveRange: nil).forEach { attribute in
+            if attribute.key == .paragraphStyle,
+               let originalParagraphStyle = attribute.value as? NSParagraphStyle {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.setParagraphStyle(originalParagraphStyle)
+                paragraphStyle.lineBreakMode = .byWordWrapping
+
+                newAttributedString.addAttribute(attribute.key, value: paragraphStyle, range: NSRange(location: .zero, length: originalString.length))
+
+                return
+            }
+
+            newAttributedString.addAttribute(attribute.key, value: attribute.value, range: NSRange(location: .zero, length: originalString.length))
+        }
+        
+        return newAttributedString
     }
 
     private func updateAttributedText() {
