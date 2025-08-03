@@ -105,4 +105,18 @@ open class SQStyle: NSObject {
 
         return attributedString
     }
+    
+    open func requiredWidth(
+        forString string: String,
+        height: CGFloat
+    ) -> CGFloat {
+        .zero
+    }
+    
+    open func requiredHeight(
+        forString string: String,
+        width: CGFloat
+    ) -> CGFloat {
+        .zero
+    }
 }

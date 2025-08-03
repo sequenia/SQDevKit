@@ -81,4 +81,65 @@ open class SQTextStyle: SQStyle {
         self.baselineIsAllowed = isAllowed
         return self
     }
+    
+    override open func requiredWidth(
+        forString string: String,
+        height: CGFloat
+    ) -> CGFloat {
+        let constraintBox = CGSize(
+            width: .greatestFiniteMagnitude,
+            height: height
+        )
+
+        return self
+            .attirubtedStringForCalculation(string: string)
+            .boundingRect(
+                with: constraintBox,
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            .width
+            .rounded(.up)
+    }
+    
+    override open func requiredHeight(
+        forString string: String,
+        width: CGFloat
+    ) -> CGFloat {
+        let constraintBox = CGSize(
+            width: width,
+            height: .greatestFiniteMagnitude
+        )
+
+        return self.attirubtedStringForCalculation(string: string)
+            .boundingRect(
+                with: constraintBox,
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            .height
+            .rounded(.up)
+    }
+    
+    internal func attirubtedStringForCalculation(
+        string: String
+    ) -> NSAttributedString {
+        var newAttributedString = NSMutableAttributedString(string: string)
+        self.attributes.forEach { attribute in
+            if attribute.key == .paragraphStyle,
+               let originalParagraphStyle = attribute.value as? NSParagraphStyle {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.setParagraphStyle(originalParagraphStyle)
+                paragraphStyle.lineBreakMode = .byWordWrapping
+
+                newAttributedString.addAttribute(attribute.key, value: paragraphStyle, range: NSRange(location: .zero, length: string.count))
+
+                return
+            }
+
+            newAttributedString.addAttribute(attribute.key, value: attribute.value, range: NSRange(location: .zero, length: string.count))
+        }
+        
+        return newAttributedString
+    }
 }

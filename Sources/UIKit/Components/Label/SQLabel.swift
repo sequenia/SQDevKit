@@ -33,19 +33,11 @@ open class SQLabel: UILabel, StyledComponent {
         if attributedString.string.isEmpty { return .zero }
 
         let labelWidth = self.frame.width <= .zero ? width : self.frame.width
-        let constraintBox = CGSize(
-            width: labelWidth,
-            height: .greatestFiniteMagnitude
+        
+        return self.style.requiredHeight(
+            forString: attributedString.string,
+            width: labelWidth
         )
-
-        return self.attirubtedStringForCalculation(originalString: attributedString)
-            .boundingRect(
-                with: constraintBox,
-                options: [.usesLineFragmentOrigin, .usesFontLeading],
-                context: nil
-            )
-            .height
-            .rounded(.up)
     }
     
     open func requiredWidth(withHeight height: CGFloat) -> CGFloat {
@@ -59,34 +51,10 @@ open class SQLabel: UILabel, StyledComponent {
             height: labelHeight
         )
         
-        return self.attirubtedStringForCalculation(originalString: attributedString)
-            .boundingRect(
-                with: constraintBox,
-                options: [.usesLineFragmentOrigin, .usesFontLeading],
-                context: nil
-            )
-            .width
-            .rounded(.up)
-    }
-    
-    private func attirubtedStringForCalculation(originalString: NSAttributedString) -> NSAttributedString {
-        var newAttributedString = NSMutableAttributedString(string: originalString.string)
-        originalString.attributes(at: .zero, effectiveRange: nil).forEach { attribute in
-            if attribute.key == .paragraphStyle,
-               let originalParagraphStyle = attribute.value as? NSParagraphStyle {
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.setParagraphStyle(originalParagraphStyle)
-                paragraphStyle.lineBreakMode = .byWordWrapping
-
-                newAttributedString.addAttribute(attribute.key, value: paragraphStyle, range: NSRange(location: .zero, length: originalString.length))
-
-                return
-            }
-
-            newAttributedString.addAttribute(attribute.key, value: attribute.value, range: NSRange(location: .zero, length: originalString.length))
-        }
-        
-        return newAttributedString
+        return self.style.requiredWidth(
+            forString: attributedString.string,
+            height: labelHeight
+        )
     }
 
     private func updateAttributedText() {

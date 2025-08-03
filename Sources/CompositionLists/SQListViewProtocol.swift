@@ -12,6 +12,28 @@ import SQExtensions
 import SQEntities
 #endif
 
+public enum SQListViewContentOffsetUpdateMode {
+    case auto
+    case keepPrevious
+    case setOffset(contentOffset: CGPoint)
+}
+
+public struct SQListViewScrollToItemAfterReloadCommand {
+    public let indexPath: IndexPath
+    public let scrollPosition: UICollectionView.ScrollPosition
+    public let animated: Bool
+    
+    public init(
+        indexPath: IndexPath,
+        scrollPosition: UICollectionView.ScrollPosition,
+        animated: Bool
+    ) {
+        self.indexPath = indexPath
+        self.scrollPosition = scrollPosition
+        self.animated = animated
+    }
+}
+
 // MARK: - Associated keys
 private struct SQListViewAssociatedKeys {
 
@@ -56,11 +78,11 @@ public protocol SQListViewProtocol: AnyObject {
     /// - Parameters:
     ///   - content: new sections content.`[SQSectionContent]`.
     ///   - animated: need reload with animation.`Bool`.
-    ///   - keepContentOffset: should keep content offset after reload.`Bool`.
+    ///   - keepContentOffsetUpdateMode: mode for updating contentOffser.`SQListViewContentOffsetUpdateMode`.
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
-        keepContentOffset: Bool
+        contentOffsetUpdateMode: SQListViewContentOffsetUpdateMode
     )
     
     /// Reload collection view with new sections content
@@ -85,7 +107,7 @@ public protocol SQListViewProtocol: AnyObject {
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
-        keepContentOffset: Bool,
+        contentOffsetUpdateMode: SQListViewContentOffsetUpdateMode,
         completion: (() -> Void)?
     )
 
@@ -173,7 +195,7 @@ public extension SQListViewProtocol {
         self.reloadData(
             withSectionsContent: content,
             animated: animated,
-            keepContentOffset: true,
+            contentOffsetUpdateMode: .keepPrevious,
             completion: nil
         )
     }
@@ -181,12 +203,12 @@ public extension SQListViewProtocol {
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
-        keepContentOffset: Bool
+        contentOffsetUpdateMode: SQListViewContentOffsetUpdateMode
     ) {
         self.reloadData(
             withSectionsContent: content,
             animated: animated,
-            keepContentOffset: keepContentOffset,
+            contentOffsetUpdateMode: contentOffsetUpdateMode,
             completion: nil
         )
     }
@@ -199,7 +221,7 @@ public extension SQListViewProtocol {
         self.reloadData(
             withSectionsContent: content,
             animated: animated,
-            keepContentOffset: true,
+            contentOffsetUpdateMode: .keepPrevious,
             completion: completion
         )
     }
@@ -207,7 +229,7 @@ public extension SQListViewProtocol {
     func reloadData(
         withSectionsContent content: [SQSectionContent],
         animated: Bool,
-        keepContentOffset: Bool,
+        contentOffsetUpdateMode: SQListViewContentOffsetUpdateMode,
         completion: (() -> Void)?
     ) {
         var newSnapshot = NSDiffableDataSourceSnapshot<SQSection, AnyHashable>()
@@ -217,11 +239,19 @@ public extension SQListViewProtocol {
             newSnapshot.appendSections([section])
             newSnapshot.appendItems(section.content.items)
         }
+        
+        switch contentOffsetUpdateMode {
+        case .auto, .keepPrevious:
+            break
 
-        var contentOffsetY: CGFloat = .zero
+        case .setOffset(let contentOffset):
+            self.collectionView.contentOffset = contentOffset
+        }
+
+        var previousContentOffset: CGPoint = .zero
         if !animated {
             UIView.setAnimationsEnabled(false)
-            contentOffsetY = self.collectionView.contentOffset.y
+            previousContentOffset = self.collectionView.contentOffset
         }
 
         self.dataSource.apply(
@@ -232,7 +262,7 @@ public extension SQListViewProtocol {
                 if !animated {
                     CATransaction.setDisableActions(true)
                 }
-                self.collectionView.layoutIfNeeded()
+                self.collectionView.setNeedsLayout()
                 CATransaction.commit()
 
                 if animated {
@@ -240,12 +270,26 @@ public extension SQListViewProtocol {
                     self.reloadEmptyData()
                     return
                 }
-
-                if keepContentOffset {
-                    self.collectionView.contentOffset.y = contentOffsetY
-                }
-
+                
                 UIView.setAnimationsEnabled(true)
+                
+                switch contentOffsetUpdateMode {
+                case .auto:
+                    break
+
+                case .keepPrevious, .setOffset:
+                    self.collectionView.contentOffset = .init(
+                        x: min(
+                            self.collectionView.sq.maxContentOffset.x,
+                            previousContentOffset.x
+                        ),
+                        y: min(
+                            self.collectionView.sq.maxContentOffset.y,
+                            previousContentOffset.y
+                        )
+                    )
+                }
+                
                 self.reloadEmptyData()
                 completion?()
             }
