@@ -14,24 +14,8 @@ import SQEntities
 
 public enum SQListViewContentOffsetUpdateMode {
     case auto
-    case keepPrevious
+    case reset
     case setOffset(contentOffset: CGPoint)
-}
-
-public struct SQListViewScrollToItemAfterReloadCommand {
-    public let indexPath: IndexPath
-    public let scrollPosition: UICollectionView.ScrollPosition
-    public let animated: Bool
-    
-    public init(
-        indexPath: IndexPath,
-        scrollPosition: UICollectionView.ScrollPosition,
-        animated: Bool
-    ) {
-        self.indexPath = indexPath
-        self.scrollPosition = scrollPosition
-        self.animated = animated
-    }
 }
 
 // MARK: - Associated keys
@@ -195,7 +179,7 @@ public extension SQListViewProtocol {
         self.reloadData(
             withSectionsContent: content,
             animated: animated,
-            contentOffsetUpdateMode: .keepPrevious,
+            contentOffsetUpdateMode: .auto,
             completion: nil
         )
     }
@@ -221,7 +205,7 @@ public extension SQListViewProtocol {
         self.reloadData(
             withSectionsContent: content,
             animated: animated,
-            contentOffsetUpdateMode: .keepPrevious,
+            contentOffsetUpdateMode: .auto,
             completion: completion
         )
     }
@@ -241,7 +225,7 @@ public extension SQListViewProtocol {
         }
         
         switch contentOffsetUpdateMode {
-        case .auto, .keepPrevious:
+        case .auto, .reset:
             break
 
         case .setOffset(let contentOffset):
@@ -276,8 +260,11 @@ public extension SQListViewProtocol {
                 switch contentOffsetUpdateMode {
                 case .auto:
                     break
+                    
+                case .reset:
+                    self.collectionView.contentOffset = .zero
 
-                case .keepPrevious, .setOffset:
+                case .setOffset:
                     self.collectionView.contentOffset = .init(
                         x: min(
                             self.collectionView.sq.maxContentOffset.x,
