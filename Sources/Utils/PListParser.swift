@@ -6,16 +6,24 @@
 //
 
 import Foundation
+import OSLog
+
+public enum PlistParserError: Error {
+    case notFoundPlist
+}
 
 public class PListParser {
     
     private var plistName: String
     private var plistContent: [String: Any]
-    
-    public init(plistName: String = "Info") {
+    private var logger = Logger()
+
+    public init(plistName: String = "Info") throws {
         guard let plistPath = Bundle.main.path(forResource: plistName, ofType: "plist"),
               let content = NSDictionary(contentsOfFile: plistPath) as? [String: Any] else {
-            fatalError("Unable to find \(plistName).plist in resources")
+            self.logger.log(level: .error, "Unable to find \(plistName).plist in resources")
+
+            throw PlistParserError.notFoundPlist
         }
 
         self.plistName = plistName
