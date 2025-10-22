@@ -125,9 +125,9 @@ public class SQPhoneField: UIView {
         let field = SQTextField()
         field.delegate = self
         field.backgroundColor = .clear
-        field.autocorrectionType = .yes
         field.rightViewMode = .whileEditing
         field.keyboardType = .numberPad
+        field.autocorrectionType = .no
         field.textContentType = .telephoneNumber
         return field
     }()
@@ -221,8 +221,6 @@ extension SQPhoneField: SQConfigurableView {
 
     public func configure() {
         self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.textField.autocorrectionType = .no
-        self.textField.textContentType = .telephoneNumber
     }
 
     public func setupLayout() {

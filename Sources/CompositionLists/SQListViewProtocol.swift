@@ -232,11 +232,7 @@ public extension SQListViewProtocol {
             self.collectionView.contentOffset = contentOffset
         }
 
-        var previousContentOffset: CGPoint = .zero
-        if !animated {
-            UIView.setAnimationsEnabled(false)
-            previousContentOffset = self.collectionView.contentOffset
-        }
+        let previousContentOffset = self.collectionView.contentOffset
 
         self.dataSource.apply(
             newSnapshot,
@@ -254,8 +250,6 @@ public extension SQListViewProtocol {
                     self.reloadEmptyData()
                     return
                 }
-                
-                UIView.setAnimationsEnabled(true)
                 
                 switch contentOffsetUpdateMode {
                 case .auto:
