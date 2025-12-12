@@ -95,6 +95,7 @@ public extension SQListProvider {
             result.insert(
                 SpacerSection(
                     id: "\(section.id)" + .topSpacerAdditional,
+                    parentSectionId: section.id,
                     height: spacings.top,
                     backgroundColor: backgroundColor ?? .clear
                 ),
@@ -105,6 +106,7 @@ public extension SQListProvider {
             result.append(
                 SpacerSection(
                     id: "\(section.id)" + .bottomSpacerAdditional,
+                    parentSectionId: section.id,
                     height: spacings.bottom,
                     backgroundColor: backgroundColor ?? .clear
                 )

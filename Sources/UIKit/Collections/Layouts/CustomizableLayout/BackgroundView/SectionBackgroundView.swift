@@ -15,7 +15,7 @@ import SQEntities
 
 // MARK: - SectionBackgroundView
 @available(iOS 13.0, *)
-class SectionBackgroundView: UICollectionReusableView {
+public class SectionBackgroundView: UICollectionReusableView {
 
 // MARK: - Properties
     private var insetView = UIView()
@@ -40,7 +40,7 @@ class SectionBackgroundView: UICollectionReusableView {
     }
     
 // MARK: - Life cycle
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         self.insetView.sq.roundCorners(
@@ -52,7 +52,7 @@ class SectionBackgroundView: UICollectionReusableView {
     }
 
 // MARK: - Life cycle
-    override func apply(_ attributes: UICollectionViewLayoutAttributes) {
+    override public func apply(_ attributes: UICollectionViewLayoutAttributes) {
         super.apply(attributes)
 
         guard let customizableAttributes = attributes as? CustomizableLayoutAttributes else { return }
@@ -65,12 +65,13 @@ class SectionBackgroundView: UICollectionReusableView {
         self.insetView.backgroundColor = self.settings.backgroundColor
 
         let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(self.onClickView)
+            target: self,
+            action: #selector(self.onClickView)
         )
 
         self.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
     @objc
     private func onClickView() {
         guard let sectionIndex = self.sectionIndex else { return }
@@ -83,12 +84,12 @@ class SectionBackgroundView: UICollectionReusableView {
 @available(iOS 13.0, *)
 extension SectionBackgroundView: SQConfigurableView {
 
-    func configure() {
+    public func configure() {
         self.backgroundColor = .clear
         self.clipsToBounds = true
     }
 
-    func setupLayout() {
+    public func setupLayout() {
         self.addSubview(self.insetView)
 
         self.insetView.snp.makeConstraints { make in

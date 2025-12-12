@@ -26,7 +26,7 @@ public extension CustomizableLayoutDelegate {
         nil
     }
 
-    func onClickSection(sectionIndex: Int) { }
+    func onClickSection(sectionIndex: Int) {}
 }
 
 // MARK: - CustomizableLayout
