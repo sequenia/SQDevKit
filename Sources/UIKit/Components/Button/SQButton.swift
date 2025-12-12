@@ -117,6 +117,12 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
 
         self.updateAttributedText()
     }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updateLayer()
+    }
 
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
@@ -214,6 +220,7 @@ open class SQButton: UIButton, StyledComponent, SQConfigurableView {
         }
         
         self.updateTintColor()
+        self.setNeedsLayout()
         self.setNeedsDisplay()
     }
 
