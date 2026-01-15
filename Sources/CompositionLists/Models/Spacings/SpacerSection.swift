@@ -11,15 +11,18 @@ import UIKit
 public struct SpacerSection: SQSectionContent {
 
     public var id: String
+    public var parentSectionId: String
 
     public var items: [AnyHashable]
 
     public init(
         id: String,
+        parentSectionId: String,
         height: CGFloat,
         backgroundColor: UIColor = .clear
     ) {
         self.id = [id, "EmptyCell"].joined(separator: "_")
+        self.parentSectionId = parentSectionId
         self.items = [
             EmptyModel(
                 id: id,
