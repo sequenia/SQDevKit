@@ -60,7 +60,11 @@ public extension SQExtensions where Base: UINavigationController {
     ///   - style: style for navigation bar. `NavigationBarStyle`.
     func setNavigationBarStyle(_ style: NavigationBarStyle) {
         let appearance = UINavigationBarAppearance()
-        if #available(iOS 15.0, *) {
+        if #available(iOS 26.0, *) {
+            appearance.configureWithDefaultBackground()
+            
+        }
+        else if #available(iOS 15.0, *) {
             if style.isTranslucent {
                 appearance.configureWithTransparentBackground()
             } else {
