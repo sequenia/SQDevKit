@@ -48,6 +48,7 @@ public extension SQExtensions where Base == String {
     func toDate(format: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
+        dateFormatter.locale = .sqPosix
 
         return dateFormatter.date(from: self.base)
     }
