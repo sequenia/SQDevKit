@@ -55,6 +55,7 @@ public extension SQExtensions where Base: UIDevice {
         return self.mapToDevice(identifier: self.modelIdentifier)
     }
 
+    // Source file with list: https://github.com/AnbalaganD/iModels/blob/main/Sources/iModels/Device.swift
     private static func mapToDevice(identifier: String) -> String {
         return switch identifier {
             case "iPhone1,1": "iPhone"
