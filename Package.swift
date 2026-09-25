@@ -27,7 +27,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/SnapKit/SnapKit.git",
-            exact: .init("5.7.1")!
+            exact: .init("6.0.0")!
         ),
         .package(
             url: "https://github.com/luximetr/AnyFormatKit.git",
@@ -35,7 +35,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
-            exact: .init("8.6.2")!
+            exact: .init("8.13.0")!
         )
     ],
     targets: [
