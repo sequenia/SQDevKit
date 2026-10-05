@@ -21,11 +21,14 @@ public struct SQFont {
         letterSpacing: CGFloat? = nil,
         lineHeight: CGFloat
     ) {
-        if let font = UIFont(name: name, size: size) {
-            self.font = font
-        } else {
-            self.font = .systemFont(ofSize: size)
-        }
+        self.font = UIFont(
+            name: name,
+            size: size
+        ) ?? .systemFont(
+            ofSize: size,
+            weight: .init(postScriptName: name)
+        )
+
         self.letterSpacing = letterSpacing
         self.lineHeight = lineHeight
     }
@@ -34,13 +37,45 @@ public struct SQFont {
         guard let name = json["name"].string,
               let size = json["size"].sq.cgFloat,
               let lineHeight = json["lineHeight"].sq.cgFloat else { return nil }
+        
+        self.font = UIFont(
+            name: name,
+            size: size
+        ) ?? .systemFont(
+            ofSize: size,
+            weight: .init(postScriptName: name)
+        )
 
-        if let font = UIFont(name: name, size: size) {
-            self.font = font
-        } else {
-            self.font = .systemFont(ofSize: size)
-        }
         self.letterSpacing = json["letterSpacing"].sq.cgFloat
         self.lineHeight = lineHeight
+    }
+}
+
+private extension UIFont.Weight {
+
+    init(
+        postScriptName name: String
+    ) {
+        switch name.split(separator: "-").last.map({ $0.lowercased() }) ?? "" {
+        case "bold":
+            self = .bold
+
+        case "semibold":
+            self = .semibold
+
+        case "medium":
+            self = .medium
+
+        case "light":
+            self = .light
+
+        case "thin":
+            self = .thin
+        case "heavy", "black":
+            self = .heavy
+
+        default:
+            self = .regular
+        }
     }
 }
